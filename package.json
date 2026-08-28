@@ -1,0 +1,34 @@
+{
+  "name": "pi-debug-mode",
+  "version": "0.1.0",
+  "description": "Evidence-first debugging workflow for Pi",
+  "type": "module",
+  "license": "MIT",
+  "author": "Liu Shiyu",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liush2yuxjtu/pi-debug-mode.git"
+  },
+  "homepage": "https://github.com/liush2yuxjtu/pi-debug-mode#readme",
+  "bugs": "https://github.com/liush2yuxjtu/pi-debug-mode/issues",
+  "keywords": ["pi-package", "pi-extension", "debugging"],
+  "files": ["src", "README.md", "LICENSE"],
+  "pi": {
+    "extensions": ["./src/index.ts"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
