@@ -2,7 +2,7 @@
 
 Evidence-first debugging workflow for [Pi](https://github.com/earendil-works/pi-mono), inspired by Cursor Debug Mode.
 
-It guides Pi through competing hypotheses, targeted runtime instrumentation, human reproduction, evidence-backed fixes, and final verification.
+It guides Pi through competing hypotheses, targeted runtime instrumentation, human reproduction, evidence-backed fixes, and final verification. Canonical source: [github.com/liush2yuxjtu/pi-debug-mode](https://github.com/liush2yuxjtu/pi-debug-mode).
 
 ## Install
 
@@ -30,6 +30,18 @@ At each checkpoint, `debug_reproduction` shows exact steps and three choices:
 
 Use `/debug-stop` to leave debug mode without claiming a fix.
 
+## Uninstall
+
+```bash
+pi remove npm:pi-debug-mode
+```
+
+For a GitHub install:
+
+```bash
+pi remove git:github.com/liush2yuxjtu/pi-debug-mode
+```
+
 ## How it works
 
 1. Inspect the real execution path and list competing hypotheses.
@@ -37,6 +49,12 @@ Use `/debug-stop` to leave debug mode without claiming a fix.
 3. Ask for one exact reproduction through an interactive checkpoint.
 4. Read captured evidence and apply the smallest root-cause fix.
 5. Verify once more, then remove every temporary probe.
+
+## Permissions and security
+
+Pi extensions run with the same system permissions as Pi. This package adds two commands and one interactive tool; it does not start background services, send telemetry, or make network requests. Debug sessions may ask Pi to add temporary runtime probes and read local logs. Review proposed tool calls and avoid reproducing bugs with secrets in inputs or logs.
+
+Report vulnerabilities privately through [GitHub Security Advisories](https://github.com/liush2yuxjtu/pi-debug-mode/security/advisories/new). For normal bugs and support, use [GitHub Issues](https://github.com/liush2yuxjtu/pi-debug-mode/issues).
 
 ## Sources
 

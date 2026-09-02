@@ -1,0 +1,26 @@
+{
+  "artifact": "pi-debug-mode",
+  "version": "0.1.0",
+  "license": "MIT",
+  "canonicalRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
+  "channels": [
+    {
+      "name": "github",
+      "status": "prepared",
+      "listingUrl": "https://github.com/liush2yuxjtu/pi-debug-mode",
+      "installCommand": "pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.0"
+    },
+    {
+      "name": "npm",
+      "status": "prepared",
+      "listingUrl": "https://www.npmjs.com/package/pi-debug-mode",
+      "installCommand": "pi install npm:pi-debug-mode@0.1.0"
+    },
+    {
+      "name": "pi-package-gallery",
+      "status": "pending-npm-publication",
+      "listingUrl": "https://pi.dev/packages/pi-debug-mode",
+      "installCommand": "pi install npm:pi-debug-mode@0.1.0"
+    }
+  ]
+}
