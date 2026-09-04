@@ -1,26 +1,27 @@
 {
   "artifact": "pi-debug-mode",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "license": "MIT",
   "canonicalRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
   "channels": [
     {
       "name": "github",
-      "status": "prepared",
-      "listingUrl": "https://github.com/liush2yuxjtu/pi-debug-mode",
-      "installCommand": "pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.0"
+      "status": "published-and-verified",
+      "listingUrl": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.2",
+      "installCommand": "pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.2"
     },
     {
       "name": "npm",
-      "status": "prepared",
+      "status": "published-and-verified",
       "listingUrl": "https://www.npmjs.com/package/pi-debug-mode",
-      "installCommand": "pi install npm:pi-debug-mode@0.1.0"
+      "installCommand": "pi install npm:pi-debug-mode@0.1.2",
+      "integrity": "sha512-TFqNiMgvQse51danTO4lR0bugeZSJsjoCQBLyoEe3Usu2DKyaqcb0PaPUtSbhhzVOeFxlq5hVazmSJV1iWydMA=="
     },
     {
       "name": "pi-package-gallery",
-      "status": "pending-npm-publication",
+      "status": "published-and-verified",
       "listingUrl": "https://pi.dev/packages/pi-debug-mode",
-      "installCommand": "pi install npm:pi-debug-mode@0.1.0"
+      "installCommand": "pi install npm:pi-debug-mode@0.1.2"
     }
   ]
 }
