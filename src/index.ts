@@ -3,7 +3,7 @@ import type {
 	ExtensionContext,
 } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
-import { outcomeMessage, type ReproductionOutcome } from "./protocol.js";
+import { outcomeMessage, type ReproductionOutcome } from "./protocol.ts";
 
 const STATE_ENTRY = "pi-debug-mode:state";
 const OPTIONS = [
