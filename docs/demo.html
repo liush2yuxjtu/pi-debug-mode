@@ -1,59 +1,423 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>pi-debug-mode product demo</title>
-<style>
-:root{--bg:#eeeae2;--ink:#171714;--muted:#6a665f;--line:#c9c2b7;--panel:#faf8f3;--dark:#191a17;--green:#c9f05a;--amber:#f2b84b;--red:#e96554}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}.page{width:min(1180px,calc(100% - 48px));margin:auto;padding:34px 0 28px}.nav{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px}.brand{font-weight:760;letter-spacing:-.03em}.pill{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted)}.hero{display:grid;grid-template-columns:.85fr 1.65fr;gap:42px;padding:42px 0 28px}.eyebrow{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}h1{font-size:54px;line-height:.98;letter-spacing:-.055em;margin:18px 0 20px;max-width:8ch}.lead{font-size:17px;line-height:1.55;color:var(--muted);max-width:35ch}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:30px}.fact{border-top:1px solid var(--line);padding-top:10px}.fact b{display:block;font:12px ui-monospace,SFMono-Regular,Menlo,monospace}.fact span{font-size:12px;color:var(--muted)}.stage{position:relative;min-height:620px;border:1px solid #aaa297;border-radius:20px;overflow:hidden;background:radial-gradient(circle at 68% 24%,rgba(201,240,90,.42),transparent 33%),linear-gradient(145deg,#d9d4ca,#aaa499)}.grain{position:absolute;inset:0;opacity:.25;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E")}.window{position:absolute;border:1px solid rgba(0,0,0,.28);border-radius:13px;overflow:hidden;box-shadow:0 24px 50px rgba(30,27,21,.24)}.titlebar{height:38px;display:flex;align-items:center;gap:7px;padding:0 13px;border-bottom:1px solid rgba(255,255,255,.1);font:11px ui-monospace,SFMono-Regular,Menlo,monospace}.dot{width:8px;height:8px;border-radius:50%;background:#666}.terminal{left:28px;top:34px;width:72%;height:395px;background:var(--dark);color:#e7e9df}.terminal .titlebar{color:#969a8c}.terminal-body{padding:19px 20px;font:13px/1.58 ui-monospace,SFMono-Regular,Menlo,monospace}.line{min-height:20px}.prompt{color:var(--green)}.dim{color:#8c9182}.amber{color:var(--amber)}.green{color:var(--green)}.cursor{display:inline-block;width:7px;height:15px;vertical-align:-2px;background:var(--green);animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}.checkpoint{right:22px;bottom:24px;width:58%;background:var(--panel)}.checkpoint .titlebar{color:var(--muted);border-color:var(--line)}.card{padding:17px}.card h2{font-size:18px;margin:0 0 7px}.card p{margin:0 0 12px;font-size:13px;color:var(--muted)}.steps{font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0 0 13px;padding-left:21px}.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:1px solid #aca69b;background:white;color:var(--ink);border-radius:8px;padding:9px 11px;font:12px ui-monospace,SFMono-Regular,Menlo,monospace;cursor:pointer}button:hover,button:focus-visible{border-color:#171714;outline:none;box-shadow:0 0 0 3px rgba(201,240,90,.7)}button.primary{background:var(--ink);color:white;border-color:var(--ink)}.status{position:absolute;right:16px;top:14px;background:var(--green);color:#252718;border-radius:999px;padding:7px 10px;font:bold 11px ui-monospace,SFMono-Regular,Menlo,monospace;box-shadow:0 6px 18px rgba(0,0,0,.14)}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font:10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}.hide{display:none}@media(max-width:850px){.hero{grid-template-columns:1fr}h1{font-size:44px}.stage{min-height:auto;padding:16px}.window{position:relative!important;inset:auto!important;width:100%!important;margin-bottom:14px}.terminal{height:380px}.checkpoint{height:auto}.facts{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.cursor{animation:none}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eeeae2">
+  <meta name="description" content="Run the interactive pi-debug-mode workflow with competing hypotheses, targeted runtime probes, a human reproduction checkpoint, a small fix, and final verification.">
+  <meta name="release-version" content="0.1.4">
+  <link rel="canonical" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">
+  <link rel="alternate" hreflang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">
+  <link rel="alternate" hreflang="x-default" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="pi-debug-mode">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="zh_CN">
+  <meta property="og:title" content="Interactive pi-debug-mode Demo | Evidence-first Debugging">
+  <meta property="og:description" content="Step through hypotheses, runtime probes, human reproduction, a supported fix, and final verification.">
+  <meta property="og:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">
+  <meta property="og:image" content="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-poster.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Interactive pi-debug-mode Demo | Evidence-first Debugging">
+  <meta name="twitter:description" content="Step through hypotheses, runtime probes, human reproduction, a supported fix, and final verification.">
+  <meta name="twitter:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-poster.png">
+  <title>Interactive pi-debug-mode Demo | Evidence-first Debugging</title>
+  <style>
+    :root {
+      --paper: #eeeae2;
+      --paper-bright: #faf8f3;
+      --ink: #171714;
+      --muted: #66635c;
+      --line: #c5beb2;
+      --panel: #191a17;
+      --panel-muted: #9ca092;
+      --proof: #c9f05a;
+      --amber: #f2b84b;
+      --display: Georgia, "Times New Roman", serif;
+      --body: "Avenir Next", "Helvetica Neue", sans-serif;
+      --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(23, 23, 20, 0.035) 1px, transparent 1px),
+        var(--paper);
+      background-size: 100% 31px, auto;
+      color: var(--ink);
+      font-family: var(--body);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-underline-offset: 0.2em; }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      transform: translateY(-160%);
+      border: 2px solid var(--ink);
+      background: var(--proof);
+      padding: 0 16px;
+      font: 700 0.8rem var(--mono);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    :focus-visible {
+      outline: 3px solid var(--ink);
+      outline-offset: 3px;
+      box-shadow: 0 0 0 6px var(--proof);
+    }
+
+    .nav-shell,
+    .page,
+    .footer-shell {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .site-header { border-bottom: 1px solid var(--line); }
+
+    .nav {
+      display: flex;
+      min-height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand { display: inline-flex; min-height: 44px; align-items: center; font: 700 1rem var(--mono); text-decoration: none; }
+
+    .nav-links,
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .nav-link,
+    .footer-link {
+      display: inline-flex;
+      min-width: 44px;
+      min-height: 44px;
+      align-items: center;
+      padding: 0 10px;
+      font: 0.72rem var(--mono);
+    }
+
+    .page { padding: 52px 0 38px; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.55fr);
+      gap: clamp(34px, 7vw, 84px);
+      align-items: start;
+    }
+
+    .eyebrow,
+    .pill,
+    .fact,
+    .titlebar,
+    .terminal-body,
+    button,
+    .status,
+    .demo-note,
+    .site-footer {
+      font-family: var(--mono);
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 8ch;
+      margin: 18px 0 22px;
+      font: 400 clamp(3.4rem, 7vw, 6.4rem)/0.9 var(--display);
+      letter-spacing: -0.06em;
+    }
+
+    .lead { max-width: 36ch; color: var(--muted); font-size: 1.05rem; }
+
+    .facts { display: grid; gap: 0; margin-top: 34px; border-top: 1px solid var(--line); }
+
+    .fact {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+      font-size: 0.72rem;
+    }
+
+    .fact b { color: var(--ink); }
+    .fact span { color: var(--muted); }
+
+    .demo-note { margin-top: 24px; color: var(--muted); font-size: 0.7rem; }
+
+    .stage {
+      position: relative;
+      min-height: 620px;
+      overflow: hidden;
+      border: 1px solid #9e978d;
+      background:
+        radial-gradient(circle at 72% 22%, rgba(201, 240, 90, 0.48), transparent 32%),
+        linear-gradient(145deg, #d8d2c7, #aaa398);
+      box-shadow: 0 28px 70px rgba(30, 27, 21, 0.2);
+    }
+
+    .stage::before {
+      position: absolute;
+      inset: 0;
+      opacity: 0.22;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E");
+      content: "";
+      pointer-events: none;
+    }
+
+    .window {
+      position: absolute;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      box-shadow: 0 24px 50px rgba(30, 27, 21, 0.24);
+    }
+
+    .titlebar {
+      display: flex;
+      min-height: 42px;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0 14px;
+      font-size: 0.68rem;
+    }
+
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #666; }
+
+    .terminal {
+      top: 34px;
+      left: 28px;
+      width: 72%;
+      height: 398px;
+      background: var(--panel);
+      color: #e7e9df;
+    }
+
+    .terminal .titlebar { color: var(--panel-muted); }
+
+    .terminal-body { padding: 20px; font-size: 0.8rem; line-height: 1.62; }
+    .line { min-height: 21px; }
+    .prompt, .green { color: var(--proof); }
+    .dim { color: var(--panel-muted); }
+    .amber { color: var(--amber); }
+    .hide { display: none; }
+
+    .checkpoint {
+      right: 22px;
+      bottom: 24px;
+      width: 58%;
+      background: var(--paper-bright);
+    }
+
+    .checkpoint .titlebar { border-color: var(--line); color: var(--muted); }
+    .card { padding: 20px; }
+    .card h2 { margin: 0 0 7px; font: 700 1rem var(--mono); }
+    .card p { margin: 0 0 14px; color: var(--muted); font-size: 0.84rem; }
+    .steps { margin: 0 0 16px; padding-left: 22px; font: 0.75rem/1.65 var(--mono); }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    button {
+      min-height: 44px;
+      border: 1px solid #a49e93;
+      border-radius: 0;
+      background: white;
+      padding: 9px 12px;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 0.72rem;
+    }
+
+    button:hover:not(:disabled) { border-color: var(--ink); background: var(--proof); }
+    button:disabled { cursor: not-allowed; opacity: 0.56; }
+    button.primary { border-color: var(--ink); background: var(--ink); color: white; }
+
+    .status {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      z-index: 2;
+      background: var(--proof);
+      padding: 8px 11px;
+      color: #252718;
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    .site-footer { margin-top: 54px; border-top: 1px solid var(--line); }
+    .footer-shell { display: flex; min-height: 88px; align-items: center; justify-content: space-between; gap: 20px; }
+    .footer-note { color: var(--muted); font-size: 0.68rem; }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; }
+      h1 { max-width: 11ch; }
+      .stage { min-height: auto; padding: 18px; }
+      .window { position: relative; inset: auto; width: 100%; margin-bottom: 16px; }
+      .terminal { height: 390px; }
+      .checkpoint { height: auto; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-shell, .page, .footer-shell { width: min(100% - 24px, 560px); }
+      .nav, .footer-shell { align-items: flex-start; flex-direction: column; padding: 16px 0; }
+      .fact { grid-template-columns: 1fr; gap: 2px; }
+      .stage { padding: 10px; }
+      .terminal-body { padding: 16px 13px; font-size: 0.7rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
 </head>
-<body>
-<main class="page">
-  <nav class="nav"><div class="brand">pi-debug-mode</div><div class="pill">local product demo · simulated</div></nav>
-  <section class="hero">
-    <div>
-      <div class="eyebrow">Evidence before fixes</div>
-      <h1>Debug with proof.</h1>
-      <p class="lead">A Pi extension for competing hypotheses, targeted runtime probes, exact human reproduction, and evidence-backed fixes.</p>
-      <div class="facts"><div class="fact"><b>/debug</b><span>start workflow</span></div><div class="fact"><b>/debug-stop</b><span>exit safely</span></div><div class="fact"><b>debug_reproduction</b><span>human checkpoint</span></div></div>
-    </div>
-    <div class="stage" aria-label="Interactive pi-debug-mode demonstration">
-      <div class="grain"></div><div class="status" id="status">READY</div>
-      <section class="window terminal" aria-label="Pi terminal">
-        <div class="titlebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>tmux · pi-debug-demo</span></div>
-        <div class="terminal-body" id="terminal" aria-live="polite">
-          <div class="line dim">Pi 0.84.4 · pi-debug-mode 0.1.0</div>
-          <div class="line"><span class="prompt">❯</span> <span id="command">/debug checkout hangs after payment</span></div>
-          <div class="line" id="line1">Press <button class="primary" id="start">Start debug run</button> to replay the workflow.</div>
-          <div id="trace" class="hide"></div>
+<body data-release-version="0.1.4">
+  <a class="skip-link" href="#main">Skip to interactive demo</a>
+  <header class="site-header">
+    <nav class="nav nav-shell" aria-label="Demo navigation">
+      <a class="brand" href="https://liush2yuxjtu.github.io/pi-debug-mode/">pi-debug-mode</a>
+      <div class="nav-links">
+        <a class="nav-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/">Product home</a>
+        <a class="nav-link" href="https://github.com/liush2yuxjtu/pi-debug-mode">GitHub</a>
+        <a class="nav-link" lang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">中文演示</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="page">
+    <section class="hero" aria-labelledby="demo-title">
+      <div>
+        <p class="eyebrow">Interactive simulation</p>
+        <h1 id="demo-title">Debug with proof.</h1>
+        <p class="lead">Step through the pi-debug-mode sequence. The simulation shows competing hypotheses, targeted probes, a human checkpoint, and verification after the fix.</p>
+        <div class="facts">
+          <div class="fact"><b>/debug</b><span>start the workflow</span></div>
+          <div class="fact"><b>/debug-stop</b><span>exit without claiming a fix</span></div>
+          <div class="fact"><b>debug_reproduction</b><span>collect the human outcome</span></div>
         </div>
-      </section>
-      <section class="window checkpoint" aria-label="Reproduction checkpoint">
-        <div class="titlebar"><span>debug_reproduction · sequential</span></div>
-        <div class="card">
-          <h2 id="card-title">Checkpoint waits for evidence</h2>
-          <p id="card-copy">Instrumentation first. Fix only after one reproduction separates hypotheses.</p>
-          <ol class="steps"><li>Open checkout.</li><li>Submit test payment.</li><li>Wait for confirmation state.</li></ol>
-          <div class="actions">
-            <button id="reproduced" disabled>Issue reproduced</button>
-            <button id="fixed" disabled>Fixed</button>
-            <button id="context" disabled>Type prompt…</button>
+        <p class="demo-note">Simulation for version 0.1.4. The separate TUI recording contains output from a live Pi run.</p>
+      </div>
+
+      <div class="stage" role="region" aria-label="Interactive pi-debug-mode workflow">
+        <div class="status" id="status" tabindex="-1" aria-live="polite">READY</div>
+        <section class="window terminal" aria-label="Simulated Pi terminal">
+          <div class="titlebar"><span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span><span>Pi · pi-debug-mode</span></div>
+          <div class="terminal-body" aria-live="polite">
+            <div class="line dim">Pi · pi-debug-mode 0.1.4</div>
+            <div class="line"><span class="prompt">❯</span> /debug checkout hangs after payment</div>
+            <div class="line" id="start-line">Select <button class="primary" id="start" type="button">Start debug run</button> to replay the workflow.</div>
+            <div id="trace" class="hide"></div>
           </div>
-        </div>
-      </section>
+        </section>
+        <section class="window checkpoint" aria-label="Reproduction checkpoint">
+          <div class="titlebar"><span>debug_reproduction · sequential</span></div>
+          <div class="card">
+            <h2 id="card-title">Checkpoint waits for evidence</h2>
+            <p id="card-copy">Instrumentation comes first. One reproduction separates the hypotheses before a fix.</p>
+            <ol class="steps"><li>Open checkout.</li><li>Submit a test payment.</li><li>Wait for the confirmation state.</li></ol>
+            <div class="actions">
+              <button id="reproduced" type="button" disabled>Issue reproduced</button>
+              <button id="fixed" type="button" disabled>Fixed</button>
+              <button id="context" type="button" disabled>Type prompt…</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-shell">
+      <span class="footer-note">Interactive simulation · version 0.1.4</span>
+      <div class="footer-links">
+        <a class="footer-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/">English product home</a>
+        <a class="footer-link" lang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">中文交互演示</a>
+      </div>
     </div>
-  </section>
-  <footer class="footer"><span>Source: /Users/liushiyuwin/projects/pi-debug-mode</span><span>Pi session ID: 01a06b02-98e4-7881-a26e-74424fcca330</span></footer>
-</main>
-<script>
-const q=s=>document.querySelector(s), trace=q('#trace'), status=q('#status');
-function add(text,cls=''){const d=document.createElement('div');d.className='line '+cls;d.textContent=text;trace.appendChild(d)}
-q('#start').onclick=()=>{q('#line1').remove();trace.classList.remove('hide');add('debug  active · inspecting execution path','amber');setTimeout(()=>add('hypotheses  race · stale cache · dropped callback','dim'),400);setTimeout(()=>add('pi-debug  probes added at request, callback, state write','dim'),900);setTimeout(()=>{add('checkpoint  reproduce once','green');status.textContent='REPRODUCE';q('#reproduced').disabled=false;q('#context').disabled=false;q('#card-title').textContent='Reproduce checkout hang';q('#card-copy').textContent='Choose the observed result. Pi reads probe evidence before changing code.'},1400)};
-q('#reproduced').onclick=()=>{add('outcome  reproduced · callback arrived after timeout','amber');setTimeout(()=>add('root cause  timeout races callback state write','dim'),450);setTimeout(()=>add('fix  make callback state transition atomic','green'),900);setTimeout(()=>{status.textContent='VERIFY';q('#reproduced').disabled=true;q('#fixed').disabled=false;q('#card-title').textContent='Verify smallest fix';q('#card-copy').textContent='Repeat the same steps. Select Fixed only when the final state is visible.'},1200)};
-q('#fixed').onclick=()=>{add('outcome  fixed · probes removed · tests pass','green');status.textContent='FIXED';q('#fixed').disabled=true;q('#context').disabled=true;q('#card-title').textContent='Evidence closed the loop';q('#card-copy').textContent='Temporary pi-debug probes removed after human verification.'};
-q('#context').onclick=()=>{add('context  user supplied additional runtime detail','dim')};
-</script>
+  </footer>
+
+  <script>
+    const select = (selector) => document.querySelector(selector)
+    const trace = select('#trace')
+    const status = select('#status')
+
+    function addLine(text, className = '') {
+      const line = document.createElement('div')
+      line.className = `line ${className}`
+      line.textContent = text
+      trace.appendChild(line)
+    }
+
+    select('#start').addEventListener('click', () => {
+      select('#start-line').remove()
+      status.focus({ preventScroll: true })
+      trace.classList.remove('hide')
+      addLine('debug  active · inspecting execution path', 'amber')
+      setTimeout(() => addLine('hypotheses  stale cache · dropped callback · race condition', 'dim'), 400)
+      setTimeout(() => addLine('pi-debug  probes added at request, callback, state write', 'dim'), 900)
+      setTimeout(() => {
+        addLine('checkpoint  reproduce once', 'green')
+        status.textContent = 'REPRODUCE'
+        select('#reproduced').disabled = false
+        select('#context').disabled = false
+        select('#reproduced').focus({ preventScroll: true })
+        select('#card-title').textContent = 'Reproduce checkout hang'
+        select('#card-copy').textContent = 'Choose the observed result. Pi reads probe evidence before changing code.'
+      }, 1400)
+    })
+
+    select('#reproduced').addEventListener('click', () => {
+      addLine('outcome  reproduced · callback arrived after timeout', 'amber')
+      setTimeout(() => addLine('root cause  timeout races callback state write', 'dim'), 450)
+      setTimeout(() => addLine('fix  make callback state transition atomic', 'green'), 900)
+      setTimeout(() => {
+        status.textContent = 'VERIFY'
+        select('#reproduced').disabled = true
+        select('#fixed').disabled = false
+        select('#fixed').focus({ preventScroll: true })
+        select('#card-title').textContent = 'Verify the smallest fix'
+        select('#card-copy').textContent = 'Repeat the same steps. Select Fixed only when the final state is visible.'
+      }, 1200)
+    })
+
+    select('#fixed').addEventListener('click', () => {
+      addLine('outcome  fixed · probes removed · tests pass', 'green')
+      status.textContent = 'FIXED'
+      select('#fixed').disabled = true
+      select('#context').disabled = true
+      status.focus({ preventScroll: true })
+      select('#card-title').textContent = 'Evidence closed the loop'
+      select('#card-copy').textContent = 'Temporary pi-debug probes were removed after human verification.'
+    })
+
+    select('#context').addEventListener('click', () => {
+      addLine('context  user supplied additional runtime detail', 'dim')
+    })
+  </script>
 </body>
 </html>
