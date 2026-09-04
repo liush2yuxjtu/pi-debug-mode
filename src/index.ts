@@ -3,7 +3,7 @@ import type {
 	ExtensionContext,
 } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
-import { outcomeMessage, type ReproductionOutcome } from "./protocol.js";
+import { outcomeMessage, type ReproductionOutcome } from "./protocol.ts";
 
 const STATE_ENTRY = "pi-debug-mode:state";
 const OPTIONS = [
@@ -74,7 +74,8 @@ export default function debugMode(pi: ExtensionAPI): void {
 			state.bug = bug;
 			persist(pi, state);
 			updateStatus(ctx, true);
-			pi.sendUserMessage(`Debug this issue in Pi Debug Mode:\n\n${bug}`);
+			await ctx.waitForIdle();
+			await pi.sendUserMessage(`Debug this issue in Pi Debug Mode:\n\n${bug}`);
 		},
 	});
 
