@@ -4,6 +4,12 @@ Evidence-first debugging workflow for [Pi](https://github.com/earendil-works/pi-
 
 It guides Pi through competing hypotheses, targeted runtime instrumentation, human reproduction, evidence-backed fixes, and final verification. Canonical source: [github.com/liush2yuxjtu/pi-debug-mode](https://github.com/liush2yuxjtu/pi-debug-mode).
 
+## Demo
+
+[![pi-debug-mode evidence-first workflow](artifacts/demo/pi-debug-mode-poster.png)](artifacts/demo/pi-debug-mode-demo.mp4)
+
+[Watch the 13-second product demo](artifacts/demo/pi-debug-mode-demo.mp4) or open the [interactive local demo](docs/demo.html). The demo is a deterministic simulation of the extension workflow; command and checkpoint behavior come from the tested extension contract.
+
 ## Install
 
 ```bash

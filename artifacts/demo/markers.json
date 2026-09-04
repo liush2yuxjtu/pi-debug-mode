@@ -1,0 +1,38 @@
+[
+  {
+    "label": "orient",
+    "elapsedMs": 2335,
+    "scrollY": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  {
+    "label": "start-debug",
+    "elapsedMs": 2976,
+    "scrollY": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  {
+    "label": "issue-reproduced",
+    "elapsedMs": 6092,
+    "scrollY": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+  {
+    "label": "fixed",
+    "elapsedMs": 9010,
+    "scrollY": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    }
+  }
+]
