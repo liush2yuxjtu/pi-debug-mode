@@ -3,7 +3,7 @@ import test from "node:test";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import debugMode from "../src/index.ts";
 
-test("queues /debug as followUp while Pi is busy", async () => {
+test("waits for Pi to settle before starting /debug", async () => {
 	let debugHandler:
 		| ((args: string, ctx: any) => Promise<void>)
 		| undefined;
@@ -11,6 +11,7 @@ test("queues /debug as followUp while Pi is busy", async () => {
 		| ((event: { systemPrompt: string }, ctx: any) => any)
 		| undefined;
 	const persisted: unknown[] = [];
+	const events: string[] = [];
 	const sent: Array<{ content: unknown; options: unknown }> = [];
 
 	const pi = {
@@ -36,12 +37,16 @@ test("queues /debug as followUp while Pi is busy", async () => {
 			setStatus: () => undefined,
 			theme: { fg: (_color: string, text: string) => text },
 		},
+		waitForIdle: async () => {
+			events.push("idle");
+		},
 	} as any);
 
+	assert.deepEqual(events, ["idle"]);
 	assert.deepEqual(sent, [
 		{
 			content: `Debug this issue in Pi Debug Mode:\n\n${bug}`,
-			options: { deliverAs: "followUp" },
+			options: undefined,
 		},
 	]);
 	assert.deepEqual(persisted.at(-1), { version: 1, active: true, bug });
