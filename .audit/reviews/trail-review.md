@@ -1,5 +1,7 @@
 reviewed by qoder/Auto
 
+状态：这是修复前的历史评审。第 1、3、4 项已由 `.audit/reviews/disposition.md` 处理。第 2、5 项保留为公开发布门禁。
+
 5 处标记：
 
 1. 架构评审自证分数缺乏独立证据。`.audit/seo-architecture.md` 称 QODER 15.5/16、CODEX 10/16 并选 QODER 为 base，但完整评分表 `.audit/design/cross-judge.md` 未在材料中展开，无逐条准则证据。结合评审者即为 Qoder，存在模型家族自我背书风险。需公开 rubric 与逐条扣分依据后再采纳。

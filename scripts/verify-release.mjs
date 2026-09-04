@@ -757,7 +757,7 @@ function checkNpmPack(result, { root }) {
 		env: { ...process.env, NPM_CONFIG_UPDATE_NOTIFIER: 'false' },
 	})
 	if (run.error || run.status !== 0) {
-		const detail = run.error?.message ?? run.stderr.trim() ?? `exit ${run.status}`
+		const detail = run.error?.message || run.stderr.trim() || `exit ${run.status}`
 		addCheck(result, 'npm pack file list', 'fail', detail)
 		return
 	}
