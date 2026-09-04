@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "asciinema-player": "3.17.0",
+    "playwright-core": "1.55.0"
+  }
+}

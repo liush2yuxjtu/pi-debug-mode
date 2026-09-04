@@ -4,11 +4,15 @@ Evidence-first debugging workflow for [Pi](https://github.com/earendil-works/pi-
 
 It guides Pi through competing hypotheses, targeted runtime instrumentation, human reproduction, evidence-backed fixes, and final verification. Canonical source: [github.com/liush2yuxjtu/pi-debug-mode](https://github.com/liush2yuxjtu/pi-debug-mode).
 
-## Demo
+## Real TUI demo
 
-[![pi-debug-mode evidence-first workflow](artifacts/demo/pi-debug-mode-poster.png)](artifacts/demo/pi-debug-mode-demo.mp4)
+[![Real pi-debug-mode session in Pi TUI](artifacts/demo/pi-debug-mode-real-tui-poster.png)](artifacts/demo/pi-debug-mode-real-tui.mp4)
 
-[Watch the 13-second product demo](artifacts/demo/pi-debug-mode-demo.mp4) or open the [interactive local demo](docs/demo.html). The demo is a deterministic simulation of the extension workflow; command and checkpoint behavior come from the tested extension contract.
+[Watch the real Pi TUI recording](artifacts/demo/pi-debug-mode-real-tui.mp4). It captures a live `/debug` run on a real machine with the published extension and `openai-codex/gpt-5.6-sol`: hypothesis generation, temporary `pi-debug` probes, the interactive `debug_reproduction` checkpoint, evidence inspection, the smallest fix, human verification, probe cleanup, and the final passing test.
+
+The source terminal session was recorded from tmux as an asciinema cast. Only long human-wait intervals were compressed; TUI output and tool execution remain from the live run.
+
+For a short conceptual preview, [watch the 13-second product demo](artifacts/demo/pi-debug-mode-demo.mp4) or open the [interactive local demo](docs/demo.html). That shorter preview is a deterministic simulation.
 
 ## Install
 
