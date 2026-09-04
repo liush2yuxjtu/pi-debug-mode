@@ -28,6 +28,8 @@ At each checkpoint, `debug_reproduction` shows exact steps and three choices:
 2. `Issue reproduced, please try again`
 3. `Type prompt…`
 
+If `/debug` is invoked while Pi is busy, its debug task is queued as a `followUp` and starts only after the current agent work fully settles. It never steers the active turn.
+
 Use `/debug-stop` to leave debug mode without claiming a fix.
 
 ## Uninstall

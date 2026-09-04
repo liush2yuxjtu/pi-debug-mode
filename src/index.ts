@@ -74,7 +74,9 @@ export default function debugMode(pi: ExtensionAPI): void {
 			state.bug = bug;
 			persist(pi, state);
 			updateStatus(ctx, true);
-			pi.sendUserMessage(`Debug this issue in Pi Debug Mode:\n\n${bug}`);
+			await pi.sendUserMessage(`Debug this issue in Pi Debug Mode:\n\n${bug}`, {
+				deliverAs: "followUp",
+			});
 		},
 	});
 
