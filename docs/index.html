@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2efe6">
+  <meta name="description" content="pi-debug-mode adds a Cursor-style, evidence-first Debug Mode to the Pi coding agent with competing hypotheses, runtime probes, human reproduction, and final verification.">
+  <meta name="release-version" content="0.1.4">
+  <link rel="canonical" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
+  <link rel="alternate" hreflang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
+  <link rel="alternate" hreflang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="pi-debug-mode">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="zh_CN">
+  <meta property="og:title" content="pi-debug-mode | Evidence-first Debug Mode for Pi Agents">
+  <meta property="og:description" content="A Cursor-style Debug Mode for Pi that gathers runtime evidence before changing code.">
+  <meta property="og:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-poster.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="pi-debug-mode | Evidence-first Debug Mode for Pi Agents">
+  <meta name="twitter:description" content="A Cursor-style Debug Mode for Pi that gathers runtime evidence before changing code.">
+  <meta name="twitter:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-poster.png">
+  <title>pi-debug-mode | Evidence-first Debug Mode for Pi Agents</title>
+  <link rel="stylesheet" href="site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "pi-debug-mode",
+    "description": "A Cursor-style evidence-first Debug Mode for the Pi coding agent.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform",
+    "softwareVersion": "0.1.4",
+    "url": "https://liush2yuxjtu.github.io/pi-debug-mode/",
+    "codeRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
+    "license": "https://opensource.org/license/mit",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "When should I use pi-debug-mode?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use it for bugs that need runtime evidence, competing hypotheses, or a human reproduction step before code changes."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What data leaves my machine?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The extension itself sends no telemetry and makes no network requests. Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it prove every fix?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Its instructions require evidence before a fix and ask for final verification, but weak probes, an incomplete reproduction, or missing tests can still leave a bug unresolved."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-release-version="0.1.4">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <nav class="site-nav site-shell" aria-label="Primary navigation">
+      <a class="brand" href="https://liush2yuxjtu.github.io/pi-debug-mode/" aria-label="pi-debug-mode home">pi-debug-mode</a>
+      <div class="nav-links">
+        <a class="nav-link" href="#workflow">Workflow</a>
+        <a class="nav-link" href="#evidence">Evidence</a>
+        <a class="nav-link" href="#install">Install</a>
+        <a class="nav-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">Interactive demo</a>
+        <a class="nav-link" lang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">中文</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="site-shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="label">Pi extension 0.1.4</p>
+        <h1 id="hero-title">Debug Mode built around <em>evidence.</em></h1>
+        <p class="hero-lead">pi-debug-mode is a Cursor-style Debug Mode for the Pi coding agent. Its injected instructions ask Pi to test competing hypotheses with targeted runtime probes before changing code.</p>
+        <div class="actions">
+          <a class="button button-primary" href="#install">Install version 0.1.4</a>
+          <a class="button button-secondary" href="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui.mp4">Watch the real Pi TUI recording</a>
+        </div>
+        <p class="update"><time datetime="2026-09-04">Updated 4 September 2026</time></p>
+      </div>
+
+      <aside class="hero-note" aria-label="Debug Mode evidence sequence">
+        <div class="terminal-card">
+          <div class="terminal-head">
+            <span>evidence log</span>
+            <span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="prompt">❯</span> /debug checkout hangs after payment</div>
+            <div class="terminal-line"><strong>01</strong> inspect execution path</div>
+            <div class="terminal-line"><strong>02</strong> compare 3 hypotheses</div>
+            <div class="terminal-line"><strong>03</strong> add pi-debug probes</div>
+            <div class="terminal-line"><strong>04</strong> reproduce once</div>
+            <div class="terminal-line"><strong>05</strong> verify and remove probes</div>
+            <div class="proof-stamp">fix follows evidence</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="when-to-use" class="section" aria-labelledby="use-title">
+      <div class="section-rail">
+        <span class="section-index">01 / WHEN</span>
+        <h2 id="use-title">Use it when static inspection is not enough.</h2>
+        <p class="section-intro">An ordinary prompt still fits a direct question or an obvious static defect. Debug Mode fits bugs whose cause depends on what the program does while it runs.</p>
+      </div>
+      <div class="use-grid">
+        <article class="use-card">
+          <h3>Several causes still fit</h3>
+          <p>A race, stale state, and a dropped callback can produce the same symptom. Probes separate them.</p>
+        </article>
+        <article class="use-card">
+          <h3>The bug needs human action</h3>
+          <p>Use the checkpoint when only a person can reproduce the sequence or confirm the visible result.</p>
+        </article>
+        <article class="use-card">
+          <h3>Logs need exact placement</h3>
+          <p>Mark temporary probes with <code>pi-debug</code> at the branches that distinguish each hypothesis.</p>
+        </article>
+        <article class="use-card">
+          <h3>A fix needs a second run</h3>
+          <p>Repeat the same reproduction before removing probes or reporting that the issue is fixed.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="workflow" class="section" aria-labelledby="workflow-title">
+      <div class="section-rail">
+        <span class="section-index">02 / METHOD</span>
+        <h2 id="workflow-title">Five steps from symptom to checked fix.</h2>
+        <p class="section-intro">The extension adds a fixed evidence loop to the current Pi session. It does not replace Pi or start a separate service.</p>
+      </div>
+      <ol class="workflow-list">
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>Inspect the execution path</h3><p>The injected instructions ask Pi to read the relevant code and list three to five competing hypotheses before mutation.</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>Add targeted runtime probes</h3><p>The instructions ask Pi to add the smallest set of temporary <code>pi-debug</code> probes that can distinguish those hypotheses.</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>Reproduce once</h3><p><code>debug_reproduction</code> shows exact steps and waits for Fixed, reproduced, or typed context.</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>Fix the supported cause</h3><p>The instructions ask Pi to read the captured evidence, update the hypotheses, and change the smallest root-cause path.</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>Verify and clean up</h3><p>You repeat the flow. After you select Fixed, the instructions tell Pi to remove every temporary probe and run relevant validation.</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="evidence" class="section" aria-labelledby="evidence-title">
+      <div class="section-rail">
+        <span class="section-index">03 / PROOF</span>
+        <h2 id="evidence-title">See the workflow before installing it.</h2>
+        <p class="section-intro">The long recording comes from a real Pi TUI session on a real machine. The interactive demo is a deterministic simulation of the same checkpoints.</p>
+      </div>
+      <div class="evidence-panel">
+        <a href="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui.mp4" aria-label="Watch the full real Pi TUI recording">
+          <img class="evidence-image" src="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-poster.png" width="1280" height="720" loading="lazy" decoding="async" alt="Pi terminal showing pi-debug-mode hypotheses, runtime evidence, and reproduction checkpoint">
+        </a>
+        <div class="evidence-copy">
+          <h3>Real terminal output, plus a separate interactive walkthrough.</h3>
+          <p>The recording includes hypothesis generation, temporary probes, the reproduction selector, evidence inspection, a root-cause fix, human verification, probe cleanup, and a passing test.</p>
+          <div class="evidence-links">
+            <a class="evidence-link" href="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui.mp4">Real Pi TUI video</a>
+            <a class="evidence-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">English interactive demo</a>
+            <a class="evidence-link" href="https://github.com/liush2yuxjtu/pi-debug-mode">GitHub source repository</a>
+            <a class="evidence-link" href="https://www.npmjs.com/package/pi-debug-mode">npm package page</a>
+            <a class="evidence-link" href="https://pi.dev/packages/pi-debug-mode">Pi Package Gallery listing</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="section" aria-labelledby="compare-title">
+      <div class="section-rail">
+        <span class="section-index">04 / CHOICE</span>
+        <h2 id="compare-title">Pick the amount of process the bug needs.</h2>
+        <p class="section-intro">These approaches solve different jobs. The difference is whether runtime evidence and a human checkpoint are optional or part of the workflow.</p>
+      </div>
+      <div class="table-wrap" tabindex="0" aria-label="Debugging approach comparison">
+        <table>
+          <thead>
+            <tr><th scope="col">Approach</th><th scope="col">Runtime evidence</th><th scope="col">Human checkpoint</th><th scope="col">Finish condition</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Ordinary debug prompt</td><td>Depends on the prompt and response.</td><td>Optional.</td><td>Defined by the prompt.</td></tr>
+            <tr><td>Generic agent mode</td><td>Depends on that mode's tools and instructions.</td><td>Depends on that mode.</td><td>Defined by that mode.</td></tr>
+            <tr><td><code>pi-debug-mode</code></td><td>Its injected instructions place competing hypotheses and targeted probes before a fix.</td><td><code>debug_reproduction</code> runs after instrumentation and after the fix.</td><td>After user confirmation, its instructions call for probe cleanup and relevant validation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="install" class="section" aria-labelledby="install-title">
+      <div class="section-rail">
+        <span class="section-index">05 / INSTALL</span>
+        <h2 id="install-title">Install from npm or the tagged source.</h2>
+        <p class="section-intro">Both commands pin version 0.1.4. Restart Pi after installation, then run <code>/debug</code> with the symptom and expected behavior.</p>
+      </div>
+      <div class="install-grid">
+        <article class="install-card">
+          <h3>npm</h3>
+          <p>Install the package through Pi's npm source.</p>
+          <pre class="command"><code>pi install npm:pi-debug-mode@0.1.4</code></pre>
+        </article>
+        <article class="install-card">
+          <h3>GitHub</h3>
+          <p>Install the immutable Git tag through Pi's Git source.</p>
+          <pre class="command"><code>pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.4</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="security" class="section" aria-labelledby="security-title">
+      <div class="section-rail">
+        <span class="section-index">06 / ACCESS</span>
+        <h2 id="security-title">The extension uses Pi's permissions.</h2>
+        <p class="section-intro">Read the proposed tool calls and treat debug logs as data that may contain application inputs.</p>
+      </div>
+      <div class="security-grid">
+        <article class="security-card">
+          <h3>System access</h3>
+          <p>Pi extensions run with the same system permissions as Pi. A debug session may add temporary probes and read local logs.</p>
+        </article>
+        <article class="security-card">
+          <h3>No extension telemetry</h3>
+          <p>pi-debug-mode starts no background service, sends no telemetry, and makes no network requests.</p>
+        </article>
+        <article class="security-card">
+          <h3>Provider boundary</h3>
+          <p>Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session. Keep secrets out of reproductions.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq" class="section" aria-labelledby="faq-title">
+      <div class="section-rail">
+        <span class="section-index">07 / FAQ</span>
+        <h2 id="faq-title">Limits and common questions.</h2>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>When should I use pi-debug-mode?</h3>
+          <p>Use it for bugs that need runtime evidence, competing hypotheses, or a human reproduction step before code changes.</p>
+        </article>
+        <article class="faq-item">
+          <h3>What data leaves my machine?</h3>
+          <p>The extension itself sends no telemetry and makes no network requests. Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session.</p>
+        </article>
+        <article class="faq-item">
+          <h3>Does it prove every fix?</h3>
+          <p>No. Its instructions require evidence before a fix and ask for final verification, but weak probes, an incomplete reproduction, or missing tests can still leave a bug unresolved.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner site-shell">
+      <div>
+        <a class="brand" href="https://liush2yuxjtu.github.io/pi-debug-mode/">pi-debug-mode</a>
+        <p class="footer-note">MIT licensed. Version 0.1.4. <time datetime="2026-09-04">Updated 4 September 2026</time>.</p>
+      </div>
+      <div class="footer-links" aria-label="Footer navigation">
+        <a class="footer-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/">English canonical page</a>
+        <a class="footer-link" lang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">中文标准页面</a>
+        <a class="footer-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">Interactive demo</a>
+        <a class="footer-link" href="https://github.com/liush2yuxjtu/pi-debug-mode">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
