@@ -1,6 +1,6 @@
 {
   "name": "pi-debug-mode",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Evidence-first debugging workflow for Pi",
   "type": "module",
   "license": "MIT",
@@ -11,10 +11,22 @@
   },
   "homepage": "https://github.com/liush2yuxjtu/pi-debug-mode#readme",
   "bugs": "https://github.com/liush2yuxjtu/pi-debug-mode/issues",
-  "keywords": ["pi-package", "pi-extension", "debugging"],
-  "files": ["src", "README.md", "LICENSE"],
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "debugging"
+  ],
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
   "pi": {
-    "extensions": ["./src/index.ts"]
+    "extensions": [
+      "./src/index.ts"
+    ],
+    "video": "https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.1/artifacts/demo/pi-debug-mode-demo.mp4",
+    "image": "https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.1/artifacts/demo/pi-debug-mode-poster.png"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
