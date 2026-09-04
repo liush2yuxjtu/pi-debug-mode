@@ -31,7 +31,9 @@ jobs:
       - name: Check whether version already exists
         id: version
         run: |
-          if npm view "$(node -p \"require('./package.json').name\")@$(node -p \"require('./package.json').version\")" version >/dev/null 2>&1; then
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if npm view "${PACKAGE_NAME}@${PACKAGE_VERSION}" version >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
