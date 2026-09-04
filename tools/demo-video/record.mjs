@@ -4,6 +4,9 @@ import path from "node:path";
 
 const root = path.resolve(process.cwd());
 const out = path.join(root, "artifacts/demo");
+const locale = process.env.DEMO_LOCALE === "zh" ? "zh" : "en";
+const suffix = locale === "zh" ? "-zh" : "";
+const pageName = locale === "zh" ? "demo-zh.html" : "demo.html";
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch({
   headless: true,
@@ -34,7 +37,7 @@ async function moveAndClick(selector, label) {
   await el.click();
   await mark(label);
 }
-await page.goto("http://127.0.0.1:41731/docs/demo.html", { waitUntil: "networkidle" });
+await page.goto(`http://127.0.0.1:41731/docs/${pageName}`, { waitUntil: "networkidle" });
 await page.waitForTimeout(1800);
 await mark("orient");
 await moveAndClick("#start", "start-debug");
@@ -43,10 +46,13 @@ await moveAndClick("#reproduced", "issue-reproduced");
 await page.waitForTimeout(2300);
 await moveAndClick("#fixed", "fixed");
 await page.waitForTimeout(3400);
-await page.screenshot({ path: path.join(out, "pi-debug-mode-poster.png") });
+await page.screenshot({ path: path.join(out, `pi-debug-mode-poster${suffix}.png`) });
 const video = page.video();
+const originalVideo = await video.path();
+const stableVideo = path.join(out, `pi-debug-mode-demo${suffix}.webm`);
 await context.close();
-await video.saveAs(path.join(out, "pi-debug-mode-demo.webm"));
+await video.saveAs(stableVideo);
+if (originalVideo !== stableVideo) await fs.rm(originalVideo, { force: true });
 await browser.close();
-await fs.writeFile(path.join(out, "markers.json"), JSON.stringify(markers, null, 2));
+await fs.writeFile(path.join(out, `markers${suffix}.json`), JSON.stringify(markers, null, 2));
 console.log(JSON.stringify({ ok: true, markers }));

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pi-debug-mode 中文产品演示</title>
+<style>
+:root{--bg:#eeeae2;--ink:#171714;--muted:#6a665f;--line:#c9c2b7;--panel:#faf8f3;--dark:#191a17;--green:#c9f05a;--amber:#f2b84b;--red:#e96554}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}.page{width:min(1180px,calc(100% - 48px));margin:auto;padding:34px 0 28px}.nav{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px}.brand{font-weight:760;letter-spacing:-.03em}.pill{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted)}.hero{display:grid;grid-template-columns:.85fr 1.65fr;gap:42px;padding:42px 0 28px}.eyebrow{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}h1{font-size:54px;line-height:.98;letter-spacing:-.055em;margin:18px 0 20px;max-width:8ch}.lead{font-size:17px;line-height:1.55;color:var(--muted);max-width:35ch}.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:30px}.fact{border-top:1px solid var(--line);padding-top:10px}.fact b{display:block;font:12px ui-monospace,SFMono-Regular,Menlo,monospace}.fact span{font-size:12px;color:var(--muted)}.stage{position:relative;min-height:620px;border:1px solid #aaa297;border-radius:20px;overflow:hidden;background:radial-gradient(circle at 68% 24%,rgba(201,240,90,.42),transparent 33%),linear-gradient(145deg,#d9d4ca,#aaa499)}.grain{position:absolute;inset:0;opacity:.25;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.13'/%3E%3C/svg%3E")}.window{position:absolute;border:1px solid rgba(0,0,0,.28);border-radius:13px;overflow:hidden;box-shadow:0 24px 50px rgba(30,27,21,.24)}.titlebar{height:38px;display:flex;align-items:center;gap:7px;padding:0 13px;border-bottom:1px solid rgba(255,255,255,.1);font:11px ui-monospace,SFMono-Regular,Menlo,monospace}.dot{width:8px;height:8px;border-radius:50%;background:#666}.terminal{left:28px;top:34px;width:72%;height:395px;background:var(--dark);color:#e7e9df}.terminal .titlebar{color:#969a8c}.terminal-body{padding:19px 20px;font:13px/1.58 ui-monospace,SFMono-Regular,Menlo,monospace}.line{min-height:20px}.prompt{color:var(--green)}.dim{color:#8c9182}.amber{color:var(--amber)}.green{color:var(--green)}.cursor{display:inline-block;width:7px;height:15px;vertical-align:-2px;background:var(--green);animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}.checkpoint{right:22px;bottom:24px;width:58%;background:var(--panel)}.checkpoint .titlebar{color:var(--muted);border-color:var(--line)}.card{padding:17px}.card h2{font-size:18px;margin:0 0 7px}.card p{margin:0 0 12px;font-size:13px;color:var(--muted)}.steps{font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0 0 13px;padding-left:21px}.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:1px solid #aca69b;background:white;color:var(--ink);border-radius:8px;padding:9px 11px;font:12px ui-monospace,SFMono-Regular,Menlo,monospace;cursor:pointer}button:hover,button:focus-visible{border-color:#171714;outline:none;box-shadow:0 0 0 3px rgba(201,240,90,.7)}button.primary{background:var(--ink);color:white;border-color:var(--ink)}.status{position:absolute;right:16px;top:14px;background:var(--green);color:#252718;border-radius:999px;padding:7px 10px;font:bold 11px ui-monospace,SFMono-Regular,Menlo,monospace;box-shadow:0 6px 18px rgba(0,0,0,.14)}.footer{display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px;color:var(--muted);font:10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}.hide{display:none}@media(max-width:850px){.hero{grid-template-columns:1fr}h1{font-size:44px}.stage{min-height:auto;padding:16px}.window{position:relative!important;inset:auto!important;width:100%!important;margin-bottom:14px}.terminal{height:380px}.checkpoint{height:auto}.facts{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.cursor{animation:none}}
+</style>
+</head>
+<body>
+<main class="page">
+  <nav class="nav"><div class="brand">pi-debug-mode</div><div class="pill">本地产品演示 · 模拟流程</div></nav>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">先取证，再修复</div>
+      <h1>用证据调试。</h1>
+      <p class="lead">一个 Pi 扩展：并行分析竞争假设，添加最小运行时探针，通过人工复现取证，再做根因修复。</p>
+      <div class="facts"><div class="fact"><b>/debug</b><span>启动调试</span></div><div class="fact"><b>/debug-stop</b><span>安全退出</span></div><div class="fact"><b>debug_reproduction</b><span>人工检查点</span></div></div>
+    </div>
+    <div class="stage" aria-label="pi-debug-mode 中文交互演示">
+      <div class="grain"></div><div class="status" id="status">就绪</div>
+      <section class="window terminal" aria-label="Pi 终端">
+        <div class="titlebar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span>tmux · pi-debug-demo</span></div>
+        <div class="terminal-body" id="terminal" aria-live="polite">
+          <div class="line dim">Pi 0.84.4 · pi-debug-mode 0.1.0</div>
+          <div class="line"><span class="prompt">❯</span> <span id="command">/debug 支付后结账页面卡住</span></div>
+          <div class="line" id="line1">点击 <button class="primary" id="start">开始调试</button>，查看完整证据闭环。</div>
+          <div id="trace" class="hide"></div>
+        </div>
+      </section>
+      <section class="window checkpoint" aria-label="复现检查点">
+        <div class="titlebar"><span>debug_reproduction · sequential</span></div>
+        <div class="card">
+          <h2 id="card-title">检查点等待证据</h2>
+          <p id="card-copy">先添加探针。一次复现区分假设后，才允许修复。</p>
+          <ol class="steps"><li>打开结账页。</li><li>提交测试支付。</li><li>等待确认状态。</li></ol>
+          <div class="actions">
+            <button id="reproduced" disabled>问题已复现</button>
+            <button id="fixed" disabled>已修复</button>
+            <button id="context" disabled>补充信息…</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+  <footer class="footer"><span>Source: /Users/liushiyuwin/projects/pi-debug-mode</span><span>Pi session ID: 01a06b02-98e4-7881-a26e-74424fcca330</span></footer>
+</main>
+<script>
+const q=s=>document.querySelector(s), trace=q('#trace'), status=q('#status');
+function add(text,cls=''){const d=document.createElement('div');d.className='line '+cls;d.textContent=text;trace.appendChild(d)}
+q('#start').onclick=()=>{q('#line1').remove();trace.classList.remove('hide');add('debug  已启动 · 检查真实执行路径','amber');setTimeout(()=>add('竞争假设  竞态 · 缓存过期 · 回调丢失','dim'),400);setTimeout(()=>add('pi-debug  已在请求、回调和状态写入处添加探针','dim'),900);setTimeout(()=>{add('检查点  执行一次复现','green');status.textContent='请复现';q('#reproduced').disabled=false;q('#context').disabled=false;q('#card-title').textContent='复现结账卡死';q('#card-copy').textContent='选择实际结果。Pi 会先读取探针证据，再修改代码。'},1400)};
+q('#reproduced').onclick=()=>{add('结果  已复现 · 回调晚于超时到达','amber');setTimeout(()=>add('根因  超时与回调状态写入发生竞态','dim'),450);setTimeout(()=>add('修复  将回调状态迁移改为原子操作','green'),900);setTimeout(()=>{status.textContent='请验证';q('#reproduced').disabled=true;q('#fixed').disabled=false;q('#card-title').textContent='验证最小修复';q('#card-copy').textContent='重复相同步骤。确认最终状态可见后，再选择“已修复”。'},1200)};
+q('#fixed').onclick=()=>{add('结果  已修复 · 探针已移除 · 测试通过','green');status.textContent='已修复';q('#fixed').disabled=true;q('#context').disabled=true;q('#card-title').textContent='证据闭环完成';q('#card-copy').textContent='人工验证通过后，所有 pi-debug 临时探针已移除。'};
+q('#context').onclick=()=>{add('补充信息  用户提供了额外运行时细节','dim')};
+</script>
+</body>
+</html>
