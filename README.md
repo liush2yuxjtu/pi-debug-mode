@@ -12,7 +12,15 @@ It guides Pi through competing hypotheses, targeted runtime instrumentation, hum
 
 The source terminal session was recorded from tmux as an asciinema cast. Only long human-wait intervals were compressed; TUI output and tool execution remain from the live run.
 
-For a short conceptual preview, [watch the 13-second product demo](artifacts/demo/pi-debug-mode-demo.mp4) or open the [interactive local demo](docs/demo.html). That shorter preview is a deterministic simulation.
+### 中文演示
+
+[![pi-debug-mode 真实中文 TUI 调试](artifacts/demo/pi-debug-mode-real-tui-zh-poster.png)](artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
+
+- [真实中文 Pi TUI 演示（57 秒）](artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
+- [中文概念演示（13 秒）](artifacts/demo/pi-debug-mode-demo-zh.mp4)
+- [中文交互演示](docs/demo-zh.html)
+
+For a short English conceptual preview, [watch the 13-second product demo](artifacts/demo/pi-debug-mode-demo.mp4) or open the [interactive local demo](docs/demo.html). That shorter preview is a deterministic simulation.
 
 ## Install
 
