@@ -1,27 +1,28 @@
 {
   "artifact": "pi-debug-mode",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "license": "MIT",
   "canonicalRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
   "channels": [
     {
       "name": "github",
       "status": "published-and-verified",
-      "listingUrl": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.2",
-      "installCommand": "pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.2"
+      "listingUrl": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.3",
+      "installCommand": "pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.3"
     },
     {
       "name": "npm",
       "status": "published-and-verified",
       "listingUrl": "https://www.npmjs.com/package/pi-debug-mode",
-      "installCommand": "pi install npm:pi-debug-mode@0.1.2",
-      "integrity": "sha512-TFqNiMgvQse51danTO4lR0bugeZSJsjoCQBLyoEe3Usu2DKyaqcb0PaPUtSbhhzVOeFxlq5hVazmSJV1iWydMA=="
+      "installCommand": "pi install npm:pi-debug-mode@0.1.3",
+      "integrity": "sha512-b87RMMUJc4JiYVacWLK1UjA+QsRIhrJcq/qQG3WAagQhFoXFM2w8T+qIIFaWTa3/6Q3v3gWGzK8tMzQrYsPa+Q=="
     },
     {
       "name": "pi-package-gallery",
       "status": "published-and-verified",
       "listingUrl": "https://pi.dev/packages/pi-debug-mode",
-      "installCommand": "pi install npm:pi-debug-mode@0.1.2"
+      "installCommand": "pi install npm:pi-debug-mode@0.1.3",
+      "preview": "real-machine Pi TUI recording"
     }
   ]
 }

@@ -4,7 +4,7 @@
 
 - Artifact: Pi extension/package `pi-debug-mode`
 - Canonical source: `https://github.com/liush2yuxjtu/pi-debug-mode`
-- Current version: `0.1.2`, tag `v0.1.2`
+- Current version: `0.1.3`, tag `v0.1.3`
 - License: MIT
 - Runtime source: `src/index.ts` and `src/protocol.ts`
 
@@ -13,17 +13,17 @@
 ### GitHub
 
 - Public repository and immutable GitHub Releases
-- Install: `pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.2`
+- Install: `pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.3`
 - Metrics: stars, forks, issues, release downloads
 - Validation: clean clone, tests, typecheck, Pi load smoke test
 - Rollback: deprecate affected release and publish a patch; never move tags
 
 ### npm and Pi Package Gallery
 
-- npm package: `pi-debug-mode@0.1.2`
-- Install: `pi install npm:pi-debug-mode@0.1.2`
+- npm package: `pi-debug-mode@0.1.3`
+- Install: `pi install npm:pi-debug-mode@0.1.3`
 - Gallery discovery: `pi-package` keyword
-- Gallery preview: version-pinned MP4 and PNG under `pi.video` and `pi.image`
+- Gallery preview: version-pinned real-machine Pi TUI MP4 and PNG under `pi.video` and `pi.image`
 - Authentication: npm Trusted Publisher with GitHub Actions OIDC
 - Workflow: `liush2yuxjtu/pi-debug-mode/.github/workflows/release.yml`
 - No npm token stored in Git or GitHub Secrets
