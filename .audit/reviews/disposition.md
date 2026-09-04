@@ -29,6 +29,8 @@
 - Accepted the public-network and tag-order flags as release gates. The plan runs `tagged` before the GitHub Release and `published` after npm publication.
 - Fixed the browser-evidence flag. `.audit/browser-qa.json` now records all viewport dimensions, both three-button demo sequences, final status, and final focus.
 - Dismissed the missing-workflow-evidence flag. The tracked workflow and the verifier both enforce the recorded order, and the release run will provide exact-head evidence.
+- Rejected the cross-judge claim that the worktree folder name was the repository name. `package.json` and the verifier use the canonical `liush2yuxjtu/pi-debug-mode` repository.
+- Fixed two nonblocking review gaps. The verifier now captures nested Markdown media destinations and checks that local poster sources are real 1280 by 720 PNG files.
 
 ## Result
 

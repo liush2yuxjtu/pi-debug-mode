@@ -274,7 +274,7 @@ function mapRawUrlToLocalPath(identity, value) {
 }
 
 function extractMarkdownMediaLinks(markdown) {
-	const links = [...markdown.matchAll(/!?\[[^\]]*\]\(([^)\s]+)(?:\s+['"][^'"]*['"])?\)/g)]
+	const links = [...markdown.matchAll(/\(([^)\s]+)(?:\s+['"][^'"]*['"])?\)/g)]
 		.map((match) => match[1])
 		.filter((url) => /\.(?:png|jpe?g|gif|webp|svg|mp4|webm|mov)(?:[?#].*)?$/i.test(url))
 	return [...new Set(links)]
@@ -715,7 +715,12 @@ function checkSurfaceRegistry(result, { root, identity, surfaces }) {
 		if (!surface.url) problems.push(`${surface.id} has empty URL`)
 		if (surface.owner === 'git-tag') {
 			if (!surface.url.startsWith(`https://raw.githubusercontent.com/${identity.owner}/${identity.repo}/${identity.tagName}/`)) problems.push(`${surface.id} is not pinned to ${identity.tagName}`)
-			if (!surface.localPath || !safeLocalFileExists(root, surface.localPath)) problems.push(`${surface.id} has no local source mapping`)
+			if (!surface.localPath || !safeLocalFileExists(root, surface.localPath)) {
+				problems.push(`${surface.id} has no local source mapping`)
+			} else if (surface.contentKind === 'image') {
+				const dimensions = readPngDimensions(resolve(root, surface.localPath))
+				if (!dimensions || dimensions.width !== 1280 || dimensions.height !== 720) problems.push(`${surface.id} source must be a 1280x720 PNG`)
+			}
 		}
 		if (surface.owner === 'pages-main' && (!surface.localPath || !safeLocalFileExists(root, surface.localPath))) problems.push(`${surface.id} has no page source`)
 	}
@@ -730,6 +735,17 @@ function checkSurfaceRegistry(result, { root, identity, surfaces }) {
 function safeLocalFileExists(root, localPath) {
 	const absolute = resolve(root, localPath)
 	return absolute.startsWith(`${root}${sep}`) && existsSync(absolute)
+}
+
+function readPngDimensions(path) {
+	try {
+		const header = readFileSync(path).subarray(0, 24)
+		const signature = '89504e470d0a1a0a'
+		if (header.length < 24 || header.subarray(0, 8).toString('hex') !== signature) return null
+		return { width: header.readUInt32BE(16), height: header.readUInt32BE(20) }
+	} catch {
+		return null
+	}
 }
 
 function checkNpmPack(result, { root }) {
