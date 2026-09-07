@@ -219,7 +219,7 @@ function buildPublicSurfaces(identity, pkg, readme) {
 			owner: 'git-tag',
 			url: typeof url === 'string' ? url : '',
 			phases: ['local', 'tagged', 'published'],
-			localPath: mapRawUrlToLocalPath(identity, url),
+			localPath: mapTaggedMediaUrlToLocalPath(identity, url),
 			contentKind,
 		})
 	}
@@ -256,16 +256,21 @@ function buildPublicSurfaces(identity, pkg, readme) {
 	return surfaces
 }
 
-function mapRawUrlToLocalPath(identity, value) {
+function taggedMediaBase(identity) {
+	return `https://cdn.jsdelivr.net/gh/${identity.owner}/${identity.repo}@${identity.tagName}/`
+}
+
+function mapTaggedMediaUrlToLocalPath(identity, value) {
 	if (typeof value !== 'string') return undefined
 	try {
 		const url = new URL(value)
 		const parts = url.pathname.split('/').filter(Boolean)
 		if (
-			url.hostname !== 'raw.githubusercontent.com' ||
+			url.hostname !== 'cdn.jsdelivr.net' ||
 			parts.length < 4 ||
-			parts[0] !== identity.owner ||
-			parts[1] !== identity.repo
+			parts[0] !== 'gh' ||
+			parts[1] !== identity.owner ||
+			parts[2] !== `${identity.repo}@${identity.tagName}`
 		) return undefined
 		return parts.slice(3).join('/')
 	} catch {
@@ -385,8 +390,8 @@ function checkPiMetadata(result, { pkg, identity }) {
 	const unknownKeys = pi && typeof pi === 'object'
 		? Object.keys(pi).filter((key) => !supportedKeys.includes(key))
 		: []
-	const expectedImage = `https://raw.githubusercontent.com/${identity.owner}/${identity.repo}/${identity.tagName}/artifacts/demo/pi-debug-mode-real-tui-poster.png`
-	const expectedVideo = `https://raw.githubusercontent.com/${identity.owner}/${identity.repo}/${identity.tagName}/artifacts/demo/pi-debug-mode-real-tui.mp4`
+	const expectedImage = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-real-tui-poster.png`
+	const expectedVideo = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-real-tui.mp4`
 	const problems = []
 	if (!pi || typeof pi !== 'object') problems.push('pi metadata is missing')
 	if (!arraysEqual(pi?.extensions, ['./src/index.ts'])) problems.push('pi.extensions must contain only ./src/index.ts')
@@ -456,9 +461,9 @@ function checkReadme(result, { root, readme, identity }) {
 	const mediaProblems = []
 	if (!mediaLinks.length) mediaProblems.push('no media links found')
 	for (const url of mediaLinks) {
-		const localPath = mapRawUrlToLocalPath(identity, url)
-		if (!url.startsWith(`https://raw.githubusercontent.com/${identity.owner}/${identity.repo}/${identity.tagName}/`)) {
-			mediaProblems.push(`not an absolute ${identity.tagName} Raw URL: ${url}`)
+		const localPath = mapTaggedMediaUrlToLocalPath(identity, url)
+		if (!url.startsWith(taggedMediaBase(identity))) {
+			mediaProblems.push(`not an absolute ${identity.tagName} jsDelivr GitHub URL: ${url}`)
 			continue
 		}
 		if (!localPath || !safeLocalFileExists(root, localPath)) {
@@ -550,9 +555,9 @@ function checkHtmlPages(result, { root, identity, pkg }) {
 		}
 		if (metaValue(html, 'property', 'og:url') !== spec.canonical) problems.push('og:url must match canonical')
 		if (metaValue(html, 'name', 'twitter:url') !== spec.canonical) problems.push('twitter:url must match canonical')
-		const expectedImagePrefix = `https://raw.githubusercontent.com/${identity.owner}/${identity.repo}/${identity.tagName}/`
-		if (!String(metaValue(html, 'property', 'og:image') ?? '').startsWith(expectedImagePrefix)) problems.push(`og:image must use ${identity.tagName} Raw media`)
-		if (!String(metaValue(html, 'name', 'twitter:image') ?? '').startsWith(expectedImagePrefix)) problems.push(`twitter:image must use ${identity.tagName} Raw media`)
+		const expectedImagePrefix = taggedMediaBase(identity)
+		if (!String(metaValue(html, 'property', 'og:image') ?? '').startsWith(expectedImagePrefix)) problems.push(`og:image must use ${identity.tagName} jsDelivr GitHub media`)
+		if (!String(metaValue(html, 'name', 'twitter:image') ?? '').startsWith(expectedImagePrefix)) problems.push(`twitter:image must use ${identity.tagName} jsDelivr GitHub media`)
 		if (metaValue(html, 'property', 'og:image:width') !== '1280') problems.push('og:image:width must be 1280')
 		if (metaValue(html, 'property', 'og:image:height') !== '720') problems.push('og:image:height must be 720')
 		if (metaValue(html, 'name', 'release-version') !== pkg.version) problems.push(`release-version must be ${pkg.version}`)
@@ -714,7 +719,7 @@ function checkSurfaceRegistry(result, { root, identity, surfaces }) {
 		if (!['git-tag', 'pages-main', 'npm-registry', 'pi-gallery'].includes(surface.owner)) problems.push(`${surface.id} has invalid owner`)
 		if (!surface.url) problems.push(`${surface.id} has empty URL`)
 		if (surface.owner === 'git-tag') {
-			if (!surface.url.startsWith(`https://raw.githubusercontent.com/${identity.owner}/${identity.repo}/${identity.tagName}/`)) problems.push(`${surface.id} is not pinned to ${identity.tagName}`)
+			if (!surface.url.startsWith(taggedMediaBase(identity))) problems.push(`${surface.id} is not pinned to ${identity.tagName}`)
 			if (!surface.localPath || !safeLocalFileExists(root, surface.localPath)) {
 				problems.push(`${surface.id} has no local source mapping`)
 			} else if (surface.contentKind === 'image') {
@@ -873,8 +878,8 @@ async function fetchSurface(surface) {
 		const contentType = response.headers.get('content-type') ?? ''
 		if (!statusOk) return { ok: false, status: response.status, body: '', detail: `HTTP ${response.status} ${surface.url}` }
 		if (binary) {
-			const expected = surface.contentKind === 'image' ? 'image/' : 'video/'
-			const typeOk = contentType.startsWith(expected) || contentType.startsWith('application/octet-stream')
+			const expected = surface.contentKind === 'image' ? 'image/' : 'video/mp4'
+			const typeOk = contentType.startsWith(expected)
 			const reader = response.body?.getReader()
 			const first = reader ? await reader.read() : { value: undefined }
 			await reader?.cancel()

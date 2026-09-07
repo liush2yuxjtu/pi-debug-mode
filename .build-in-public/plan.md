@@ -1,59 +1,68 @@
-# Distribution plan for 0.1.4
+# Distribution plan for 0.1.5
 
-## Status
-
-Version 0.1.4 is planned and not published. Version 0.1.3 remains the current verified release until the release workflow finishes and public checks pass.
-
-## Target identity
+## Canonical artifact and version
 
 - Artifact: Pi extension and npm package `pi-debug-mode`
-- Target version: `0.1.4`
-- Planned tag: `v0.1.4`
+- Current verified release: `0.1.4`, tag `v0.1.4`
+- Target patch: `0.1.5`, tag `v0.1.5`
 - Canonical source: `https://github.com/liush2yuxjtu/pi-debug-mode`
 - GitHub Pages source: `main/docs`
 - GitHub Pages base: `https://liush2yuxjtu.github.io/pi-debug-mode/`
 - License: MIT
 - Runtime source: `src/index.ts` and `src/protocol.ts`
 
-## Distribution channels
+## Direct channels
 
 ### GitHub
 
-- Keep releases immutable.
-- Install the target with `pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.4` after publication.
-- Keep README media on version-pinned GitHub Raw URLs.
-- Never move a published tag. Deprecate an affected release and publish a patch instead.
+- Public repository, immutable tags, and GitHub Releases
+- Install: `pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.5`
+- Media: attach four MP4 files and four PNG posters to the release
+- Metrics: stars, forks, issues, and per-asset release downloads
+- Validation: tests, typecheck, release verifier, clean tagged install
+- Rollback: deprecate affected release and publish another patch; never move tags
 
 ### npm and Pi Package Gallery
 
-- Target npm package: `pi-debug-mode@0.1.4`
-- Planned install command: `pi install npm:pi-debug-mode@0.1.4`
-- Keep `src`, `README.md`, `LICENSE`, and npm-required metadata as the complete tarball.
-- Keep `pi.video` and `pi.image` on `v0.1.4` GitHub Raw URLs.
-- Let the existing GitHub Release workflow publish npm through Trusted Publisher OIDC.
-- Keep Pages deployment separate from npm publication.
+- npm package: `pi-debug-mode@0.1.5`
+- Install: `pi install npm:pi-debug-mode@0.1.5`
+- Gallery discovery: `pi-package` keyword
+- Gallery preview: version-pinned MP4 and PNG from jsDelivr's GitHub CDN
+- Authentication: npm Trusted Publisher through GitHub Actions OIDC
+- Validation: registry metadata, tarball integrity, clean install, Gallery page, and browser media playback
+- Rollback: npm deprecation plus patch release; no routine unpublish
 
-## Verification phases
+### GitHub Pages
 
-1. `local` checks package metadata, README links, local media mapping, site files, SEO, public prose, and the npm tarball.
-2. `tagged` repeats local checks, then requires every versioned Raw asset and every Pages route to return valid content.
-3. `published` repeats tagged checks, verifies `pi-debug-mode@0.1.4` through `registry.npmjs.org`, and checks the Pi Gallery page.
+- English product page, Chinese product page, and two interactive demos
+- Metrics: none configured; no analytics added
+- Validation: four HTTPS routes, metadata, responsive browser QA, and media links
+- Rollback: revert `main/docs`; Pages remains sourced from `/docs`
 
-## Release flow
+## Wrapper channels
 
-1. Finish the 0.1.4 files and run `npm test`, `npm run typecheck`, and `npm run verify:release -- --mode local`.
-2. Merge the approved commit to `main`. Let the separate Pages configuration publish `main/docs`.
-3. Confirm the four Pages routes, then create the immutable `v0.1.4` tag.
-4. Run `npm run verify:release -- --mode tagged` with bounded retries.
-5. Publish the GitHub Release only after tagged checks pass.
-6. Let `.github/workflows/release.yml` publish npm through OIDC.
-7. Run `npm run verify:release -- --mode published`.
-8. Update `release-manifest.json`, `release-report.md`, and `metrics.jsonl` only after real publication is verified.
+None. A wrapper would add no native install value.
 
-## Rejected channels
+## Rejected channels and reasons
 
-Do not add wrappers. This project is a native Pi extension, not an Agent Skill, MCP server, IDE extension, container, standalone CLI, or language-specific library.
+No skills.sh, ClawHub, LobeHub, MCP, IDE, container, Homebrew, or language-registry wrappers. This artifact is a native Pi extension distributed through npm, GitHub, and Pi Package Gallery.
 
-## Metrics boundary
+## Authentication, review, signing, and fees
 
-Report GitHub stars, release downloads, npm downloads, and Gallery displays separately. Never sum them or label them as users.
+- GitHub and Pages: authenticated `gh`; no fee or manual review
+- npm: OIDC Trusted Publisher; no npm token in Git or GitHub Secrets
+- Pi Package Gallery: automatic npm discovery; update latency outside repository control
+
+## Release waves and rollback
+
+1. Replace Raw GitHub media URLs with immutable jsDelivr GitHub-tag URLs so MP4 responses use `video/mp4` and tolerate GFW-network routing better.
+2. Run `npm test`, `npm run typecheck`, `npm run verify:release -- --mode local`, and package checks.
+3. Merge to `main`, confirm Pages deployment, create and push immutable `v0.1.5`.
+4. Run tagged checks against all media and Pages routes.
+5. Create a GitHub Release with media assets; GitHub Actions publishes npm through OIDC.
+6. Run published checks until npm and Pi Gallery expose `0.1.5`; verify actual browser playback.
+7. Append evidence and update release manifest/report.
+
+## Resume-safe reporting plan
+
+Report GitHub Release assets, npm downloads, and Gallery visibility separately. Never sum them or call them users. Record cache lag and automation blocks as limits, not failures of public availability.
