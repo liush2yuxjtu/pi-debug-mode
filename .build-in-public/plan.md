@@ -1,68 +1,58 @@
-# Distribution plan for 0.1.6
+# Distribution plan for 0.1.7
 
 ## Canonical artifact and version
 
 - Artifact: Pi extension and npm package `pi-debug-mode`
 - Current verified release: `0.1.6`, tag `v0.1.6`
-- Previous release: `0.1.5`, tag `v0.1.5`
+- Target patch: `0.1.7`, tag `v0.1.7`
 - Canonical source: `https://github.com/liush2yuxjtu/pi-debug-mode`
 - GitHub Pages source: `main/docs`
 - GitHub Pages base: `https://liush2yuxjtu.github.io/pi-debug-mode/`
 - License: MIT
 
-## Problem
+## Problem and replacement
 
-Public MP4 links work, but GitHub README and Pi Gallery require a click or hover to expose motion. That does not satisfy an immediately visible product preview.
+Version 0.1.6 used a concept-demo GIF as primary preview. It looped without a click but showed simulated UI rather than the real Pi TUI. Version 0.1.7 replaces both English and Chinese primary GIFs with 12-second segments from the real-machine Pi TUI recordings, seconds 10–22.
 
 ## Direct channels
 
-### GitHub
+### GitHub and README
 
-- Embed English and Chinese animated GIF previews directly in README Markdown, without link wrappers.
-- Keep four full MP4 files available through explicit links and GitHub Release assets.
-- Attach two GIFs, four MP4 files, and four PNG posters to release `v0.1.6`.
+- Embed real-TUI English and Chinese GIFs directly without link wrappers.
+- Keep complete real-machine MP4 recordings as explicit secondary links and release assets.
+- Attach two real-TUI GIFs, four MP4 files, and four PNG posters to release `v0.1.7`.
 
 ### npm and Pi Package Gallery
 
-- Publish `pi-debug-mode@0.1.6` through existing Trusted Publisher OIDC.
-- Use only `pi.image`, pointed at the version-pinned English animated GIF.
-- Omit `pi.video`; Pi gives video precedence and otherwise requires hover/click behavior.
-- Keep GIF and other media outside the five-file npm tarball; use immutable jsDelivr GitHub-tag URLs.
+- Publish `pi-debug-mode@0.1.7` through existing Trusted Publisher OIDC.
+- Use only `pi.image`, pointed at the real-TUI English GIF.
+- Omit `pi.video` so the Gallery primary preview remains inline image animation.
+- Keep media outside the five-file npm tarball through immutable jsDelivr GitHub-tag URLs.
 
 ### GitHub Pages
 
-- Replace the linked static evidence poster with the animated GIF, without a link wrapper.
-- Use the static PNG poster when `prefers-reduced-motion: reduce` is active.
-- Keep a separate full real-TUI MP4 link and interactive demo.
+- Embed real-TUI English and Chinese GIF segments directly.
+- Use static PNG posters for `prefers-reduced-motion: reduce`.
+- Keep complete real-machine MP4 links and interactive simulations as secondary routes.
 
 ## Wrapper channels
 
-None.
+None. Native Pi package channels only.
 
-## Rejected channels and reasons
+## Release waves
 
-No skills.sh, ClawHub, LobeHub, MCP, IDE, container, Homebrew, or unrelated registry wrappers. This remains a native Pi extension.
-
-## Authentication, review, signing, and fees
-
-- GitHub and Pages: authenticated `gh`; no fee
-- npm: OIDC Trusted Publisher; no stored npm token
-- Pi Gallery: automatic npm discovery; refresh delay outside repository control
-- jsDelivr: public immutable GitHub-tag CDN; no account or fee
-
-## Completed release waves and rollback
-
-1. Rendered 800×450, 8 fps, 98-frame English and Chinese GIF loops on Mac mini only.
-2. Verified GIF dimensions, frame count, infinite loop, sub-2 MiB size, and visual motion.
-3. Updated README, Pi metadata, Pages, release verifier, package version, and reproducible render script.
-4. Passed tests, typecheck, package dry-run, local checks, tagged checks, and browser QA.
-5. Merged, deployed Pages, and created immutable `v0.1.6`.
-6. Published ten GitHub Release assets and npm through OIDC.
-7. Waited for Pi Gallery to show exact version `0.1.6` and the image-only GIF metadata.
-8. Proved README, Pages, direct CDN, and Gallery animation with zero clicks by comparing time-separated browser frames.
+1. Replace primary GIF bytes with real-TUI 10–22s segments; do all GIF work on Mac mini.
+2. Bump package and public docs to 0.1.7.
+3. Run tests, typecheck, package dry-run, local verifier, GIF metadata checks, and local browser QA.
+4. Merge, deploy Pages, create immutable `v0.1.7`, and run tagged verifier.
+5. Publish GitHub Release and npm through OIDC.
+6. Wait for Pi Gallery cache refresh; verify exact version, current GIF URL, zero `<video>` elements, and frame changes with zero interaction.
+7. Record release evidence and metrics.
 
 Rollback remains patch-only. Never move a published tag.
 
-## Resume-safe reporting plan
+## Known boundaries
 
-Report GitHub Release downloads, npm downloads, and Pi Gallery visibility separately. Verification downloads are not adoption. State clearly that GIF is the inline preview and MP4 is the full recording.
+- Pi Gallery refresh delay remains upstream-controlled.
+- Pi Gallery social metadata remains generic under upstream issue https://github.com/earendil-works/pi/issues/6699.
+- Full MP4 remains available for users wanting complete evidence; primary previews now show real TUI motion.
