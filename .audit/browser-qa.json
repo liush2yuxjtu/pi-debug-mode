@@ -1,0 +1,342 @@
+{
+  "ok": true,
+  "report": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "path": "/",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode | Evidence-first Debug Mode for Pi Agents",
+      "lang": "en",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": null,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "path": "/zh/",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode | Pi 编码智能体的证据优先调试模式",
+      "lang": "zh-CN",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": null,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "path": "/demo.html",
+      "status": 200,
+      "ok": true,
+      "title": "Interactive pi-debug-mode Demo | Evidence-first Debugging",
+      "lang": "en",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": {
+        "buttons": [
+          "Start debug run",
+          "Issue reproduced",
+          "Fixed"
+        ],
+        "finalStatus": "FIXED",
+        "finalFocus": "status"
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "path": "/demo-zh.html",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode 交互演示 | 用运行时证据定位并验证 Pi 调试问题",
+      "lang": "zh-CN",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": {
+        "buttons": [
+          "开始调试",
+          "问题已复现",
+          "已修复"
+        ],
+        "finalStatus": "已修复",
+        "finalFocus": "status"
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 700,
+        "height": 900
+      },
+      "path": "/",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode | Evidence-first Debug Mode for Pi Agents",
+      "lang": "en",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": null,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 700,
+        "height": 900
+      },
+      "path": "/zh/",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode | Pi 编码智能体的证据优先调试模式",
+      "lang": "zh-CN",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": null,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 700,
+        "height": 900
+      },
+      "path": "/demo.html",
+      "status": 200,
+      "ok": true,
+      "title": "Interactive pi-debug-mode Demo | Evidence-first Debugging",
+      "lang": "en",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": {
+        "buttons": [
+          "Start debug run",
+          "Issue reproduced",
+          "Fixed"
+        ],
+        "finalStatus": "FIXED",
+        "finalFocus": "status"
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "tablet",
+        "width": 700,
+        "height": 900
+      },
+      "path": "/demo-zh.html",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode 交互演示 | 用运行时证据定位并验证 Pi 调试问题",
+      "lang": "zh-CN",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": {
+        "buttons": [
+          "开始调试",
+          "问题已复现",
+          "已修复"
+        ],
+        "finalStatus": "已修复",
+        "finalFocus": "status"
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "path": "/",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode | Evidence-first Debug Mode for Pi Agents",
+      "lang": "en",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": null,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "path": "/zh/",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode | Pi 编码智能体的证据优先调试模式",
+      "lang": "zh-CN",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": null,
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "path": "/demo.html",
+      "status": 200,
+      "ok": true,
+      "title": "Interactive pi-debug-mode Demo | Evidence-first Debugging",
+      "lang": "en",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": {
+        "buttons": [
+          "Start debug run",
+          "Issue reproduced",
+          "Fixed"
+        ],
+        "finalStatus": "FIXED",
+        "finalFocus": "status"
+      },
+      "errors": []
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "path": "/demo-zh.html",
+      "status": 200,
+      "ok": true,
+      "title": "pi-debug-mode 交互演示 | 用运行时证据定位并验证 Pi 调试问题",
+      "lang": "zh-CN",
+      "h1": 1,
+      "landmarks": {
+        "header": 1,
+        "nav": 1,
+        "main": 1,
+        "footer": 1
+      },
+      "overflow": 0,
+      "undersized": [],
+      "brokenImages": [],
+      "interaction": {
+        "buttons": [
+          "开始调试",
+          "问题已复现",
+          "已修复"
+        ],
+        "finalStatus": "已修复",
+        "finalFocus": "status"
+      },
+      "errors": []
+    }
+  ],
+  "method": "Playwright Chromium with version-pinned Raw media fulfilled from matching tracked local files before tag publication"
+}

@@ -1,0 +1,142 @@
+{
+  "mode": "local",
+  "ok": false,
+  "checks": [
+    {
+      "id": "release identity",
+      "status": "pass",
+      "detail": "pi-debug-mode@0.1.3; v0.1.3; https://github.com/liush2yuxjtu/pi-debug-mode"
+    },
+    {
+      "id": "package and lock version",
+      "status": "pass",
+      "detail": "both use 0.1.3"
+    },
+    {
+      "id": "package description",
+      "status": "fail",
+      "detail": "missing pi coding agent, cursor-style debug mode"
+    },
+    {
+      "id": "package keywords",
+      "status": "fail",
+      "detail": "missing pi coding agent, debug mode, evidence-driven debugging, hypothesis-driven debugging, runtime instrumentation, developer tools, cursor debug mode"
+    },
+    {
+      "id": "package links",
+      "status": "fail",
+      "detail": "homepage must be https://liush2yuxjtu.github.io/pi-debug-mode/"
+    },
+    {
+      "id": "npm files allowlist",
+      "status": "pass",
+      "detail": "src, README.md, LICENSE"
+    },
+    {
+      "id": "Pi metadata",
+      "status": "pass",
+      "detail": "supported fields with v0.1.3 media pins"
+    },
+    {
+      "id": "release workflow",
+      "status": "fail",
+      "detail": "expected version gate before install and local verifier after typecheck, with no Pages deployment"
+    },
+    {
+      "id": "README information contract",
+      "status": "fail",
+      "detail": "opening missing cursor-style, evidence-first debug mode, pi coding agent, runtime evidence before changing code; content missing ## Why not a normal debug prompt?, ## FAQ, https://liush2yuxjtu.github.io/pi-debug-mode/, https://liush2yuxjtu.github.io/pi-debug-mode/zh/, https://liush2yuxjtu.github.io/pi-debug-mode/demo.html, https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html"
+    },
+    {
+      "id": "README media",
+      "status": "fail",
+      "detail": "not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui-poster.png; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui.mp4; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui-zh-poster.png; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui-zh.mp4; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-demo-zh.mp4; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-demo.mp4"
+    },
+    {
+      "id": "site files",
+      "status": "fail",
+      "detail": "missing docs/.nojekyll, docs/site.css, docs/index.html, docs/zh/index.html, docs/sitemap.xml, docs/robots.txt"
+    },
+    {
+      "id": "HTML docs/index.html",
+      "status": "fail",
+      "detail": "file is missing"
+    },
+    {
+      "id": "HTML docs/zh/index.html",
+      "status": "fail",
+      "detail": "file is missing"
+    },
+    {
+      "id": "HTML docs/demo.html",
+      "status": "fail",
+      "detail": "canonical must be https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; missing en alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; missing zh-CN alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html; missing x-default alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; page must have one header; skip link is missing; meta description is missing or too short; og:title is missing; og:description is missing; og:url is missing; og:image is missing; twitter:title is missing; twitter:description is missing; twitter:url is missing; twitter:image is missing; og:url must match canonical; twitter:url must match canonical; og:image must use v0.1.3 Raw media; twitter:image must use v0.1.3 Raw media; og:image:width must be 1280; og:image:height must be 720; release-version must be 0.1.3; 44px interactive target rule is missing; homepage navigation must link to https://liush2yuxjtu.github.io/pi-debug-mode/"
+    },
+    {
+      "id": "HTML docs/demo-zh.html",
+      "status": "fail",
+      "detail": "canonical must be https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html; missing en alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; missing zh-CN alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html; missing x-default alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; page must have one header; skip link is missing; meta description is missing or too short; og:title is missing; og:description is missing; og:url is missing; og:image is missing; twitter:title is missing; twitter:description is missing; twitter:url is missing; twitter:image is missing; og:url must match canonical; twitter:url must match canonical; og:image must use v0.1.3 Raw media; twitter:image must use v0.1.3 Raw media; og:image:width must be 1280; og:image:height must be 720; release-version must be 0.1.3; 44px interactive target rule is missing; homepage navigation must link to https://liush2yuxjtu.github.io/pi-debug-mode/zh/"
+    },
+    {
+      "id": "HTML titles",
+      "status": "fail",
+      "detail": "docs/demo.html title has 26 characters"
+    },
+    {
+      "id": "JSON-LD docs/index.html",
+      "status": "fail",
+      "detail": "file is missing"
+    },
+    {
+      "id": "JSON-LD docs/zh/index.html",
+      "status": "fail",
+      "detail": "file is missing"
+    },
+    {
+      "id": "sitemap",
+      "status": "fail",
+      "detail": "docs/sitemap.xml is missing"
+    },
+    {
+      "id": "robots.txt",
+      "status": "fail",
+      "detail": "docs/robots.txt is missing"
+    },
+    {
+      "id": "public prose",
+      "status": "fail",
+      "detail": "docs/demo.html contains local user path; docs/demo.html contains stale 0.1.0; docs/demo-zh.html contains local user path; docs/demo-zh.html contains stale 0.1.0; docs/demo-zh.html contains local-demo wording"
+    },
+    {
+      "id": "public surface registry",
+      "status": "fail",
+      "detail": "readme-media-1 is not pinned to v0.1.3; readme-media-1 has no local source mapping; readme-media-2 is not pinned to v0.1.3; readme-media-2 has no local source mapping; readme-media-3 is not pinned to v0.1.3; readme-media-3 has no local source mapping; readme-media-4 is not pinned to v0.1.3; readme-media-4 has no local source mapping; readme-media-5 is not pinned to v0.1.3; readme-media-5 has no local source mapping; readme-media-6 is not pinned to v0.1.3; readme-media-6 has no local source mapping; pages-home-en has no page source; pages-home-zh has no page source"
+    },
+    {
+      "id": "npm pack file list",
+      "status": "pass",
+      "detail": "LICENSE, README.md, package.json, src/index.ts, src/protocol.ts"
+    }
+  ],
+  "failures": [
+    "package description: missing pi coding agent, cursor-style debug mode",
+    "package keywords: missing pi coding agent, debug mode, evidence-driven debugging, hypothesis-driven debugging, runtime instrumentation, developer tools, cursor debug mode",
+    "package links: homepage must be https://liush2yuxjtu.github.io/pi-debug-mode/",
+    "release workflow: expected version gate before install and local verifier after typecheck, with no Pages deployment",
+    "README information contract: opening missing cursor-style, evidence-first debug mode, pi coding agent, runtime evidence before changing code; content missing ## Why not a normal debug prompt?, ## FAQ, https://liush2yuxjtu.github.io/pi-debug-mode/, https://liush2yuxjtu.github.io/pi-debug-mode/zh/, https://liush2yuxjtu.github.io/pi-debug-mode/demo.html, https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html",
+    "README media: not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui-poster.png; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui.mp4; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui-zh-poster.png; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-real-tui-zh.mp4; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-demo-zh.mp4; not an absolute v0.1.3 Raw URL: artifacts/demo/pi-debug-mode-demo.mp4",
+    "site files: missing docs/.nojekyll, docs/site.css, docs/index.html, docs/zh/index.html, docs/sitemap.xml, docs/robots.txt",
+    "HTML docs/index.html: file is missing",
+    "HTML docs/zh/index.html: file is missing",
+    "HTML docs/demo.html: canonical must be https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; missing en alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; missing zh-CN alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html; missing x-default alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; page must have one header; skip link is missing; meta description is missing or too short; og:title is missing; og:description is missing; og:url is missing; og:image is missing; twitter:title is missing; twitter:description is missing; twitter:url is missing; twitter:image is missing; og:url must match canonical; twitter:url must match canonical; og:image must use v0.1.3 Raw media; twitter:image must use v0.1.3 Raw media; og:image:width must be 1280; og:image:height must be 720; release-version must be 0.1.3; 44px interactive target rule is missing; homepage navigation must link to https://liush2yuxjtu.github.io/pi-debug-mode/",
+    "HTML docs/demo-zh.html: canonical must be https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html; missing en alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; missing zh-CN alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html; missing x-default alternate https://liush2yuxjtu.github.io/pi-debug-mode/demo.html; page must have one header; skip link is missing; meta description is missing or too short; og:title is missing; og:description is missing; og:url is missing; og:image is missing; twitter:title is missing; twitter:description is missing; twitter:url is missing; twitter:image is missing; og:url must match canonical; twitter:url must match canonical; og:image must use v0.1.3 Raw media; twitter:image must use v0.1.3 Raw media; og:image:width must be 1280; og:image:height must be 720; release-version must be 0.1.3; 44px interactive target rule is missing; homepage navigation must link to https://liush2yuxjtu.github.io/pi-debug-mode/zh/",
+    "HTML titles: docs/demo.html title has 26 characters",
+    "JSON-LD docs/index.html: file is missing",
+    "JSON-LD docs/zh/index.html: file is missing",
+    "sitemap: docs/sitemap.xml is missing",
+    "robots.txt: docs/robots.txt is missing",
+    "public prose: docs/demo.html contains local user path; docs/demo.html contains stale 0.1.0; docs/demo-zh.html contains local user path; docs/demo-zh.html contains stale 0.1.0; docs/demo-zh.html contains local-demo wording",
+    "public surface registry: readme-media-1 is not pinned to v0.1.3; readme-media-1 has no local source mapping; readme-media-2 is not pinned to v0.1.3; readme-media-2 has no local source mapping; readme-media-3 is not pinned to v0.1.3; readme-media-3 has no local source mapping; readme-media-4 is not pinned to v0.1.3; readme-media-4 has no local source mapping; readme-media-5 is not pinned to v0.1.3; readme-media-5 has no local source mapping; readme-media-6 is not pinned to v0.1.3; readme-media-6 has no local source mapping; pages-home-en has no page source; pages-home-zh has no page source"
+  ],
+  "warnings": []
+}

@@ -1,0 +1,123 @@
+{
+  "mode": "local",
+  "ok": true,
+  "checks": [
+    {
+      "id": "release identity",
+      "status": "pass",
+      "detail": "pi-debug-mode@0.1.4; v0.1.4; https://github.com/liush2yuxjtu/pi-debug-mode"
+    },
+    {
+      "id": "package and lock version",
+      "status": "pass",
+      "detail": "both use 0.1.4"
+    },
+    {
+      "id": "package description",
+      "status": "pass",
+      "detail": "Cursor-style debug mode for the Pi coding agent, with evidence-first debugging and targeted runtime probes."
+    },
+    {
+      "id": "package keywords",
+      "status": "pass",
+      "detail": "covers 9 required concepts"
+    },
+    {
+      "id": "package links",
+      "status": "pass",
+      "detail": "homepage, repository, and bugs are canonical"
+    },
+    {
+      "id": "npm files allowlist",
+      "status": "pass",
+      "detail": "src, README.md, LICENSE"
+    },
+    {
+      "id": "Pi metadata",
+      "status": "pass",
+      "detail": "supported fields with v0.1.4 media pins"
+    },
+    {
+      "id": "release workflow",
+      "status": "pass",
+      "detail": "version gate runs before install; local verifier runs after typecheck; GitHub Release OIDC remains npm publication owner"
+    },
+    {
+      "id": "README information contract",
+      "status": "pass",
+      "detail": "definition, comparison, FAQ, sites, and demo routes are present"
+    },
+    {
+      "id": "README media",
+      "status": "pass",
+      "detail": "6 absolute v0.1.4 media links map to local files"
+    },
+    {
+      "id": "site files",
+      "status": "pass",
+      "detail": "8 required files present"
+    },
+    {
+      "id": "HTML docs/index.html",
+      "status": "pass",
+      "detail": "en; canonical, hreflang, social metadata, landmarks, and access rules pass"
+    },
+    {
+      "id": "HTML docs/zh/index.html",
+      "status": "pass",
+      "detail": "zh-CN; canonical, hreflang, social metadata, landmarks, and access rules pass"
+    },
+    {
+      "id": "HTML docs/demo.html",
+      "status": "pass",
+      "detail": "en; canonical, hreflang, social metadata, landmarks, and access rules pass"
+    },
+    {
+      "id": "HTML docs/demo-zh.html",
+      "status": "pass",
+      "detail": "zh-CN; canonical, hreflang, social metadata, landmarks, and access rules pass"
+    },
+    {
+      "id": "HTML titles",
+      "status": "pass",
+      "detail": "4 unique titles use practical lengths"
+    },
+    {
+      "id": "JSON-LD docs/index.html",
+      "status": "pass",
+      "detail": "SoftwareApplication and visible three-question FAQPage parse"
+    },
+    {
+      "id": "JSON-LD docs/zh/index.html",
+      "status": "pass",
+      "detail": "SoftwareApplication and visible three-question FAQPage parse"
+    },
+    {
+      "id": "sitemap",
+      "status": "pass",
+      "detail": "four canonical routes and language alternates only"
+    },
+    {
+      "id": "robots.txt",
+      "status": "pass",
+      "detail": "crawl allowed and sitemap named"
+    },
+    {
+      "id": "public prose",
+      "status": "pass",
+      "detail": "no machine paths, stale routes, stale versions, or local-demo wording"
+    },
+    {
+      "id": "public surface registry",
+      "status": "pass",
+      "detail": "12 surfaces have one owner, phase list, content kind, and local mapping where required"
+    },
+    {
+      "id": "npm pack file list",
+      "status": "pass",
+      "detail": "LICENSE, README.md, package.json, src/index.ts, src/protocol.ts"
+    }
+  ],
+  "failures": [],
+  "warnings": []
+}

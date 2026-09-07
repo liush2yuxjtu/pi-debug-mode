@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://liush2yuxjtu.github.io/pi-debug-mode/sitemap.xml

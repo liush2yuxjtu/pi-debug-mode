@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2efe6">
+  <meta name="description" content="pi-debug-mode 为 Pi 编码智能体加入 Cursor 风格的证据优先调试模式，通过竞争假设、运行时探针、人工复现和最终验证，避免在确认根因前直接修改代码。">
+  <meta name="release-version" content="0.1.4">
+  <link rel="canonical" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
+  <link rel="alternate" hreflang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
+  <link rel="alternate" hreflang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
+  <link rel="alternate" hreflang="x-default" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="pi-debug-mode">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="pi-debug-mode | Pi 编码智能体的证据优先调试模式">
+  <meta property="og:description" content="先用竞争假设和运行时探针确认原因，再修改代码并完成一次人工验证。">
+  <meta property="og:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="720">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="pi-debug-mode | Pi 编码智能体的证据优先调试模式">
+  <meta name="twitter:description" content="先用竞争假设和运行时探针确认原因，再修改代码并完成一次人工验证。">
+  <meta name="twitter:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
+  <title>pi-debug-mode | Pi 编码智能体的证据优先调试模式</title>
+  <link rel="stylesheet" href="../site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "pi-debug-mode",
+    "description": "面向 Pi 编码智能体的 Cursor 风格证据优先调试模式。",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Cross-platform",
+    "softwareVersion": "0.1.4",
+    "url": "https://liush2yuxjtu.github.io/pi-debug-mode/zh/",
+    "codeRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
+    "license": "https://opensource.org/license/mit",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "什么时候应该使用 pi-debug-mode？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "当问题需要运行时证据、存在多个竞争假设，或修改代码前需要人工复现时，使用 pi-debug-mode。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "哪些数据会离开本机？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "扩展本身不发送遥测，也不发起网络请求。你配置的 Pi 模型提供商仍可能收到 Pi 在会话中发送的提示词、工具输出和日志。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "它能证明每次修复都正确吗？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "不能。它的调试指令要求先取证并在修复后验证，但薄弱的探针、不完整的复现或缺失的测试仍可能让问题没有彻底解决。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-release-version="0.1.4">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <nav class="site-nav site-shell" aria-label="主导航">
+      <a class="brand" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/" aria-label="pi-debug-mode 中文首页">pi-debug-mode</a>
+      <div class="nav-links">
+        <a class="nav-link" href="#workflow">工作流</a>
+        <a class="nav-link" href="#evidence">证据</a>
+        <a class="nav-link" href="#install">安装</a>
+        <a class="nav-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">交互演示</a>
+        <a class="nav-link" lang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/">English</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="site-shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="label">Pi 扩展 0.1.4</p>
+        <h1 id="hero-title">先拿到<em>证据，</em>再修改代码。</h1>
+        <p class="hero-lead">pi-debug-mode 是面向 Pi 编码智能体的 Cursor 风格调试模式。它向 Pi 注入调试指令，要求 Pi 用竞争假设和定向运行时探针确认原因，然后再修复。</p>
+        <div class="actions">
+          <a class="button button-primary" href="#install">安装 0.1.4</a>
+          <a class="button button-secondary" href="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh.mp4">观看真实中文 Pi TUI 录屏</a>
+        </div>
+        <p class="update"><time datetime="2026-09-04">更新于 2026 年 9 月 4 日</time></p>
+      </div>
+
+      <aside class="hero-note" aria-label="调试模式证据流程">
+        <div class="terminal-card">
+          <div class="terminal-head">
+            <span>evidence log</span>
+            <span class="terminal-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="prompt">❯</span> /debug 支付后结账页面卡住</div>
+            <div class="terminal-line"><strong>01</strong> 检查真实执行路径</div>
+            <div class="terminal-line"><strong>02</strong> 比较 3 个竞争假设</div>
+            <div class="terminal-line"><strong>03</strong> 添加 pi-debug 探针</div>
+            <div class="terminal-line"><strong>04</strong> 执行一次人工复现</div>
+            <div class="terminal-line"><strong>05</strong> 验证并移除探针</div>
+            <div class="proof-stamp">修复跟随证据</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="when-to-use" class="section" aria-labelledby="use-title">
+      <div class="section-rail">
+        <span class="section-index">01 / 何时使用</span>
+        <h2 id="use-title">静态检查不足以确认原因时使用。</h2>
+        <p class="section-intro">直接问题或明显的静态缺陷仍适合普通提示词。问题原因取决于程序运行过程时，再进入 Debug Mode。</p>
+      </div>
+      <div class="use-grid">
+        <article class="use-card">
+          <h3>多个原因都说得通</h3>
+          <p>竞态、陈旧状态和丢失回调可能产生相同症状。探针负责区分它们。</p>
+        </article>
+        <article class="use-card">
+          <h3>问题需要人工操作</h3>
+          <p>只有人能完成复现步骤或判断界面结果时，使用人工检查点。</p>
+        </article>
+        <article class="use-card">
+          <h3>日志必须放在关键分支</h3>
+          <p>在能够区分假设的位置添加临时探针，并统一标记为 <code>pi-debug</code>。</p>
+        </article>
+        <article class="use-card">
+          <h3>修复后必须再跑一次</h3>
+          <p>使用相同步骤复现。确认结果后，才移除探针并报告修复。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="workflow" class="section" aria-labelledby="workflow-title">
+      <div class="section-rail">
+        <span class="section-index">02 / 方法</span>
+        <h2 id="workflow-title">从症状到已验证修复的五个步骤。</h2>
+        <p class="section-intro">扩展把固定的证据流程加入当前 Pi 会话。它不替代 Pi，也不启动独立服务。</p>
+      </div>
+      <ol class="workflow-list">
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>检查真实执行路径</h3><p>注入的指令要求 Pi 先读取相关代码，并在修改前提出三到五个竞争假设。</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>添加定向运行时探针</h3><p>指令要求 Pi 只添加能够区分这些假设的临时 <code>pi-debug</code> 探针。</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>执行一次复现</h3><p><code>debug_reproduction</code> 展示准确步骤，并等待已修复、已复现或补充信息。</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>修复证据支持的原因</h3><p>指令要求 Pi 读取证据，更新假设，然后修改最小的根因路径。</p></div>
+        </li>
+        <li class="workflow-step">
+          <span class="step-number" aria-hidden="true"></span>
+          <div class="step-copy"><h3>验证并清理</h3><p>你重复相同步骤。选择已修复后，指令要求 Pi 移除全部临时探针并运行相关检查。</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="evidence" class="section" aria-labelledby="evidence-title">
+      <div class="section-rail">
+        <span class="section-index">03 / 证据</span>
+        <h2 id="evidence-title">安装前先看完整流程。</h2>
+        <p class="section-intro">长录屏来自真实机器上的真实 Pi TUI 会话。交互演示是同一组检查点的确定性模拟。</p>
+      </div>
+      <div class="evidence-panel">
+        <a href="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh.mp4" aria-label="观看完整真实中文 Pi TUI 录屏">
+          <img class="evidence-image" src="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png" width="1280" height="720" loading="lazy" decoding="async" alt="Pi 终端显示 pi-debug-mode 的竞争假设、运行时证据和人工复现检查点">
+        </a>
+        <div class="evidence-copy">
+          <h3>真实终端输出，以及独立的交互演示。</h3>
+          <p>录屏包含竞争假设、临时探针、复现选择器、证据检查、根因修复、人工确认、探针清理和通过的测试。</p>
+          <div class="evidence-links">
+            <a class="evidence-link" href="https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh.mp4">真实中文 Pi TUI 录屏</a>
+            <a class="evidence-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">中文交互演示</a>
+            <a class="evidence-link" href="https://github.com/liush2yuxjtu/pi-debug-mode">GitHub 源码仓库</a>
+            <a class="evidence-link" href="https://www.npmjs.com/package/pi-debug-mode">npm 包页面</a>
+            <a class="evidence-link" href="https://pi.dev/packages/pi-debug-mode">Pi Package Gallery 页面</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="section" aria-labelledby="compare-title">
+      <div class="section-rail">
+        <span class="section-index">04 / 选择</span>
+        <h2 id="compare-title">按问题需要选择调试流程。</h2>
+        <p class="section-intro">三种方式处理不同任务。关键差异在于运行时证据和人工检查点是可选项，还是流程的一部分。</p>
+      </div>
+      <div class="table-wrap" tabindex="0" aria-label="调试方式对比">
+        <table>
+          <thead>
+            <tr><th scope="col">方式</th><th scope="col">运行时证据</th><th scope="col">人工检查点</th><th scope="col">结束条件</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>普通调试提示词</td><td>取决于提示词和 Agent 回复。</td><td>可选。</td><td>由提示词定义。</td></tr>
+            <tr><td>通用 Agent 模式</td><td>取决于该模式的工具和指令。</td><td>取决于该模式。</td><td>由该模式定义。</td></tr>
+            <tr><td><code>pi-debug-mode</code></td><td>注入的指令要求在修复前提出竞争假设并添加定向探针。</td><td>插桩后和修复后都使用 <code>debug_reproduction</code>。</td><td>人工确认后，指令要求清理探针并运行相关检查。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="install" class="section" aria-labelledby="install-title">
+      <div class="section-rail">
+        <span class="section-index">05 / 安装</span>
+        <h2 id="install-title">从 npm 或固定 Git tag 安装。</h2>
+        <p class="section-intro">两个命令都固定到 0.1.4。安装后重启 Pi，再用 <code>/debug</code> 描述症状和预期结果。</p>
+      </div>
+      <div class="install-grid">
+        <article class="install-card">
+          <h3>npm</h3>
+          <p>通过 Pi 的 npm 来源安装。</p>
+          <pre class="command"><code>pi install npm:pi-debug-mode@0.1.4</code></pre>
+        </article>
+        <article class="install-card">
+          <h3>GitHub</h3>
+          <p>通过 Pi 的 Git 来源安装不可变 tag。</p>
+          <pre class="command"><code>pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.4</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section id="security" class="section" aria-labelledby="security-title">
+      <div class="section-rail">
+        <span class="section-index">06 / 权限</span>
+        <h2 id="security-title">扩展使用 Pi 的现有权限。</h2>
+        <p class="section-intro">检查建议执行的工具调用，并把调试日志视为可能包含应用输入的数据。</p>
+      </div>
+      <div class="security-grid">
+        <article class="security-card">
+          <h3>系统权限</h3>
+          <p>Pi 扩展拥有与 Pi 相同的系统权限。调试会话可能添加临时探针并读取本地日志。</p>
+        </article>
+        <article class="security-card">
+          <h3>扩展不发送遥测</h3>
+          <p>pi-debug-mode 不启动后台服务，不发送遥测，也不发起网络请求。</p>
+        </article>
+        <article class="security-card">
+          <h3>模型提供商边界</h3>
+          <p>你配置的 Pi 模型提供商可能收到 Pi 在会话中发送的提示词、工具输出和日志。不要在复现步骤中放入秘密信息。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq" class="section" aria-labelledby="faq-title">
+      <div class="section-rail">
+        <span class="section-index">07 / 常见问题</span>
+        <h2 id="faq-title">适用边界和常见问题。</h2>
+      </div>
+      <div class="faq-list">
+        <article class="faq-item">
+          <h3>什么时候应该使用 pi-debug-mode？</h3>
+          <p>当问题需要运行时证据、存在多个竞争假设，或修改代码前需要人工复现时，使用 pi-debug-mode。</p>
+        </article>
+        <article class="faq-item">
+          <h3>哪些数据会离开本机？</h3>
+          <p>扩展本身不发送遥测，也不发起网络请求。你配置的 Pi 模型提供商仍可能收到 Pi 在会话中发送的提示词、工具输出和日志。</p>
+        </article>
+        <article class="faq-item">
+          <h3>它能证明每次修复都正确吗？</h3>
+          <p>不能。它的调试指令要求先取证并在修复后验证，但薄弱的探针、不完整的复现或缺失的测试仍可能让问题没有彻底解决。</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner site-shell">
+      <div>
+        <a class="brand" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">pi-debug-mode</a>
+        <p class="footer-note">MIT 许可。版本 0.1.4。<time datetime="2026-09-04">更新于 2026 年 9 月 4 日</time>。</p>
+      </div>
+      <div class="footer-links" aria-label="页脚导航">
+        <a class="footer-link" lang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/">English canonical page</a>
+        <a class="footer-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">中文标准页面</a>
+        <a class="footer-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">中文交互演示</a>
+        <a class="footer-link" href="https://github.com/liush2yuxjtu/pi-debug-mode">GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
