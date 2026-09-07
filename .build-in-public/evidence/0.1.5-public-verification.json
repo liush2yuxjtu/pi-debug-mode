@@ -1,0 +1,116 @@
+{
+  "capturedAt": "2026-09-07T03:51:11Z",
+  "version": "0.1.5",
+  "releaseCommit": "bd4a4fd3dd5d0f9b5674c045bffe355415acfcc0",
+  "pagesCommit": "837f891abbc42d55f8e899e05b0b7e41d38cc8da",
+  "release": {
+    "url": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.5",
+    "workflow": "https://github.com/liush2yuxjtu/pi-debug-mode/actions/runs/34080128914",
+    "workflowConclusion": "success",
+    "assetCount": 8,
+    "assetContentTypes": {
+      "mp4": "video/mp4",
+      "png": "image/png"
+    }
+  },
+  "npm": {
+    "package": "pi-debug-mode",
+    "version": "0.1.5",
+    "publishedAt": "2026-09-07T03:35:26.784Z",
+    "registryUrl": "https://registry.npmjs.org/pi-debug-mode/0.1.5",
+    "tarball": "https://registry.npmjs.org/pi-debug-mode/-/pi-debug-mode-0.1.5.tgz",
+    "integrity": "sha512-JM6AT+SaWMK2jncDoMz7RykCvlRuCW749XAsNjTlaneo7VBgG29qnHcm6B0RYNuW5geWwouEwZNLMZe0tvylZw==",
+    "fileCount": 5,
+    "cleanPiInstall": "pass"
+  },
+  "piGallery": {
+    "url": "https://pi.dev/packages/pi-debug-mode",
+    "visibleVersion": "0.1.5",
+    "refreshedAt": "2026-09-07T03:48:14Z",
+    "video": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui.mp4",
+    "poster": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui-poster.png",
+    "browserPlayback": {
+      "status": "pass",
+      "durationSeconds": 80.92,
+      "width": 1280,
+      "height": 720,
+      "readyState": 4,
+      "playheadAdvanced": true
+    }
+  },
+  "pages": {
+    "source": "main/docs",
+    "status": "built",
+    "routes": [
+      "https://liush2yuxjtu.github.io/pi-debug-mode/",
+      "https://liush2yuxjtu.github.io/pi-debug-mode/zh/",
+      "https://liush2yuxjtu.github.io/pi-debug-mode/demo.html",
+      "https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html"
+    ],
+    "httpStatus": 200,
+    "browserErrors": 0,
+    "brokenImages": 0
+  },
+  "media": [
+    {
+      "name": "pi-debug-mode-real-tui.mp4",
+      "bytes": 1529419,
+      "durationSeconds": 80.92,
+      "width": 1280,
+      "height": 720,
+      "codec": "H.264",
+      "cdnContentType": "video/mp4",
+      "sha256": "31d106caafde58e3783344f048135ac260bb3a40b870b15c2e6d144ce7ee062f",
+      "cdnAndReleaseHashesMatch": true
+    },
+    {
+      "name": "pi-debug-mode-real-tui-zh.mp4",
+      "bytes": 1392919,
+      "durationSeconds": 57,
+      "width": 1280,
+      "height": 720,
+      "codec": "H.264",
+      "cdnContentType": "video/mp4",
+      "sha256": "b8fe70c29bd25f1caecae18d0de027540638bfb441cbbbea5e80c12a4b75c1fc",
+      "cdnAndReleaseHashesMatch": true
+    },
+    {
+      "name": "pi-debug-mode-demo.mp4",
+      "bytes": 403496,
+      "durationSeconds": 12.48,
+      "width": 1280,
+      "height": 720,
+      "codec": "H.264",
+      "cdnContentType": "video/mp4",
+      "sha256": "047e6ccf607f357d4297e507c87f8210e11d56e1692cdefcac2849c1c4a07f1e",
+      "cdnAndReleaseHashesMatch": true
+    },
+    {
+      "name": "pi-debug-mode-demo-zh.mp4",
+      "bytes": 336085,
+      "durationSeconds": 12.48,
+      "width": 1280,
+      "height": 720,
+      "codec": "H.264",
+      "cdnContentType": "video/mp4",
+      "sha256": "cb968136a73a17a3ac539ca4ee00788d1227266f35caad782d0ea81025b64652",
+      "cdnAndReleaseHashesMatch": true
+    }
+  ],
+  "verification": {
+    "releaseVerifier": {
+      "passed": 36,
+      "failed": 0,
+      "warnings": 1
+    },
+    "browserPages": 7,
+    "browserVideosPlayed": 4,
+    "browserResult": "pass"
+  },
+  "limitations": [
+    "www.npmjs.com returned its Cloudflare anti-bot page to automated requests; registry metadata, tarball integrity, provenance, and an isolated Pi install passed.",
+    "Pi Gallery social description metadata remains generic because of upstream issue https://github.com/earendil-works/pi/issues/6699.",
+    "Release asset download counters include verification downloads and are not adoption evidence.",
+    "No GIF is published; MP4 is the Pi Gallery video format documented by Pi."
+  ]
+}
