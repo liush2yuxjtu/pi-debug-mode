@@ -1,7 +1,7 @@
 [
   {
     "label": "orient",
-    "elapsedMs": 2326,
+    "elapsedMs": 2361,
     "scrollY": 0,
     "viewport": {
       "width": 1280,
@@ -10,7 +10,7 @@
   },
   {
     "label": "start-debug",
-    "elapsedMs": 2984,
+    "elapsedMs": 3014,
     "scrollY": 0,
     "viewport": {
       "width": 1280,
@@ -19,7 +19,7 @@
   },
   {
     "label": "issue-reproduced",
-    "elapsedMs": 6095,
+    "elapsedMs": 6123,
     "scrollY": 0,
     "viewport": {
       "width": 1280,
@@ -28,7 +28,7 @@
   },
   {
     "label": "fixed",
-    "elapsedMs": 9016,
+    "elapsedMs": 9043,
     "scrollY": 0,
     "viewport": {
       "width": 1280,
