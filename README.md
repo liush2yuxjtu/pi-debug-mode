@@ -6,34 +6,34 @@ The canonical source is [github.com/liush2yuxjtu/pi-debug-mode](https://github.c
 
 ## Real TUI demo
 
-[![Real pi-debug-mode session in the Pi TUI](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-poster.png)](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui.mp4)
+[![Real pi-debug-mode session in the Pi TUI](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui-poster.png)](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui.mp4)
 
-[Watch the real Pi TUI recording](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui.mp4). The recording captures a live `/debug` run on a real machine with a published extension release and `openai-codex/gpt-5.6-sol`. It includes hypothesis generation, temporary `pi-debug` probes, the interactive `debug_reproduction` checkpoint, evidence inspection, the smallest fix, human verification, probe cleanup, and a passing test.
+[Watch the real Pi TUI recording](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui.mp4). The recording captures a live `/debug` run on a real machine with a published extension release and `openai-codex/gpt-5.6-sol`. It includes hypothesis generation, temporary `pi-debug` probes, the interactive `debug_reproduction` checkpoint, evidence inspection, the smallest fix, human verification, probe cleanup, and a passing test.
 
 The source terminal session was recorded from tmux as an asciinema cast. Only long human-wait intervals were compressed. The TUI output and tool execution remain from the live run.
 
 ### 中文演示
 
-[![pi-debug-mode 真实中文 TUI 调试](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png)](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
+[![pi-debug-mode 真实中文 TUI 调试](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png)](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
 
-- [观看 57 秒真实中文 Pi TUI 录屏](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
-- [观看 13 秒中文概念演示](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-demo-zh.mp4)
+- [观看 57 秒真实中文 Pi TUI 录屏](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
+- [观看 13 秒中文概念演示](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-demo-zh.mp4)
 - [打开中文交互演示](https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html)
 
-For a short English preview, [watch the 13-second product demo](https://raw.githubusercontent.com/liush2yuxjtu/pi-debug-mode/v0.1.4/artifacts/demo/pi-debug-mode-demo.mp4) or open the [English interactive demo](https://liush2yuxjtu.github.io/pi-debug-mode/demo.html). Both interactive demos are deterministic simulations.
+For a short English preview, [watch the 13-second product demo](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-demo.mp4) or open the [English interactive demo](https://liush2yuxjtu.github.io/pi-debug-mode/demo.html). Both interactive demos are deterministic simulations.
 
 ## Install
 
 Install the pinned npm release:
 
 ```bash
-pi install npm:pi-debug-mode@0.1.4
+pi install npm:pi-debug-mode@0.1.5
 ```
 
 Or install the pinned GitHub release:
 
 ```bash
-pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.4
+pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.5
 ```
 
 Restart Pi, then run:
