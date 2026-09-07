@@ -3,8 +3,8 @@
 ## Canonical artifact and version
 
 - Artifact: Pi extension and npm package `pi-debug-mode`
-- Current verified release: `0.1.5`, tag `v0.1.5`
-- Target patch: `0.1.6`, tag `v0.1.6`
+- Current verified release: `0.1.6`, tag `v0.1.6`
+- Previous release: `0.1.5`, tag `v0.1.5`
 - Canonical source: `https://github.com/liush2yuxjtu/pi-debug-mode`
 - GitHub Pages source: `main/docs`
 - GitHub Pages base: `https://liush2yuxjtu.github.io/pi-debug-mode/`
@@ -50,16 +50,16 @@ No skills.sh, ClawHub, LobeHub, MCP, IDE, container, Homebrew, or unrelated regi
 - Pi Gallery: automatic npm discovery; refresh delay outside repository control
 - jsDelivr: public immutable GitHub-tag CDN; no account or fee
 
-## Release waves and rollback
+## Completed release waves and rollback
 
-1. Render 800×450, 8 fps, 98-frame English and Chinese GIF loops on Mac mini only.
-2. Verify GIF dimensions, frame count, loop behavior, size, and visual motion.
-3. Update README, Pi metadata, Pages, release verifier, package version, and artifact documentation.
-4. Run tests, typecheck, package dry-run, local release checks, and browser QA.
-5. Merge, deploy Pages, create immutable `v0.1.6`, and run tagged checks.
-6. Publish GitHub Release and npm, then wait for Pi Gallery exact-version refresh.
-7. Prove no-click GIF animation on README, Pages, and Pi Gallery by comparing browser frames before and after time advances.
-8. Record release evidence and metrics.
+1. Rendered 800×450, 8 fps, 98-frame English and Chinese GIF loops on Mac mini only.
+2. Verified GIF dimensions, frame count, infinite loop, sub-2 MiB size, and visual motion.
+3. Updated README, Pi metadata, Pages, release verifier, package version, and reproducible render script.
+4. Passed tests, typecheck, package dry-run, local checks, tagged checks, and browser QA.
+5. Merged, deployed Pages, and created immutable `v0.1.6`.
+6. Published ten GitHub Release assets and npm through OIDC.
+7. Waited for Pi Gallery to show exact version `0.1.6` and the image-only GIF metadata.
+8. Proved README, Pages, direct CDN, and Gallery animation with zero clicks by comparing time-separated browser frames.
 
 Rollback remains patch-only. Never move a published tag.
 

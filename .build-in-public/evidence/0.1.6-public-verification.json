@@ -1,0 +1,145 @@
+{
+  "capturedAt": "2026-09-07T04:57:38Z",
+  "version": "0.1.6",
+  "releaseCommit": "8c40af0e3a4d14eff574db7151e26359336e2b56",
+  "release": {
+    "url": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.6",
+    "workflow": "https://github.com/liush2yuxjtu/pi-debug-mode/actions/runs/34083286393",
+    "workflowConclusion": "success",
+    "assetCount": 10,
+    "assetTypes": {
+      "gif": 2,
+      "mp4": 4,
+      "png": 4
+    }
+  },
+  "npm": {
+    "package": "pi-debug-mode",
+    "version": "0.1.6",
+    "publishedAt": "2026-09-07T04:29:58.581Z",
+    "registryUrl": "https://registry.npmjs.org/pi-debug-mode/0.1.6",
+    "tarball": "https://registry.npmjs.org/pi-debug-mode/-/pi-debug-mode-0.1.6.tgz",
+    "integrity": "sha512-mxWuuOLx0UwKoHHhPZApNwYkDKzCBEJxRieMt/vEaADuG2c82E9/GPlPlOpEG3bbCh2EPq12blIoW7pz54rtQw==",
+    "fileCount": 5,
+    "cleanPiInstall": "pass",
+    "piMetadata": {
+      "image": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-preview.gif",
+      "videoPresent": false
+    }
+  },
+  "piGallery": {
+    "url": "https://pi.dev/packages/pi-debug-mode",
+    "visibleVersion": "0.1.6",
+    "refreshedAt": "2026-09-07T04:48:46Z",
+    "primaryPreview": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-preview.gif",
+    "videoElements": 0,
+    "brokenImages": 0,
+    "noClickAnimation": {
+      "status": "pass",
+      "interactionCount": 0,
+      "thumbnailFrameChanged": true,
+      "readmeFrameChanged": true
+    }
+  },
+  "pages": {
+    "source": "main/docs",
+    "status": "built",
+    "routes": [
+      "https://liush2yuxjtu.github.io/pi-debug-mode/",
+      "https://liush2yuxjtu.github.io/pi-debug-mode/zh/",
+      "https://liush2yuxjtu.github.io/pi-debug-mode/demo.html",
+      "https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html"
+    ],
+    "httpStatus": 200,
+    "browserErrors": 0,
+    "brokenImages": 0,
+    "noClickAnimation": "pass",
+    "reducedMotionPosterFallback": "pass"
+  },
+  "githubReadme": {
+    "url": "https://github.com/liush2yuxjtu/pi-debug-mode",
+    "englishGifFrameChangedWithoutInteraction": true,
+    "chineseGifFrameChangedWithoutInteraction": true,
+    "interactionCount": 0
+  },
+  "animatedPreviews": [
+    {
+      "name": "pi-debug-mode-preview.gif",
+      "url": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-preview.gif",
+      "bytes": 1492988,
+      "width": 800,
+      "height": 450,
+      "frames": 98,
+      "durationMilliseconds": 12260,
+      "loop": "infinite",
+      "contentType": "image/gif",
+      "sha256": "58971ab9a7b39aeef73b3c110d9fc3309ac9a1a8a79d07dbc71e14dbee4ee201",
+      "cdnAndReleaseHashesMatch": true
+    },
+    {
+      "name": "pi-debug-mode-preview-zh.gif",
+      "url": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-preview-zh.gif",
+      "bytes": 1322585,
+      "width": 800,
+      "height": 450,
+      "frames": 98,
+      "durationMilliseconds": 12260,
+      "loop": "infinite",
+      "contentType": "image/gif",
+      "sha256": "1b4401a6b1abae2f19e0e2e6c865c9d429e3a159915d9ff00987ec7b7ddc52cf",
+      "cdnAndReleaseHashesMatch": true
+    }
+  ],
+  "fullVideos": [
+    {
+      "name": "pi-debug-mode-real-tui.mp4",
+      "durationSeconds": 80.92,
+      "width": 1280,
+      "height": 720,
+      "browserPlayback": "pass",
+      "sha256": "31d106caafde58e3783344f048135ac260bb3a40b870b15c2e6d144ce7ee062f"
+    },
+    {
+      "name": "pi-debug-mode-real-tui-zh.mp4",
+      "durationSeconds": 57,
+      "width": 1280,
+      "height": 720,
+      "browserPlayback": "pass",
+      "sha256": "b8fe70c29bd25f1caecae18d0de027540638bfb441cbbbea5e80c12a4b75c1fc"
+    },
+    {
+      "name": "pi-debug-mode-demo.mp4",
+      "durationSeconds": 12.52,
+      "width": 1280,
+      "height": 720,
+      "browserPlayback": "pass",
+      "sha256": "89d3961ebe5f81980dbf270360c5e21652589daa3732168525a1b30400fe8ebd"
+    },
+    {
+      "name": "pi-debug-mode-demo-zh.mp4",
+      "durationSeconds": 12.48,
+      "width": 1280,
+      "height": 720,
+      "browserPlayback": "pass",
+      "sha256": "7382b41f716fe54641aa4e64867ab158b465979a93d914e83ea478046cdb2dec"
+    }
+  ],
+  "verification": {
+    "releaseVerifier": {
+      "passed": 36,
+      "failed": 0,
+      "warnings": 1
+    },
+    "browserPages": 7,
+    "browserGifSurfaces": 6,
+    "browserMp4FilesPlayed": 4,
+    "browserInteractions": 0,
+    "browserResult": "pass"
+  },
+  "limitations": [
+    "www.npmjs.com returned its Cloudflare anti-bot page to automated requests; registry metadata, tarball integrity, provenance, and an isolated Pi install passed.",
+    "Pi Gallery social description metadata remains generic because of upstream issue https://github.com/earendil-works/pi/issues/6699.",
+    "Pi Gallery refresh completed about 19 minutes after npm publication; this cache delay is outside the package repository.",
+    "Release asset download counters are reported separately from adoption."
+  ]
+}

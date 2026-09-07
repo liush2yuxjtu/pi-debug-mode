@@ -1,38 +1,40 @@
 {
   "artifact": "pi-debug-mode",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
   "canonicalRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
-  "releaseCommit": "bd4a4fd3dd5d0f9b5674c045bffe355415acfcc0",
+  "releaseCommit": "8c40af0e3a4d14eff574db7151e26359336e2b56",
   "channels": [
     {
       "name": "github",
-      "status": "published-and-verified",
-      "listingUrl": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.5",
-      "installCommand": "pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.5",
-      "releaseAssets": 8
+      "status": "published-and-browser-verified",
+      "listingUrl": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.6",
+      "installCommand": "pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.6",
+      "releaseAssets": 10,
+      "readmeInlineGifCount": 2
     },
     {
       "name": "npm",
       "status": "published-and-verified",
       "listingUrl": "https://www.npmjs.com/package/pi-debug-mode",
-      "registryUrl": "https://registry.npmjs.org/pi-debug-mode/0.1.5",
-      "installCommand": "pi install npm:pi-debug-mode@0.1.5",
-      "integrity": "sha512-JM6AT+SaWMK2jncDoMz7RykCvlRuCW749XAsNjTlaneo7VBgG29qnHcm6B0RYNuW5geWwouEwZNLMZe0tvylZw=="
+      "registryUrl": "https://registry.npmjs.org/pi-debug-mode/0.1.6",
+      "installCommand": "pi install npm:pi-debug-mode@0.1.6",
+      "integrity": "sha512-mxWuuOLx0UwKoHHhPZApNwYkDKzCBEJxRieMt/vEaADuG2c82E9/GPlPlOpEG3bbCh2EPq12blIoW7pz54rtQw=="
     },
     {
       "name": "pi-package-gallery",
       "status": "published-and-browser-verified",
       "listingUrl": "https://pi.dev/packages/pi-debug-mode",
-      "installCommand": "pi install npm:pi-debug-mode@0.1.5",
-      "video": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui.mp4",
-      "poster": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui-poster.png"
+      "installCommand": "pi install npm:pi-debug-mode@0.1.6",
+      "primaryPreview": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-preview.gif",
+      "previewMode": "inline-animated-gif-no-click"
     },
     {
       "name": "github-pages",
       "status": "published-and-browser-verified",
       "listingUrl": "https://liush2yuxjtu.github.io/pi-debug-mode/",
-      "routes": 4
+      "routes": 4,
+      "previewMode": "inline-animated-gif-with-reduced-motion-poster"
     }
   ]
 }
