@@ -19,9 +19,9 @@ Rebuild English with `tools/real-tui-video/render.sh`; rebuild Chinese with `too
 
 `pi-debug-mode-demo.mp4` is generated from `docs/demo.html` by `tools/demo-video/render.sh`. `pi-debug-mode-demo-zh.mp4` is generated from `docs/demo-zh.html` by `tools/demo-video/render.sh zh`. Both are deterministic simulations, not real TUI captures.
 
-- `pi-debug-mode-preview.gif`: 800×450, 8 fps, 98-frame English inline loop derived from the concept MP4.
-- `pi-debug-mode-preview-zh.gif`: matching Chinese inline loop.
+- `pi-debug-mode-preview.gif`: 800×450, 8 fps, 96-frame English inline loop from seconds 10–22 of the real Pi TUI recording.
+- `pi-debug-mode-preview-zh.gif`: matching 96-frame Chinese real-TUI loop from seconds 10–22.
 
-The README embeds both GIFs without link wrappers. `pi.image` uses the English GIF as the Pi Gallery primary preview; `pi.video` is intentionally omitted so motion appears without opening the video modal. Owned product pages embed the GIF directly and use the static PNG poster when `prefers-reduced-motion: reduce` is active.
+The README embeds both GIFs without link wrappers. `pi.image` uses the English real-TUI GIF as the Pi Gallery primary preview; `pi.video` is intentionally omitted so motion appears without opening the video modal. Owned product pages embed the GIF directly and use the static PNG poster when `prefers-reduced-motion: reduce` is active.
 
 All browser recording, video conversion, GIF creation, poster capture, and contact-sheet rendering runs on the configured Mac mini.

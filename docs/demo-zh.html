@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#eeeae2">
   <meta name="description" content="运行 pi-debug-mode 中文交互演示，依次查看竞争假设、定向运行时探针、人工复现检查点、最小修复和最终验证，了解修改代码前如何先收集证据，以及它与普通调试提示词之间的流程差异。">
-  <meta name="release-version" content="0.1.6">
+  <meta name="release-version" content="0.1.7">
   <link rel="canonical" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">
   <link rel="alternate" hreflang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">
   <link rel="alternate" hreflang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">
@@ -18,7 +18,7 @@
   <meta property="og:title" content="pi-debug-mode 交互演示 | 用运行时证据定位并验证 Pi 调试问题">
   <meta property="og:description" content="依次查看竞争假设、运行时探针、人工复现、根因修复和最终验证。">
   <meta property="og:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">
-  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
+  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="720">
@@ -26,7 +26,7 @@
   <meta name="twitter:title" content="pi-debug-mode 交互演示 | 用运行时证据定位并验证 Pi 调试问题">
   <meta name="twitter:description" content="依次查看竞争假设、运行时探针、人工复现、根因修复和最终验证。">
   <meta name="twitter:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">
-  <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
+  <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
   <title>pi-debug-mode 交互演示 | 用运行时证据定位并验证 Pi 调试问题</title>
   <style>
     :root {
@@ -297,7 +297,7 @@
     }
   </style>
 </head>
-<body data-release-version="0.1.6">
+<body data-release-version="0.1.7">
   <a class="skip-link" href="#main">跳到交互演示</a>
   <header class="site-header">
     <nav class="nav nav-shell" aria-label="演示导航">
@@ -321,7 +321,7 @@
           <div class="fact"><b>/debug-stop</b><span>退出且不声称已修复</span></div>
           <div class="fact"><b>debug_reproduction</b><span>收集人工结果</span></div>
         </div>
-        <p class="demo-note">这是 0.1.6 的交互模拟。另有真实 Pi 运行输出的 TUI 录屏。</p>
+        <p class="demo-note">这是 0.1.7 的交互模拟。另有真实 Pi 运行输出的 TUI 录屏。</p>
       </div>
 
       <div class="stage" role="region" aria-label="pi-debug-mode 中文交互流程">
@@ -329,7 +329,7 @@
         <section class="window terminal" aria-label="模拟 Pi 终端">
           <div class="titlebar"><span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span><span class="dot" aria-hidden="true"></span><span>Pi · pi-debug-mode</span></div>
           <div class="terminal-body" aria-live="polite">
-            <div class="line dim">Pi · pi-debug-mode 0.1.6</div>
+            <div class="line dim">Pi · pi-debug-mode 0.1.7</div>
             <div class="line"><span class="prompt">❯</span> /debug 支付后结账页面卡住</div>
             <div class="line" id="start-line">选择 <button class="primary" id="start" type="button">开始调试</button> 查看完整流程。</div>
             <div id="trace" class="hide"></div>
@@ -354,7 +354,7 @@
 
   <footer class="site-footer">
     <div class="footer-shell">
-      <span class="footer-note">交互模拟 · 版本 0.1.6</span>
+      <span class="footer-note">交互模拟 · 版本 0.1.7</span>
       <div class="footer-links">
         <a class="footer-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">中文产品首页</a>
         <a class="footer-link" lang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">English interactive demo</a>
