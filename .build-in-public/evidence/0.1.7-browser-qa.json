@@ -1,0 +1,217 @@
+{
+  "version": "0.1.7",
+  "interactionCount": 0,
+  "ok": true,
+  "pages": [
+    {
+      "id": "github",
+      "url": "https://github.com/liush2yuxjtu/pi-debug-mode",
+      "status": 200,
+      "errors": [],
+      "hasVersion": true,
+      "animations": [
+        {
+          "src": "https://camo.githubusercontent.com/2534e481748a09c7bbd5130b80cc48c73c69b9c55fcd5e961a11dbc962450921/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f6c69757368327975786a74752f70692d64656275672d6d6f64654076302e312e372f6172746966616374732f64656d6f2f70692d64656275672d6d6f64652d707265766965772e676966",
+          "width": 800,
+          "height": 450,
+          "complete": true,
+          "firstFrameSha": "b6d1f711c52e9b77597140b7ebd4637bd3cfb02bd6e058fd3a46510a578a1d21",
+          "laterFrameSha": "74d94a1daa752029866acc1735292ca7a534262c0de0bd4b5ba3a215a2379cb9",
+          "frameChanged": true
+        },
+        {
+          "src": "https://camo.githubusercontent.com/76707e8c4c38c1805218b08dbbacbdbdf087556e2e244fe2e51ffe14ab41ccab/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f6c69757368327975786a74752f70692d64656275672d6d6f64654076302e312e372f6172746966616374732f64656d6f2f70692d64656275672d6d6f64652d707265766965772d7a682e676966",
+          "width": 800,
+          "height": 450,
+          "complete": true,
+          "firstFrameSha": "fa8eaeb6ec434fd61518fd1b7ab15fe497d16b0b05adbe9c14b091a46d0adbd4",
+          "laterFrameSha": "aeac1ec14d9fea1d01e59c488bfb54007a3d2ab893bcb597055eb0f61151b664",
+          "frameChanged": true
+        }
+      ],
+      "ok": true
+    },
+    {
+      "id": "pages-en",
+      "url": "https://liush2yuxjtu.github.io/pi-debug-mode/",
+      "status": 200,
+      "errors": [],
+      "hasVersion": true,
+      "overflow": false,
+      "brokenImages": 0,
+      "animation": {
+        "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview.gif",
+        "width": 800,
+        "height": 450,
+        "complete": true,
+        "firstFrameSha": "577d5099a8ab6828594894cdff98933fd1e026841baa022062b070d8615cfbc4",
+        "laterFrameSha": "ac94eff4d9ef72696c6e4fa0c48ad826d0f1867fcab09fb562616c67bac492ec",
+        "frameChanged": true
+      },
+      "ok": true
+    },
+    {
+      "id": "pages-zh",
+      "url": "https://liush2yuxjtu.github.io/pi-debug-mode/zh/",
+      "status": 200,
+      "errors": [],
+      "hasVersion": true,
+      "overflow": false,
+      "brokenImages": 0,
+      "animation": {
+        "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview-zh.gif",
+        "width": 800,
+        "height": 450,
+        "complete": true,
+        "firstFrameSha": "b41020fe6d8e0a2606d43580b584d4c2ea117c3f20c7c75cbbe4056447fdc825",
+        "laterFrameSha": "c8d24f8976ed0a3b42c18014b4bf53f6fe62991765c10bbab4b16598d9ed5cc8",
+        "frameChanged": true
+      },
+      "ok": true
+    },
+    {
+      "id": "demo-en",
+      "url": "https://liush2yuxjtu.github.io/pi-debug-mode/demo.html",
+      "status": 200,
+      "errors": [],
+      "hasVersion": true,
+      "overflow": false,
+      "ok": true
+    },
+    {
+      "id": "demo-zh",
+      "url": "https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html",
+      "status": 200,
+      "errors": [],
+      "hasVersion": true,
+      "overflow": false,
+      "ok": true
+    },
+    {
+      "id": "release",
+      "url": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.7",
+      "status": 200,
+      "errors": [],
+      "hasVersion": true,
+      "hasGifAssets": true,
+      "ok": true
+    },
+    {
+      "id": "gallery",
+      "url": "https://pi.dev/packages/pi-debug-mode",
+      "status": 200,
+      "errors": [],
+      "videoElements": 0,
+      "brokenImages": 0,
+      "staleNpmMedia": false,
+      "visibleVersion": "0.1.7",
+      "primaryAnimation": {
+        "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview.gif",
+        "width": 800,
+        "height": 450,
+        "complete": true,
+        "firstFrameSha": "59ab60b59381677477a96b91795ccc2eb7288209f986f92e57d8b47cc54decf2",
+        "laterFrameSha": "3e7e05d55b2a11626cb3219e8d420196855f06b6e1b38d70d0b46d880bf95e2f",
+        "frameChanged": true
+      },
+      "readmeAnimation": {
+        "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview.gif",
+        "width": 800,
+        "height": 450,
+        "complete": true,
+        "firstFrameSha": "6fec6f40d802788f5d6a0e3eb630da0fd7d8f057f020fe8b2cd2ac667d7473ac",
+        "laterFrameSha": "5a7d158e1477e76a4ed61449dd4d4731ca741f451804ee60b3a02df3038ae81e",
+        "frameChanged": true
+      },
+      "ok": true
+    }
+  ],
+  "directGifs": [
+    {
+      "name": "pi-debug-mode-preview.gif",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview.gif",
+      "width": 800,
+      "height": 450,
+      "complete": true,
+      "firstFrameSha": "44d4a662967e875c631685e4f9ff01d6dde999fb844044ea08891266f0d90515",
+      "laterFrameSha": "2defe4fa74cdba94e0291dd58093d11b51c16671bb8284331709aceafc0672d0",
+      "frameChanged": true,
+      "ok": true
+    },
+    {
+      "name": "pi-debug-mode-preview-zh.gif",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview-zh.gif",
+      "width": 800,
+      "height": 450,
+      "complete": true,
+      "firstFrameSha": "fb971def90c804f792270ca6ad214a6c102264a1236d0d2ee13c751564585446",
+      "laterFrameSha": "cfd0d7883ac5ff06aebe707c1217c64247587a0be9fbb98a8bc38964671ed580",
+      "frameChanged": true,
+      "ok": true
+    }
+  ],
+  "videos": [
+    {
+      "name": "pi-debug-mode-real-tui.mp4",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui.mp4",
+      "playError": null,
+      "currentTime": 1.258381,
+      "duration": 80.92,
+      "width": 1280,
+      "height": 720,
+      "error": null,
+      "paused": false,
+      "ok": true
+    },
+    {
+      "name": "pi-debug-mode-real-tui-zh.mp4",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-zh.mp4",
+      "playError": null,
+      "currentTime": 1.204231,
+      "duration": 57,
+      "width": 1280,
+      "height": 720,
+      "error": null,
+      "paused": false,
+      "ok": true
+    },
+    {
+      "name": "pi-debug-mode-demo.mp4",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-demo.mp4",
+      "playError": null,
+      "currentTime": 1.204885,
+      "duration": 12.52,
+      "width": 1280,
+      "height": 720,
+      "error": null,
+      "paused": false,
+      "ok": true
+    },
+    {
+      "name": "pi-debug-mode-demo-zh.mp4",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-demo-zh.mp4",
+      "playError": null,
+      "currentTime": 1.204168,
+      "duration": 12.48,
+      "width": 1280,
+      "height": 720,
+      "error": null,
+      "paused": false,
+      "ok": true
+    }
+  ],
+  "reducedMotion": [
+    {
+      "id": "en",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-poster.png",
+      "isPoster": true,
+      "ok": true
+    },
+    {
+      "id": "zh",
+      "src": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-poster-zh.png",
+      "isPoster": true,
+      "ok": true
+    }
+  ]
+}
