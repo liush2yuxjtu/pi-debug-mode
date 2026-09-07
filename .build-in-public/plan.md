@@ -3,8 +3,8 @@
 ## Canonical artifact and version
 
 - Artifact: Pi extension and npm package `pi-debug-mode`
-- Current verified release: `0.1.6`, tag `v0.1.6`
-- Target patch: `0.1.7`, tag `v0.1.7`
+- Current verified release: `0.1.7`, tag `v0.1.7`
+- Previous release: `0.1.6`, tag `v0.1.6`
 - Canonical source: `https://github.com/liush2yuxjtu/pi-debug-mode`
 - GitHub Pages source: `main/docs`
 - GitHub Pages base: `https://liush2yuxjtu.github.io/pi-debug-mode/`
@@ -12,47 +12,38 @@
 
 ## Problem and replacement
 
-Version 0.1.6 used a concept-demo GIF as primary preview. It looped without a click but showed simulated UI rather than the real Pi TUI. Version 0.1.7 replaces both English and Chinese primary GIFs with 12-second segments from the real-machine Pi TUI recordings, seconds 10–22.
+Version 0.1.6 used concept-demo GIFs as primary previews. Version 0.1.7 replaces both English and Chinese primary GIFs with 12-second segments from the real-machine Pi TUI recordings, seconds 10–22.
+
+## Completed release waves
+
+1. Replaced primary GIF bytes with real-TUI 10–22s segments; encoding ran on Mac mini only.
+2. Bumped package and public surfaces to 0.1.7.
+3. Passed tests, typecheck, package dry-run, local verifier, GIF metadata checks, and local browser QA.
+4. Merged to `main`, deployed Pages, and created immutable `v0.1.7`.
+5. Published ten GitHub Release assets and npm through OIDC.
+6. Verified exact Pi Gallery version, current real-TUI GIF URL, zero `<video>` elements, and zero-click frame changes.
+7. Recorded release evidence and metrics.
 
 ## Direct channels
 
 ### GitHub and README
 
-- Embed real-TUI English and Chinese GIFs directly without link wrappers.
-- Keep complete real-machine MP4 recordings as explicit secondary links and release assets.
-- Attach two real-TUI GIFs, four MP4 files, and four PNG posters to release `v0.1.7`.
+English and Chinese GIF previews embed actual Pi TUI output without link wrappers. Complete real-machine MP4 recordings remain explicit secondary links.
 
 ### npm and Pi Package Gallery
 
-- Publish `pi-debug-mode@0.1.7` through existing Trusted Publisher OIDC.
-- Use only `pi.image`, pointed at the real-TUI English GIF.
-- Omit `pi.video` so the Gallery primary preview remains inline image animation.
-- Keep media outside the five-file npm tarball through immutable jsDelivr GitHub-tag URLs.
+`pi-debug-mode@0.1.7` uses only `pi.image`, pointed at the real-TUI English GIF. `pi.video` remains omitted so Gallery shows image animation instead of modal video behavior.
 
 ### GitHub Pages
 
-- Embed real-TUI English and Chinese GIF segments directly.
-- Use static PNG posters for `prefers-reduced-motion: reduce`.
-- Keep complete real-machine MP4 links and interactive simulations as secondary routes.
+English and Chinese pages embed real-TUI GIF segments. Reduced-motion users receive static PNG posters. Full MP4 recordings remain secondary links.
 
-## Wrapper channels
+## Rollback
 
-None. Native Pi package channels only.
-
-## Release waves
-
-1. Replace primary GIF bytes with real-TUI 10–22s segments; do all GIF work on Mac mini.
-2. Bump package and public docs to 0.1.7.
-3. Run tests, typecheck, package dry-run, local verifier, GIF metadata checks, and local browser QA.
-4. Merge, deploy Pages, create immutable `v0.1.7`, and run tagged verifier.
-5. Publish GitHub Release and npm through OIDC.
-6. Wait for Pi Gallery cache refresh; verify exact version, current GIF URL, zero `<video>` elements, and frame changes with zero interaction.
-7. Record release evidence and metrics.
-
-Rollback remains patch-only. Never move a published tag.
+Patch-only releases. Never move a published tag. If media source needs another change, publish a new patch and update all pinned URLs.
 
 ## Known boundaries
 
 - Pi Gallery refresh delay remains upstream-controlled.
-- Pi Gallery social metadata remains generic under upstream issue https://github.com/earendil-works/pi/issues/6699.
-- Full MP4 remains available for users wanting complete evidence; primary previews now show real TUI motion.
+- Pi Gallery social metadata remains generic under https://github.com/earendil-works/pi/issues/6699.
+- Full MP4 remains available for complete evidence; primary previews show real TUI motion.

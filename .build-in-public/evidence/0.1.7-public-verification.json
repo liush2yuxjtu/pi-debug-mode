@@ -1,0 +1,107 @@
+{
+  "capturedAt": "2026-09-07T07:31:36Z",
+  "version": "0.1.7",
+  "releaseCommit": "f98af71d295b34554ef2d0d865ff1233a8d40f8a",
+  "problemFixed": "v0.1.6 primary GIFs were concept simulations; v0.1.7 primary GIFs use real Pi TUI recording segments.",
+  "sourceSegment": "seconds 10–22 of pi-debug-mode-real-tui.mp4 and pi-debug-mode-real-tui-zh.mp4",
+  "release": {
+    "url": "https://github.com/liush2yuxjtu/pi-debug-mode/releases/tag/v0.1.7",
+    "workflow": "https://github.com/liush2yuxjtu/pi-debug-mode/actions/runs/34093648620",
+    "workflowConclusion": "success",
+    "assetCount": 10,
+    "assetTypes": {
+      "gif": 2,
+      "mp4": 4,
+      "png": 4
+    }
+  },
+  "npm": {
+    "package": "pi-debug-mode",
+    "version": "0.1.7",
+    "registryUrl": "https://registry.npmjs.org/pi-debug-mode/0.1.7",
+    "tarball": "https://registry.npmjs.org/pi-debug-mode/-/pi-debug-mode-0.1.7.tgz",
+    "integrity": "sha512-ghy9wU4J4ViEzQCV2nD9N4T5Yq/DfDLN02PK4bt27F9Y4tJyuH48suMUcIHqcIVeZSA0e1QERWvo87rq60FBzA==",
+    "cleanPiInstall": "pass",
+    "piImage": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview.gif",
+    "piVideoPresent": false
+  },
+  "piGallery": {
+    "url": "https://pi.dev/packages/pi-debug-mode",
+    "visibleVersion": "0.1.7",
+    "primaryPreview": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview.gif",
+    "videoElements": 0,
+    "brokenImages": 0,
+    "zeroClickFrameChanged": true
+  },
+  "pages": {
+    "source": "main/docs",
+    "status": "built",
+    "routes": 4,
+    "zeroClickFrameChanged": true,
+    "reducedMotionPosterFallback": "pass"
+  },
+  "githubReadme": {
+    "url": "https://github.com/liush2yuxjtu/pi-debug-mode",
+    "englishRealTuiFrameChanged": true,
+    "chineseRealTuiFrameChanged": true,
+    "interactionCount": 0
+  },
+  "primaryGifs": [
+    {
+      "name": "pi-debug-mode-preview.gif",
+      "bytes": 925153,
+      "width": 800,
+      "height": 450,
+      "frames": 96,
+      "durationSeconds": 12,
+      "loop": "infinite",
+      "sha256": "a6006f3b3e9ddddc5a649576bc3df4172dd38a98902e13701c564a6e32688a49",
+      "content": "real English Pi TUI"
+    },
+    {
+      "name": "pi-debug-mode-preview-zh.gif",
+      "bytes": 938963,
+      "width": 800,
+      "height": 450,
+      "frames": 96,
+      "durationSeconds": 12,
+      "loop": "infinite",
+      "sha256": "6cd7c33bd0150687e3d7dda29994f085c9762e46d659b9b6df8adad713c1c8f6",
+      "content": "real Chinese Pi TUI"
+    }
+  ],
+  "fullVideos": [
+    {
+      "name": "pi-debug-mode-real-tui.mp4",
+      "durationSeconds": 80.92,
+      "width": 1280,
+      "height": 720,
+      "sha256": "31d106caafde58e3783344f048135ac260bb3a40b870b15c2e6d144ce7ee062f",
+      "browserPlayback": "pass"
+    },
+    {
+      "name": "pi-debug-mode-real-tui-zh.mp4",
+      "durationSeconds": 57,
+      "width": 1280,
+      "height": 720,
+      "sha256": "b8fe70c29bd25f1caecae18d0de027540638bfb441cbbbea5e80c12a4b75c1fc",
+      "browserPlayback": "pass"
+    }
+  ],
+  "verification": {
+    "releaseVerifier": {
+      "passed": 36,
+      "failed": 0,
+      "warnings": 1
+    },
+    "browserPages": 7,
+    "browserInteractions": 0,
+    "primaryGifFrameChanges": 8,
+    "browserResult": "pass"
+  },
+  "limitations": [
+    "Pi Gallery social description metadata remains generic because of upstream issue https://github.com/earendil-works/pi/issues/6699.",
+    "Pi Gallery refresh delay remains outside repository control.",
+    "No GIF or MP4 is claimed as an adoption metric."
+  ]
+}
