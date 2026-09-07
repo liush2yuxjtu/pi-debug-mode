@@ -65,6 +65,7 @@ const EXPECTED_PACKAGE_FILES = [
 ]
 const REQUIRED_SITE_FILES = [
 	'docs/.nojekyll',
+	'docs/favicon.svg',
 	'docs/site.css',
 	'docs/index.html',
 	'docs/zh/index.html',
@@ -535,6 +536,8 @@ function checkHtmlPages(result, { root, identity, pkg }) {
 		for (const [lang, url] of Object.entries(spec.alternates)) {
 			if (!alternateLinks.some((link) => link.hreflang === lang && link.href === url)) problems.push(`missing ${lang} alternate ${url}`)
 		}
+		const icons = linkTags(html, 'icon')
+		if (icons.length !== 1 || icons[0].href !== '/pi-debug-mode/favicon.svg') problems.push('favicon must use /pi-debug-mode/favicon.svg')
 		if (openingTags(html, 'h1').length !== 1) problems.push('page must have one H1')
 		for (const landmark of ['header', 'nav', 'main', 'footer']) {
 			if (openingTags(html, landmark).length !== 1) problems.push(`page must have one ${landmark}`)
@@ -796,7 +799,7 @@ async function runTaggedChecks(result, { identity, surfaces }, options) {
 	}
 }
 
-async function runPublishedChecks(result, { identity, surfaces }, options) {
+async function runPublishedChecks(result, { identity, pkg, surfaces }, options) {
 	const npmSurface = surfaces.find((surface) => surface.owner === 'npm-registry')
 	const gallerySurface = surfaces.find((surface) => surface.owner === 'pi-gallery')
 	if (!npmSurface || !gallerySurface) {
@@ -824,16 +827,30 @@ async function runPublishedChecks(result, { identity, surfaces }, options) {
 		npmResponse.ok && npmValid ? `${identity.packageName}@${identity.version} exists in registry.npmjs.org` : `${npmResponse.detail}; exact package or version did not match`,
 	)
 
-	const versionPattern = new RegExp(`(^|[^0-9.])${escapeRegExp(identity.version)}([^0-9.]|$)`)
+	const galleryVersion = galleryResponse.ok ? extractGalleryVersion(galleryResponse.body) : ''
 	const galleryReferencesRelease =
 		galleryResponse.ok &&
 		galleryResponse.body.includes(identity.packageName) &&
-		versionPattern.test(galleryResponse.body)
+		galleryVersion === identity.version
 	addCheck(
 		result,
 		'published Pi Gallery page',
 		galleryReferencesRelease ? 'pass' : 'fail',
-		galleryReferencesRelease ? `HTTP 200 references ${identity.packageName}@${identity.version}` : `${galleryResponse.detail}; package or version reference missing`,
+		galleryReferencesRelease
+			? `HTTP 200 shows ${identity.packageName}@${identity.version}`
+			: `${galleryResponse.detail}; expected version ${identity.version}, observed ${galleryVersion || '<missing>'}`,
+	)
+	const expectedGalleryMedia = [pkg.pi?.video, pkg.pi?.image].filter((value) => typeof value === 'string')
+	const galleryMediaMatches =
+		galleryReferencesRelease &&
+		expectedGalleryMedia.length === 2 &&
+		expectedGalleryMedia.every((url) => galleryResponse.body.includes(url)) &&
+		!galleryResponse.body.includes(`cdn.jsdelivr.net/npm/${identity.packageName}@${identity.version}/artifacts/`)
+	addCheck(
+		result,
+		'published Pi Gallery media',
+		galleryMediaMatches ? 'pass' : 'fail',
+		galleryMediaMatches ? 'video and poster use current tag-backed CDN URLs' : 'current video/poster URLs are missing or npm-relative media links remain',
 	)
 	if (galleryResponse.ok) {
 		const description = metaValue(galleryResponse.body, 'name', 'description') ?? ''
@@ -916,6 +933,10 @@ async function fetchSurface(surface) {
 
 function hasReleaseMarker(html, version) {
 	return html.includes(`content="${version}"`) || html.includes(`data-release-version="${version}"`)
+}
+
+function extractGalleryVersion(html) {
+	return html.match(/<dt>\s*Version\s*<\/dt>\s*<dd>\s*<code>([^<]+)<\/code>\s*<\/dd>/i)?.[1]?.trim() ?? ''
 }
 
 function openingTags(html, tagName) {
