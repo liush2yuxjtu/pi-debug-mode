@@ -485,7 +485,9 @@ h1 em {
 }
 
 .evidence-image {
+  display: block;
   width: 100%;
+  background: #111;
   border-bottom: 1px solid var(--line-dark);
   filter: saturate(0.78) contrast(1.04);
 }

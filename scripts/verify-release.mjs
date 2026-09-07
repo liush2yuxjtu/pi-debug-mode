@@ -215,10 +215,11 @@ function buildPublicSurfaces(identity, pkg, readme) {
 		}
 	}
 	const rawSurface = (id, url, contentKind) => {
+		if (typeof url !== 'string' || !url) return
 		add({
 			id,
 			owner: 'git-tag',
-			url: typeof url === 'string' ? url : '',
+			url,
 			phases: ['local', 'tagged', 'published'],
 			localPath: mapTaggedMediaUrlToLocalPath(identity, url),
 			contentKind,
@@ -391,19 +392,18 @@ function checkPiMetadata(result, { pkg, identity }) {
 	const unknownKeys = pi && typeof pi === 'object'
 		? Object.keys(pi).filter((key) => !supportedKeys.includes(key))
 		: []
-	const expectedImage = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-real-tui-poster.png`
-	const expectedVideo = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-real-tui.mp4`
+	const expectedImage = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-preview.gif`
 	const problems = []
 	if (!pi || typeof pi !== 'object') problems.push('pi metadata is missing')
 	if (!arraysEqual(pi?.extensions, ['./src/index.ts'])) problems.push('pi.extensions must contain only ./src/index.ts')
 	if (pi?.image !== expectedImage) problems.push(`pi.image must be ${expectedImage}`)
-	if (pi?.video !== expectedVideo) problems.push(`pi.video must be ${expectedVideo}`)
+	if (pi && Object.hasOwn(pi, 'video')) problems.push('pi.video must be omitted so the animated GIF is the primary no-click preview')
 	if (unknownKeys.length) problems.push(`unsupported fields ${unknownKeys.join(', ')}`)
 	addCheck(
 		result,
 		'Pi metadata',
 		problems.length ? 'fail' : 'pass',
-		problems.length ? problems.join('; ') : `supported fields with ${identity.tagName} media pins`,
+		problems.length ? problems.join('; ') : `image-only animated preview pinned to ${identity.tagName}`,
 	)
 }
 
@@ -461,6 +461,15 @@ function checkReadme(result, { root, readme, identity }) {
 	const mediaLinks = extractMarkdownMediaLinks(readme)
 	const mediaProblems = []
 	if (!mediaLinks.length) mediaProblems.push('no media links found')
+	const inlineGifs = [...readme.matchAll(/^!\[[^\]]+\]\(([^)\s]+\.gif)\)$/gim)].map((match) => match[1])
+	const expectedInlineGifs = [
+		`${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-preview.gif`,
+		`${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-preview-zh.gif`,
+	]
+	for (const url of expectedInlineGifs) {
+		if (!inlineGifs.includes(url)) mediaProblems.push(`missing unwrapped inline GIF ${url}`)
+	}
+	if (/\[!\[[^\]]*\]\([^)]+\.gif\)\]\(/i.test(readme)) mediaProblems.push('animated GIF must not require a link click')
 	for (const url of mediaLinks) {
 		const localPath = mapTaggedMediaUrlToLocalPath(identity, url)
 		if (!url.startsWith(taggedMediaBase(identity))) {
@@ -583,6 +592,15 @@ function checkHtmlPages(result, { root, identity, pkg }) {
 			for (const id of ['install', 'when-to-use', 'workflow', 'evidence', 'compare', 'security', 'faq']) {
 				if (!new RegExp(`<section\\b[^>]*\\bid=["']${id}["']`, 'i').test(html)) problems.push(`section #${id} is missing`)
 			}
+			const suffix = spec.lang === 'zh-CN' ? '-zh' : ''
+			const expectedGif = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-preview${suffix}.gif`
+			const expectedPoster = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-poster${suffix}.png`
+			const inlineImage = openingTags(html, 'img').find((item) => item.src === expectedGif)
+			const reducedMotion = openingTags(html, 'source').find((item) => item.media === '(prefers-reduced-motion: reduce)' && item.srcset === expectedPoster)
+			if (openingTags(html, 'picture').length !== 1) problems.push('home page must contain one inline preview picture')
+			if (!inlineImage) problems.push(`inline preview image must be ${expectedGif}`)
+			if (!reducedMotion) problems.push(`reduced-motion preview must use ${expectedPoster}`)
+			if (/<a\b[^>]*>\s*(?:<picture\b[^>]*>\s*)?<img\b[^>]*pi-debug-mode-preview/i.test(html)) problems.push('inline preview GIF must not be wrapped in a link')
 		} else {
 			const homepage = spec.lang === 'en' ? identity.pagesBase : `${identity.pagesBase}zh/`
 			if (!html.includes(`href="${homepage}"`)) problems.push(`homepage navigation must link to ${homepage}`)
@@ -726,8 +744,14 @@ function checkSurfaceRegistry(result, { root, identity, surfaces }) {
 			if (!surface.localPath || !safeLocalFileExists(root, surface.localPath)) {
 				problems.push(`${surface.id} has no local source mapping`)
 			} else if (surface.contentKind === 'image') {
-				const dimensions = readPngDimensions(resolve(root, surface.localPath))
-				if (!dimensions || dimensions.width !== 1280 || dimensions.height !== 720) problems.push(`${surface.id} source must be a 1280x720 PNG`)
+				const sourcePath = resolve(root, surface.localPath)
+				const dimensions = readImageDimensions(sourcePath)
+				if (!dimensions || dimensions.width !== 800 || dimensions.height !== 450) problems.push(`${surface.id} source must be an 800x450 image`)
+				if (surface.localPath.endsWith('.gif')) {
+					const animation = readGifAnimationInfo(sourcePath)
+					if (!animation || animation.frames < 2 || !animation.loops) problems.push(`${surface.id} must be an animated looping GIF`)
+					if (animation && animation.bytes > 2 * 1024 * 1024) problems.push(`${surface.id} GIF must not exceed 2 MiB`)
+				}
 			}
 		}
 		if (surface.owner === 'pages-main' && (!surface.localPath || !safeLocalFileExists(root, surface.localPath))) problems.push(`${surface.id} has no page source`)
@@ -745,12 +769,30 @@ function safeLocalFileExists(root, localPath) {
 	return absolute.startsWith(`${root}${sep}`) && existsSync(absolute)
 }
 
-function readPngDimensions(path) {
+function readImageDimensions(path) {
 	try {
 		const header = readFileSync(path).subarray(0, 24)
-		const signature = '89504e470d0a1a0a'
-		if (header.length < 24 || header.subarray(0, 8).toString('hex') !== signature) return null
-		return { width: header.readUInt32BE(16), height: header.readUInt32BE(20) }
+		if (header.length >= 24 && header.subarray(0, 8).toString('hex') === '89504e470d0a1a0a') {
+			return { width: header.readUInt32BE(16), height: header.readUInt32BE(20) }
+		}
+		if (header.length >= 10 && ['GIF87a', 'GIF89a'].includes(header.subarray(0, 6).toString('ascii'))) {
+			return { width: header.readUInt16LE(6), height: header.readUInt16LE(8) }
+		}
+		return null
+	} catch {
+		return null
+	}
+}
+
+function readGifAnimationInfo(path) {
+	try {
+		const data = readFileSync(path)
+		if (!['GIF87a', 'GIF89a'].includes(data.subarray(0, 6).toString('ascii'))) return null
+		let frames = 0
+		for (let index = 0; index < data.length - 2; index += 1) {
+			if (data[index] === 0x21 && data[index + 1] === 0xf9 && data[index + 2] === 0x04) frames += 1
+		}
+		return { frames, loops: data.includes(Buffer.from('NETSCAPE2.0')), bytes: data.length }
 	} catch {
 		return null
 	}
@@ -840,17 +882,19 @@ async function runPublishedChecks(result, { identity, pkg, surfaces }, options) 
 			? `HTTP 200 shows ${identity.packageName}@${identity.version}`
 			: `${galleryResponse.detail}; expected version ${identity.version}, observed ${galleryVersion || '<missing>'}`,
 	)
-	const expectedGalleryMedia = [pkg.pi?.video, pkg.pi?.image].filter((value) => typeof value === 'string')
+	const expectedGalleryImage = pkg.pi?.image
 	const galleryMediaMatches =
 		galleryReferencesRelease &&
-		expectedGalleryMedia.length === 2 &&
-		expectedGalleryMedia.every((url) => galleryResponse.body.includes(url)) &&
+		typeof expectedGalleryImage === 'string' &&
+		galleryResponse.body.includes(expectedGalleryImage) &&
+		galleryResponse.body.includes(`<img src="${expectedGalleryImage}"`) &&
+		!galleryResponse.body.includes('<video') &&
 		!galleryResponse.body.includes(`cdn.jsdelivr.net/npm/${identity.packageName}@${identity.version}/artifacts/`)
 	addCheck(
 		result,
 		'published Pi Gallery media',
 		galleryMediaMatches ? 'pass' : 'fail',
-		galleryMediaMatches ? 'video and poster use current tag-backed CDN URLs' : 'current video/poster URLs are missing or npm-relative media links remain',
+		galleryMediaMatches ? 'animated GIF is the current primary inline preview' : 'current inline GIF is missing, modal media remains primary, or npm-relative media links remain',
 	)
 	if (galleryResponse.ok) {
 		const description = metaValue(galleryResponse.body, 'name', 'description') ?? ''

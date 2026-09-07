@@ -1,6 +1,6 @@
 {
   "name": "pi-debug-mode",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Cursor-style debug mode for the Pi coding agent, with evidence-first debugging and targeted runtime probes.",
   "type": "module",
   "license": "MIT",
@@ -31,8 +31,7 @@
     "extensions": [
       "./src/index.ts"
     ],
-    "video": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui.mp4",
-    "image": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.5/artifacts/demo/pi-debug-mode-real-tui-poster.png"
+    "image": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.6/artifacts/demo/pi-debug-mode-preview.gif"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
