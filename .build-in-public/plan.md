@@ -21,7 +21,8 @@ Machine-checkable work stays with Pi. Visual, click, touch, and aesthetic judgme
 - The existing Guided UI demo video remains unchanged as a historical compatibility recording.
 - `artifacts/demo/pi-debug-mode-demo.mp4` and its poster remain deterministic Guided simulation evidence.
 - The real TUI recordings remain unchanged and continue to document the earlier live-machine workflow.
-- A new video render was not produced because the Mac mini gate reported less than 10 GiB free space. No local MacBook rendering was used.
+- The Mac mini gate first reported less than 10 GiB free space. Safe cleanup removed one merged worktree, nine closed caches, and 106 closed runner logs. The gate then passed at 11.9 GiB.
+- A fresh 12.44-second recording of the old Guided UI demo was rendered on Mac mini. No local MacBook rendering was used.
 - The 20-case Autopilot prompt evaluation passed 20/20 with `openai-codex/gpt-5.6-luna` and minimal thinking.
 
 ## Direct channels

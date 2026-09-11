@@ -17,7 +17,7 @@ All notable changes to `pi-debug-mode` are recorded here.
 - Autopilot now uses prompt guidance only. It does not add a slash command, start a background executor, simulate clicks, or create automatic retries.
 - Machine paths stay inside the Agent. The Agent verifies commands, tests, APIs, logs, CLI/TUI behavior, UI logic, and artifacts with existing tools.
 - Human paths remain available only for judgments that software cannot determine. The first Autopilot result is mode handoff, not a human conclusion. A human path uses at most one additional checkpoint with `humanReason`.
-- Reused the existing Guided UI demo video and poster as the historical compatibility preview. The demo remains labeled as a Guided simulation instead of claiming to show Autopilot behavior.
+- Kept the original Guided UI demo video and poster as historical compatibility assets. Added a fresh 12.44-second recording of the same old Guided flow after the 0.1.8 docs update. The recording remains labeled as a Guided simulation instead of claiming to show Autopilot behavior.
 - Updated the README, English and Chinese product pages, and release notes to describe the two Autopilot paths and their safety boundaries.
 
 ### Fixed

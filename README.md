@@ -24,7 +24,7 @@ The source terminal session was recorded from tmux as an asciinema cast. Only lo
 - [观看 13 秒中文概念演示](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-demo-zh.mp4)
 - [打开中文交互演示](https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html)
 
-For another English route, [watch the 13-second product demo](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-demo.mp4) or open the [English interactive demo](https://liush2yuxjtu.github.io/pi-debug-mode/demo.html).
+For another English route, [watch the original 13-second product demo](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-demo.mp4), [watch the fresh 0.1.8 Guided replay](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-demo-0.1.8.mp4), or open the [English interactive demo](https://liush2yuxjtu.github.io/pi-debug-mode/demo.html).
 
 ## Install
 
