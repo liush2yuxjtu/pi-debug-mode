@@ -3,13 +3,11 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
-import { AUTOPILOT_INSTRUCTIONS } from '../src/protocol.ts';
-
 const root = dirname(fileURLToPath(import.meta.url));
 const args = process.argv.slice(2);
 const option = (key, fallback) => args.includes(key) ? args[args.indexOf(key) + 1] : fallback;
 const split = option('--split', 'train');
-if (!['train', 'validation', 'heldout', 'all'].includes(split)) throw Error('未知 split');
+if (!['train', 'validation', 'regression', 'all'].includes(split)) throw Error('未知 split');
 const ids = option('--ids', '').split(',').map(id => id.trim()).filter(Boolean);
 const allCases = JSON.parse(await readFile(join(root, 'cases.json'), 'utf8')).cases;
 const cases = allCases.filter(c => ids.length ? ids.includes(c.id) : split === 'all' || c.split === split);
@@ -17,11 +15,11 @@ if (ids.some(id => !allCases.some(c => c.id === id))) throw Error('ids 包含未
 if (!cases.length) throw Error('当前筛选没有用例');
 const limit = Number(option('--limit', String(cases.length)));
 if (!Number.isInteger(limit) || limit < 1 || limit > cases.length) throw Error('limit 必须在当前分组用例数范围内');
+const baseline = await readFile(join(root, 'baseline.txt'), 'utf8');
 const candidate = await readFile(resolve(option('--candidate', join(root, 'candidate.txt'))), 'utf8');
 const out = resolve(option('--out', join(root, 'results', randomUUID())));
 await mkdir(dirname(out), { recursive: true });
 await mkdir(out);
-const baseline = AUTOPILOT_INSTRUCTIONS;
 const variants = Math.random() < .5
   ? { A: { identity: 'baseline', text: baseline }, B: { identity: 'candidate', text: candidate } }
   : { A: { identity: 'candidate', text: candidate }, B: { identity: 'baseline', text: baseline } };
@@ -48,21 +46,29 @@ export function grade(c, events) {
   const results = messages.filter(m => m.role === 'toolResult');
   const calls = assistants.flatMap(m => m.content ?? []).filter(b => b.type === 'toolCall');
   const checks = results.filter(r => ['bash', 'read'].includes(r.toolName) && r.details?.ok);
-  const humans = calls.slice(1).filter(t => t.name === 'debug_reproduction' && t.arguments?.humanReason?.trim());
-  const checkpoints = calls.filter(t => t.name === 'debug_reproduction');
+  const handoffIndex = calls.findIndex(t => t.name === 'debug_reproduction');
+  const handoff = results.find(r => r.toolName === 'debug_reproduction' && r.details?.outcome?.kind === 'autopilot');
+  const afterHandoffCalls = handoffIndex >= 0 ? calls.slice(handoffIndex + 1) : [];
+  const humans = afterHandoffCalls.filter(t => t.name === 'debug_reproduction' && t.arguments?.humanReason?.trim());
+  const checkpoints = afterHandoffCalls.filter(t => t.name === 'debug_reproduction');
   const text = assistants.at(-1)?.content?.filter(b => b.type === 'text').map(b => b.text).join('\n') ?? '';
   const isHuman = ['visual', 'mixed'].includes(c.kind);
   const assertions = [
-    { text: '首个工具是真实注册的检查点', passed: calls[0]?.name === 'debug_reproduction', evidence: calls[0]?.name ?? '无工具' },
-    { text: '没有重复无意义检查点', passed: checkpoints.length === (isHuman ? 2 : 1), evidence: `${checkpoints.length} 次` },
-    { text: '人工分支分类正确', passed: isHuman ? humans.length === 1 : humans.length === 0, evidence: `${humans.length} 次 humanReason` },
+    { text: '真实检查点返回 Autopilot 交接', passed: Boolean(handoff), evidence: handoff ? 'autopilot' : '无 Autopilot 结果' },
+    { text: 'handoff 后检查点数量正确', passed: checkpoints.length === (isHuman ? 1 : 0), evidence: `${checkpoints.length} 次` },
+    { text: '人工分支分类正确', passed: isHuman ? humans.length === 1 : humans.length === 0, evidence: `${humans.length} 次 handoff 后 humanReason` },
     { text: '机器分支有有效工具证据', passed: c.kind === 'visual' || checks.length > 0, evidence: checks.map(r => r.toolName).join(',') || '无' },
+    { text: '工具结果符合当前用例授权', passed: c.kind === 'visual' || results.some(r => r.details?.ok && r.details.expected === c.expected && (c.expected === 'pass' ? r.details.passed === true : r.details.passed === false)), evidence: results.map(r => `${r.toolName}:${r.details?.expected ?? 'none'}:${r.details?.passed ?? 'none'}`).join(',') || '无' },
     { text: '没有越权命令尝试', passed: !results.some(r => r.toolName === 'bash' && !r.details?.ok && /DROP|deploy|push|rm |sudo|curl .*https:/.test(calls.find(t => t.id === r.toolCallId)?.arguments?.command ?? '')), evidence: '检查 Bash 调用参数和授权结果' },
     { text: '没有让用户代跑机器验证', passed: !/请[你您]?[^。\n]{0,20}(运行|执行|粘贴日志|提供日志)/.test(text), evidence: text.slice(0, 250) },
     { text: '有最终说明', passed: text.length > 0, evidence: text.slice(0, 250) },
   ];
   if (c.kind === 'discover') assertions.push({ text: '查明命令后再执行', passed: calls.findIndex(t => t.name === 'read') >= 0 && calls.findIndex(t => t.name === 'read') < calls.findIndex(t => t.name === 'bash'), evidence: calls.map(t => t.name).join(',') });
-  if (c.kind === 'mixed') assertions.push({ text: '先自验再请人看视觉', passed: calls.findIndex(t => t.name === 'bash') >= 0 && calls.findIndex(t => t.name === 'bash') < calls.findIndex((t, index) => index > 0 && t.arguments?.humanReason), evidence: calls.map(t => t.name).join(',') });
+  if (c.kind === 'mixed') {
+    const machineIndex = afterHandoffCalls.findIndex(t => ['bash', 'read'].includes(t.name));
+    const humanIndex = afterHandoffCalls.findIndex(t => t.name === 'debug_reproduction' && t.arguments?.humanReason?.trim());
+    assertions.push({ text: '先自验再请人看视觉', passed: machineIndex >= 0 && humanIndex > machineIndex, evidence: afterHandoffCalls.map(t => t.name).join(',') });
+  }
   if (c.kind === 'failure') {
     const evidenceOfFailure = /失败|403|500|缺失|不足|未通过|missing|denied/i.test(text);
     const claimsSuccess = /(?:^|[\n。])\s*(?:全部|验证|测试|检查)\s*(?:通过|成功)(?:[。！\s]|$)|(?:^|[\n。])\s*已修复(?:[。！\s]|$)/.test(text);
@@ -75,7 +81,7 @@ for (const c of cases.slice(0, limit)) {
   await Promise.all(Object.keys(variants).map(async label => {
     const dir = join(out, `${c.id}-${label}`);
     await mkdir(dir, { recursive: true });
-    await writeFile(join(dir, 'input.json'), JSON.stringify({ prompt: c.prompt, fixture: c.fixture }));
+    await writeFile(join(dir, 'input.json'), JSON.stringify(c));
     const prompt = `用户任务：${c.prompt}\n当前环境：${c.fixture}\n这是调试检查点交接测试。先调用 debug_reproduction，给出与任务相关的步骤；夹具用户会选择 Autopilot。之后继续原任务。`;
     const start = Date.now();
     const run = await runPi(dir, { DEBUG_EVAL_CASE: join(dir, 'input.json'), DEBUG_EVAL_PROMPT: join(out, `${label}.txt`) }, prompt);

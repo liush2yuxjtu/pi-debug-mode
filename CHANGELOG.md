@@ -9,7 +9,7 @@ All notable changes to `pi-debug-mode` are recorded here.
 - Added `Autopilot — Agent 自行验证` to the existing `debug_reproduction` checkpoint.
 - Added `humanReason` for checkpoints that require visual, click, touch, or aesthetic judgment.
 - Added persisted Autopilot state. Older session entries without `autopilot` remain Guided.
-- Added 20 fixed behavior evals across train, validation, and heldout splits.
+- Added 20 public regression evals across train, validation, and regression splits.
 - Added a local Pi runner with anonymous A/B labels, synthetic read and Bash tools, targeted `--ids` reruns, bounded timeouts, and JSON evidence.
 
 ### Changed
@@ -35,7 +35,7 @@ All notable changes to `pi-debug-mode` are recorded here.
 - `npm run typecheck` passed.
 - Final Pi A/B run used `openai-codex/gpt-5.6-luna` with minimal thinking.
 - Final candidate passed 20/20 fixed behavior evals.
-- Final heldout score was 5/5.
+- Final public regression score was 5/5.
 - The package remained limited to the existing `src/index.ts` extension entrypoint.
 
 ### Security and compatibility

@@ -92,6 +92,7 @@ export default function debugMode(pi: ExtensionAPI): void {
 
 			state.active = true;
 			state.bug = bug;
+			state.autopilot = false;
 			persist(pi, state);
 			updateStatus(ctx, true, state.autopilot);
 			await ctx.waitForIdle();

@@ -10,8 +10,8 @@ Autopilot 只改变给 Agent 的提示，不是后台执行器，不启动 tmux�
 
 ## 行为
 
-- 首个工具调用必须是 `debug_reproduction`。Agent 不得先搜索或读取文件来跳过模式交接。
-- 提示要求 Agent 继续原调试任务，不得以“开关已开启”或“检查点调用成功”结束。未知验证命令时先查项目配置和证据，不能用无关命令充数。
+- Guided 流程使用首个 `debug_reproduction` 完成模式选择。Autopilot 结果已经完成这次交接，Agent 不得重复调用检查点来确认模式。
+- 提示要求 Agent 继续原调试任务，不得以“开关已开启”或“检查点调用成功”结束。未知验证命令时先查项目配置和证据。任务给出精确命令时，原样执行，不用附加 shell 语句替代。
 - 机器路径包含命令、测试、API、日志、CLI/TUI、UI 逻辑和产物检查。模式交接后，Agent 不得再次调用 `debug_reproduction`。
 - 人工路径包含视觉、点击体验、触控跟手性和审美判断。第一次 Autopilot 返回不算人工结论。Agent 先完成机器检查，再调用一次带 `humanReason` 的 `debug_reproduction`。人工路径最多两次检查点。已经开启 Autopilot 后，人工检查点不再显示 Autopilot 选项。
 - 权限、登录、支付、同意与破坏性操作审批不被绕过。

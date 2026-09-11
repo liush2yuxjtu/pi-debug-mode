@@ -53,7 +53,8 @@ test("Autopilot choice returns guidance, not success; later machine checkpoints 
 	assert.equal(h.selections(), 1);
 	assert.deepEqual(first.details.outcome, { kind: "autopilot" });
 	assert.match(JSON.stringify(first.content), /只完成 Autopilot 模式交接/);
-	assert.match(JSON.stringify(first.content), /下一次工具调用必须是 debug_reproduction/);
+	assert.match(JSON.stringify(first.content), /收到本提示说明交接已完成/);
+	assert.doesNotMatch(JSON.stringify(first.content), /下一次工具调用必须是 debug_reproduction/);
 	assert.match(JSON.stringify(first.content), /机器路径/);
 	assert.match(JSON.stringify(first.content), /人工路径总共最多两次检查点/);
 	const second = await h.checkpoint();
@@ -64,6 +65,15 @@ test("Autopilot choice returns guidance, not success; later machine checkpoints 
 	assert.match(JSON.stringify(prompt), /命令、测试、API、日志/);
 	assert.match(JSON.stringify(prompt), /不要让用户代跑机器验证/);
 	assert.doesNotMatch(JSON.stringify(prompt), /Only after the user selects Fixed/);
+});
+
+test("a new debug task starts in Guided mode after Autopilot", async () => {
+	const h = harness();
+	await h.command("debug", "first bug");
+	assert.deepEqual((await h.checkpoint()).details.outcome, { kind: "autopilot" });
+	await h.command("debug", "second bug");
+	assert.deepEqual((await h.checkpoint()).details.outcome, { kind: "autopilot" });
+	assert.equal(h.selections(), 2);
 });
 
 test("visual judgment still uses original outcomes; cancelled does not claim fixed", async () => {

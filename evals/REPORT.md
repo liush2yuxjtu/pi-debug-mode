@@ -1,62 +1,57 @@
-# Autopilot 提示 hill climb 结果
+# Autopilot 提示评测报告
 
-## 目标
+## 评测目标
 
-指标是 20 个固定用例的严格通过率。目标是 20/20。候选必须保持保留集不低于基线。至少完成三轮候选尝试后才允许停止。
+指标是 20 个公开回归用例的严格通过率。用例检查 Autopilot 交接后的工具推进、机器路径与人工路径分流、case 级工具授权和安全边界。
 
-评测模型是 `openai-codex/gpt-5.6-luna`。Runner 通过 `pi --model luna --thinking minimal` 启动。每个用例使用相同的合成夹具、工具权限、超时和模型。夹具不访问真实项目或生产系统。
+这 20 个用例全部进入 Git。它们是公开 regression corpus，不是独立 heldout 集。独立 heldout 输入必须在候选冻结后由仓库外的 release runner 提供。
 
 ## 最终结果
 
-最终候选通过 20/20。基线通过 16/20。
+最终候选通过 20/20。冻结历史基线通过 13/20。
 
 | 分组 | 基线 | 候选 |
 | --- | ---: | ---: |
 | train | 8/10 | 10/10 |
-| validation | 4/5 | 5/5 |
-| heldout | 4/5 | 5/5 |
-| 总计 | 16/20 | 20/20 |
+| validation | 3/5 | 5/5 |
+| regression | 2/5 | 5/5 |
+| 总计 | 13/20 | 20/20 |
 
-候选提示长度从 2543 个 JavaScript 字符降到 943 个。候选总 `usage.totalTokens` 为 171149。基线为 168697。Token 数包含缓存输入，不能直接当作账单金额。候选总子进程时长为 397303ms。基线为 398869ms。两侧并发运行，累加时长不是墙钟时间。
+模型是 `openai-codex/gpt-5.6-luna`。Runner 使用 `pi --model luna --thinking minimal`。最终候选提示为 928 个 JavaScript 字符。历史 baseline 固定在 `evals/baseline.txt`，不随生产提示变化。
 
-`benchmark.json` 保存最终 40 次配对运行的逐例断言、工具调用、最终回答、模型、Token 和匿名映射。候选通过严格门禁，已接受为生产提示。
+最终 A/B 运行包含 40 个配对进程。候选总 `usage.totalTokens` 为 140879。基线为 141958。候选总子进程时长为 392016ms。基线为 402260ms。两侧并发运行，累加时长不是墙钟时间。每个用例只采样一次，不能推导统计显著性。
 
-## 接受的改动
+`benchmark.json` 保存逐例断言、工具调用、最终回答、模型、Token 和匿名映射。`candidateAccepted` 为 `true`，因为候选 20/20，公开 regression 全通过，且没有基础测试或类型检查回归。
 
-1. 把 Autopilot 建模成两条路径。机器路径在模式交接后禁止再次调用 `debug_reproduction`。人工路径最多调用两次，第二次必须带 `humanReason`。
-2. 强制首个工具调用是 `debug_reproduction`。这避免 Agent 先搜索或读文件，再跳过模式交接。
-3. 明确第一次 Autopilot 返回不是人工判断。视觉、触控、点击和审美任务必须保留第二次人工检查点。
-4. 保留权限、登录、同意、支付和破坏性操作边界。提示不创建后台执行器，也不绕过审批。
-5. 修正 grader。`不能据此宣称已修复` 不能被识别成成功声明。该修复有回归测试。
+## Review 修复
 
-## Hill climb 记录
+PR review 发现并修复以下问题：
 
-- baseline。旧提示 16/20，heldout 4/5。证据保存在 `evals/benchmark.json`。
-- attempt 1。精简提示 19/20。视觉后续检查仍可能缺失。未接受。
-- attempt 2。增加视觉分支说明。仍为 19/20。未接受。
-- attempt 3。增加“视觉判断未完成不能结束”。目标用例通过，但完整训练与验证采样仍有波动。未接受。
-- attempt 4。增加完成不变量。机器用例出现重复检查点。未接受。
-- attempt 5。增加机器路径和人工路径状态机。修复重复检查点，但旧 grader 错误标记两条真实失败说明。未接受，先修 grader。
-- attempt 6。增加首个工具调用要求。目标用例出现三次视觉检查点。未接受。
-- attempt 7。允许第一次调用带 `humanReason`，禁止中间的无 `humanReason` 调用，并限制人工路径为两次。20/20。未接受为生产提示，因为安全边界说明还未补回。
-- attempt 8。补回权限、登录、同意、支付和安全检查说明。完整 A/B 20/20。接受。
+- A/B 身份现在在构造 variant 时显式保存。Runner 不再通过 prompt 内容相等判断 baseline。
+- `--ids` 现在独立于默认 split。指定 ID 会跨 train、validation 和 regression 选择用例。
+- 每个 case 现在保存 `allowedCommand`、`expected` 和 `allowedReadPaths`。合成 harness 拒绝其他命令和路径。
+- `summarize.mjs` 默认把结果写到输入目录。只有显式传 `--out evals/benchmark.json` 才更新 Git 基准。
+- 新 `/debug` 任务会重置 Autopilot。旧任务不会改变新任务的 Guided 起点。
+- Autopilot 已开启后，人工检查点不再显示 Autopilot 选项。
+- Autopilot prompt 不再要求 handoff 后再次调用检查点。它只要求继续原调试任务。
+- 公开用例不再标记为 heldout。未来独立 heldout 不会进入公共提示作者数据。
+- Grader 不会把“不能据此宣称已修复”识别成成功声明。
 
-本轮 decision log：`/tmp/pi-debug-mode-hillclimb/decision.tsv`。它是本地审计记录，不进 Git。
-
-## 可复现命令
+## 运行命令
 
 ```bash
-cd /Users/liushiyuwin/.pi/agent/packages/pi-debug-mode
+cd "$(git rev-parse --show-toplevel)"
 npm test
 npm run typecheck
-node --experimental-strip-types evals/run.mjs --split all --candidate evals/candidate.txt --out /tmp/pi-debug-mode-hillclimb/rerun
-node evals/summarize.mjs /tmp/pi-debug-mode-hillclimb/rerun
+npm run verify:release -- --mode local
+node --experimental-strip-types evals/run.mjs --split all --candidate evals/candidate.txt --out /tmp/pi-debug-mode-eval-rerun
+node evals/summarize.mjs /tmp/pi-debug-mode-eval-rerun --out evals/benchmark.json
 ```
 
-每次运行必须使用新的 `--out` 目录。Runner 不覆盖已有证据。`run.mjs` 支持 `--ids 02,08,13,18` 做目标用例复测。
+`run.mjs` 使用新 `--out` 目录，不覆盖已有轨迹。`--ids 02,08,13,18` 可复测指定用例。Runner 禁用默认扩展、skills、AGENTS.md、模板、内置工具和会话写入。每个进程最多 90 秒和 10 次工具调用。运行故障停止后续用例。
 
 ## 边界
 
-这组 eval 证明模型在合成工具轨迹中能继续工作和正确分流。它不证明真实项目一定修复成功，也不替代真实浏览器、手机触控或真人审美验收。每个最终用例只采样一次，不能给出统计显著性结论。
+模型真实执行了工具调用，但 API、日志和测试结果来自合成夹具。通过结果证明提示能正确分流这些固定场景，不证明真实项目一定修复成功。真实浏览器、手机触控、视觉和审美仍需对应控制技能或人工检查。
 
-下一步最有价值的验证是用真实 UI 项目运行同一提示，并加入真实浏览器交互轨迹。不要针对当前 20 个用例继续调参，否则会污染保留集。
+下一步最有价值的工作是用真实 UI 项目运行一组不公开的新 heldout 输入。不要根据当前 20 个公开用例继续调 prompt。
