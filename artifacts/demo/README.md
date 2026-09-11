@@ -19,7 +19,7 @@ Rebuild English with `tools/real-tui-video/render.sh`; rebuild Chinese with `too
 
 `pi-debug-mode-demo.mp4` is the original Guided UI demo generated from `docs/demo.html`. `pi-debug-mode-demo-zh.mp4` is the matching Chinese simulation. Both are deterministic simulations, not real TUI captures. Version 0.1.8 keeps them as historical compatibility recordings and does not claim that they show Autopilot behavior.
 
-`pi-debug-mode-demo-0.1.8.mp4` is a fresh 12.44-second recording of the same old Guided UI flow after the 0.1.8 docs update. Its poster and contact sheet use the `pi-debug-mode-demo-0.1.8-` prefix. `markers-0.1.8.json` stores the runtime beat timestamps. Browser recording, video conversion, poster capture, and contact-sheet generation ran on Mac mini through `video-render-macmini`.
+`pi-debug-mode-demo-0.1.8.mp4` is a fresh 12.60-second recording of the same old Guided UI flow after the 0.1.8 docs update. Its poster and contact sheet use the `pi-debug-mode-demo-0.1.8-` prefix. `markers-0.1.8.json` stores the runtime beat timestamps. Browser recording, video conversion, poster capture, and contact-sheet generation ran on Mac mini through `video-render-macmini`.
 
 - `pi-debug-mode-preview.gif`: 800×450, 8 fps, 96-frame English inline loop from seconds 10–22 of the real Pi TUI recording.
 - `pi-debug-mode-preview-zh.gif`: matching 96-frame Chinese real-TUI loop from seconds 10–22.
