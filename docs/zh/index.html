@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f2efe6">
   <meta name="description" content="pi-debug-mode 为 Pi 编码智能体加入 Cursor 风格的证据优先调试模式，通过竞争假设、运行时探针、人工复现和最终验证，避免在确认根因前直接修改代码。">
-  <meta name="release-version" content="0.1.7">
+  <meta name="release-version" content="0.1.8">
   <link rel="canonical" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
   <link rel="alternate" hreflang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
   <link rel="alternate" hreflang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
@@ -18,7 +18,7 @@
   <meta property="og:title" content="pi-debug-mode | Pi 编码智能体的证据优先调试模式">
   <meta property="og:description" content="先用竞争假设和运行时探针确认原因，再修改代码并完成一次人工验证。">
   <meta property="og:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
-  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
+  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="720">
@@ -26,7 +26,7 @@
   <meta name="twitter:title" content="pi-debug-mode | Pi 编码智能体的证据优先调试模式">
   <meta name="twitter:description" content="先用竞争假设和运行时探针确认原因，再修改代码并完成一次人工验证。">
   <meta name="twitter:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
-  <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
+  <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui-zh-poster.png">
   <title>pi-debug-mode | Pi 编码智能体的证据优先调试模式</title>
   <link rel="stylesheet" href="../site.css">
   <script type="application/ld+json">
@@ -37,7 +37,7 @@
     "description": "面向 Pi 编码智能体的 Cursor 风格证据优先调试模式。",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Cross-platform",
-    "softwareVersion": "0.1.7",
+    "softwareVersion": "0.1.8",
     "url": "https://liush2yuxjtu.github.io/pi-debug-mode/zh/",
     "codeRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
     "license": "https://opensource.org/license/mit",
@@ -81,7 +81,7 @@
   }
   </script>
 </head>
-<body data-release-version="0.1.7">
+<body data-release-version="0.1.8">
   <a class="skip-link" href="#main">跳到主要内容</a>
   <header class="site-header">
     <nav class="site-nav site-shell" aria-label="主导航">
@@ -99,14 +99,14 @@
   <main id="main" class="site-shell">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="label">Pi 扩展 0.1.7</p>
+        <p class="label">Pi 扩展 0.1.8</p>
         <h1 id="hero-title">先拿到<em>证据，</em>再修改代码。</h1>
         <p class="hero-lead">pi-debug-mode 是面向 Pi 编码智能体的 Cursor 风格调试模式。它向 Pi 注入调试指令，要求 Pi 用竞争假设和定向运行时探针确认原因，然后再修复。</p>
         <div class="actions">
-          <a class="button button-primary" href="#install">安装 0.1.7</a>
-          <a class="button button-secondary" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-zh.mp4">观看真实中文 Pi TUI 录屏</a>
+          <a class="button button-primary" href="#install">安装 0.1.8</a>
+          <a class="button button-secondary" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui-zh.mp4">观看真实中文 Pi TUI 录屏</a>
         </div>
-        <p class="update"><time datetime="2026-09-07">更新于 2026 年 9 月 7 日</time></p>
+        <p class="update"><time datetime="2026-09-11">更新于 2026 年 9 月 11 日</time></p>
       </div>
 
       <aside class="hero-note" aria-label="调试模式证据流程">
@@ -171,7 +171,7 @@
         </li>
         <li class="workflow-step">
           <span class="step-number" aria-hidden="true"></span>
-          <div class="step-copy"><h3>执行一次复现</h3><p><code>debug_reproduction</code> 展示准确步骤，并等待已修复、已复现或补充信息。</p></div>
+          <div class="step-copy"><h3>执行一次复现</h3><p><code>debug_reproduction</code> 提供 Guided 反馈或 Autopilot。Autopilot 让 Pi 自己完成机器检查，只在视觉、点击、触控或审美判断时再次请求人工检查。</p></div>
         </li>
         <li class="workflow-step">
           <span class="step-number" aria-hidden="true"></span>
@@ -179,7 +179,7 @@
         </li>
         <li class="workflow-step">
           <span class="step-number" aria-hidden="true"></span>
-          <div class="step-copy"><h3>验证并清理</h3><p>你重复相同步骤。选择已修复后，指令要求 Pi 移除全部临时探针并运行相关检查。</p></div>
+          <div class="step-copy"><h3>验证并清理</h3><p>Pi 重复相同的机器检查，读取实际输出，移除临时探针并报告证据。Autopilot 的模式交接不等于修复确认。</p></div>
         </li>
       </ol>
     </section>
@@ -192,14 +192,15 @@
       </div>
       <div class="evidence-panel">
         <picture>
-          <source media="(prefers-reduced-motion: reduce)" srcset="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-poster-zh.png">
-          <img class="evidence-image" src="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview-zh.gif" width="800" height="450" loading="lazy" decoding="async" alt="pi-debug-mode 中文动态工作流预览">
+          <source media="(prefers-reduced-motion: reduce)" srcset="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-poster-zh.png">
+          <img class="evidence-image" src="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-preview-zh.gif" width="800" height="450" loading="lazy" decoding="async" alt="pi-debug-mode 中文动态工作流预览">
         </picture>
         <div class="evidence-copy">
           <h3>页面内动态预览、真实终端证据和独立交互演示。</h3>
           <p>完整录屏包含竞争假设、临时探针、复现选择器、证据检查、根因修复、人工确认、探针清理和通过的测试。</p>
           <div class="evidence-links">
-            <a class="evidence-link" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-zh.mp4">真实中文 Pi TUI 录屏</a>
+            <a class="evidence-link" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui-zh.mp4">真实中文 Pi TUI 录屏</a>
+            <a class="evidence-link" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-demo-0.1.8.mp4">0.1.8 Guided UI 录屏</a>
             <a class="evidence-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html">中文交互演示</a>
             <a class="evidence-link" href="https://github.com/liush2yuxjtu/pi-debug-mode">GitHub 源码仓库</a>
             <a class="evidence-link" href="https://www.npmjs.com/package/pi-debug-mode">npm 包页面</a>
@@ -213,7 +214,7 @@
       <div class="section-rail">
         <span class="section-index">04 / 选择</span>
         <h2 id="compare-title">按问题需要选择调试流程。</h2>
-        <p class="section-intro">三种方式处理不同任务。关键差异在于运行时证据和人工检查点是可选项，还是流程的一部分。</p>
+        <p class="section-intro">这些方式处理不同任务。Guided 模式在检查点收集反馈。Autopilot 让 Pi 自己完成机器检查，只在软件无法判断时请求人工意见。</p>
       </div>
       <div class="table-wrap" tabindex="0" aria-label="调试方式对比">
         <table>
@@ -223,7 +224,7 @@
           <tbody>
             <tr><td>普通调试提示词</td><td>取决于提示词和 Agent 回复。</td><td>可选。</td><td>由提示词定义。</td></tr>
             <tr><td>通用 Agent 模式</td><td>取决于该模式的工具和指令。</td><td>取决于该模式。</td><td>由该模式定义。</td></tr>
-            <tr><td><code>pi-debug-mode</code></td><td>注入的指令要求在修复前提出竞争假设并添加定向探针。</td><td>插桩后和修复后都使用 <code>debug_reproduction</code>。</td><td>人工确认后，指令要求清理探针并运行相关检查。</td></tr>
+            <tr><td><code>pi-debug-mode</code></td><td>注入的指令要求在修复前提出竞争假设并添加定向探针。</td><td>Guided 模式在检查点询问。Autopilot 只询问视觉、点击、触控或审美判断。</td><td>Pi 报告机器证据，清理探针，并保留人工确认边界。</td></tr>
           </tbody>
         </table>
       </div>
@@ -233,18 +234,18 @@
       <div class="section-rail">
         <span class="section-index">05 / 安装</span>
         <h2 id="install-title">从 npm 或固定 Git tag 安装。</h2>
-        <p class="section-intro">两个命令都固定到 0.1.7。安装后重启 Pi，再用 <code>/debug</code> 描述症状和预期结果。</p>
+        <p class="section-intro">两个命令都固定到 0.1.8。安装后重启 Pi，再用 <code>/debug</code> 描述症状和预期结果。</p>
       </div>
       <div class="install-grid">
         <article class="install-card">
           <h3>npm</h3>
           <p>通过 Pi 的 npm 来源安装。</p>
-          <pre class="command"><code>pi install npm:pi-debug-mode@0.1.7</code></pre>
+          <pre class="command"><code>pi install npm:pi-debug-mode@0.1.8</code></pre>
         </article>
         <article class="install-card">
           <h3>GitHub</h3>
           <p>通过 Pi 的 Git 来源安装不可变 tag。</p>
-          <pre class="command"><code>pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.7</code></pre>
+          <pre class="command"><code>pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.8</code></pre>
         </article>
       </div>
     </section>
@@ -297,7 +298,7 @@
     <div class="footer-inner site-shell">
       <div>
         <a class="brand" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">pi-debug-mode</a>
-        <p class="footer-note">MIT 许可。版本 0.1.7。<time datetime="2026-09-07">更新于 2026 年 9 月 7 日</time>。</p>
+        <p class="footer-note">MIT 许可。版本 0.1.8。<time datetime="2026-09-11">更新于 2026 年 9 月 11 日</time>。</p>
       </div>
       <div class="footer-links" aria-label="页脚导航">
         <a class="footer-link" lang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/">English canonical page</a>

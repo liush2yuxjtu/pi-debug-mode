@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f2efe6">
   <meta name="description" content="pi-debug-mode adds a Cursor-style, evidence-first Debug Mode to the Pi coding agent with competing hypotheses, runtime probes, human reproduction, and final verification.">
-  <meta name="release-version" content="0.1.7">
+  <meta name="release-version" content="0.1.8">
   <link rel="canonical" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
   <link rel="alternate" hreflang="en" href="https://liush2yuxjtu.github.io/pi-debug-mode/">
   <link rel="alternate" hreflang="zh-CN" href="https://liush2yuxjtu.github.io/pi-debug-mode/zh/">
@@ -18,7 +18,7 @@
   <meta property="og:title" content="pi-debug-mode | Evidence-first Debug Mode for Pi Agents">
   <meta property="og:description" content="A Cursor-style Debug Mode for Pi that gathers runtime evidence before changing code.">
   <meta property="og:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/">
-  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-poster.png">
+  <meta property="og:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui-poster.png">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1280">
   <meta property="og:image:height" content="720">
@@ -26,7 +26,7 @@
   <meta name="twitter:title" content="pi-debug-mode | Evidence-first Debug Mode for Pi Agents">
   <meta name="twitter:description" content="A Cursor-style Debug Mode for Pi that gathers runtime evidence before changing code.">
   <meta name="twitter:url" content="https://liush2yuxjtu.github.io/pi-debug-mode/">
-  <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui-poster.png">
+  <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui-poster.png">
   <title>pi-debug-mode | Evidence-first Debug Mode for Pi Agents</title>
   <link rel="stylesheet" href="site.css">
   <script type="application/ld+json">
@@ -37,7 +37,7 @@
     "description": "A Cursor-style evidence-first Debug Mode for the Pi coding agent.",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "Cross-platform",
-    "softwareVersion": "0.1.7",
+    "softwareVersion": "0.1.8",
     "url": "https://liush2yuxjtu.github.io/pi-debug-mode/",
     "codeRepository": "https://github.com/liush2yuxjtu/pi-debug-mode",
     "license": "https://opensource.org/license/mit",
@@ -81,7 +81,7 @@
   }
   </script>
 </head>
-<body data-release-version="0.1.7">
+<body data-release-version="0.1.8">
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="site-header">
     <nav class="site-nav site-shell" aria-label="Primary navigation">
@@ -99,14 +99,14 @@
   <main id="main" class="site-shell">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="label">Pi extension 0.1.7</p>
+        <p class="label">Pi extension 0.1.8</p>
         <h1 id="hero-title">Debug Mode built around <em>evidence.</em></h1>
         <p class="hero-lead">pi-debug-mode is a Cursor-style Debug Mode for the Pi coding agent. Its injected instructions ask Pi to test competing hypotheses with targeted runtime probes before changing code.</p>
         <div class="actions">
-          <a class="button button-primary" href="#install">Install version 0.1.7</a>
-          <a class="button button-secondary" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui.mp4">Watch the real Pi TUI recording</a>
+          <a class="button button-primary" href="#install">Install version 0.1.8</a>
+          <a class="button button-secondary" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui.mp4">Watch the real Pi TUI recording</a>
         </div>
-        <p class="update"><time datetime="2026-09-07">Updated 7 September 2026</time></p>
+        <p class="update"><time datetime="2026-09-11">Updated 11 September 2026</time></p>
       </div>
 
       <aside class="hero-note" aria-label="Debug Mode evidence sequence">
@@ -171,7 +171,7 @@
         </li>
         <li class="workflow-step">
           <span class="step-number" aria-hidden="true"></span>
-          <div class="step-copy"><h3>Reproduce once</h3><p><code>debug_reproduction</code> shows exact steps and waits for Fixed, reproduced, or typed context.</p></div>
+          <div class="step-copy"><h3>Reproduce once</h3><p><code>debug_reproduction</code> offers Guided feedback or Autopilot. Autopilot keeps machine checks with Pi and reserves another checkpoint for visual, click, touch, or aesthetic judgment.</p></div>
         </li>
         <li class="workflow-step">
           <span class="step-number" aria-hidden="true"></span>
@@ -179,7 +179,7 @@
         </li>
         <li class="workflow-step">
           <span class="step-number" aria-hidden="true"></span>
-          <div class="step-copy"><h3>Verify and clean up</h3><p>You repeat the flow. After you select Fixed, the instructions tell Pi to remove every temporary probe and run relevant validation.</p></div>
+          <div class="step-copy"><h3>Verify and clean up</h3><p>Pi repeats the same machine checks, assesses the output, removes temporary probes, and reports evidence. Autopilot never treats its handoff as a fix confirmation.</p></div>
         </li>
       </ol>
     </section>
@@ -192,14 +192,15 @@
       </div>
       <div class="evidence-panel">
         <picture>
-          <source media="(prefers-reduced-motion: reduce)" srcset="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-poster.png">
-          <img class="evidence-image" src="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-preview.gif" width="800" height="450" loading="lazy" decoding="async" alt="Animated pi-debug-mode workflow preview">
+          <source media="(prefers-reduced-motion: reduce)" srcset="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-poster.png">
+          <img class="evidence-image" src="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-preview.gif" width="800" height="450" loading="lazy" decoding="async" alt="Animated pi-debug-mode workflow preview">
         </picture>
         <div class="evidence-copy">
           <h3>Inline motion, real terminal proof, and an interactive walkthrough.</h3>
           <p>The full recording includes hypothesis generation, temporary probes, the reproduction selector, evidence inspection, a root-cause fix, human verification, probe cleanup, and a passing test.</p>
           <div class="evidence-links">
-            <a class="evidence-link" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.7/artifacts/demo/pi-debug-mode-real-tui.mp4">Real Pi TUI video</a>
+            <a class="evidence-link" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-real-tui.mp4">Real Pi TUI video</a>
+            <a class="evidence-link" href="https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-demo-0.1.8.mp4">0.1.8 Guided UI replay</a>
             <a class="evidence-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/demo.html">English interactive demo</a>
             <a class="evidence-link" href="https://github.com/liush2yuxjtu/pi-debug-mode">GitHub source repository</a>
             <a class="evidence-link" href="https://www.npmjs.com/package/pi-debug-mode">npm package page</a>
@@ -213,7 +214,7 @@
       <div class="section-rail">
         <span class="section-index">04 / CHOICE</span>
         <h2 id="compare-title">Pick the amount of process the bug needs.</h2>
-        <p class="section-intro">These approaches solve different jobs. The difference is whether runtime evidence and a human checkpoint are optional or part of the workflow.</p>
+        <p class="section-intro">These approaches solve different jobs. Guided mode collects feedback at each checkpoint. Autopilot keeps machine-checkable verification with Pi and asks for human judgment only when software cannot decide.</p>
       </div>
       <div class="table-wrap" tabindex="0" aria-label="Debugging approach comparison">
         <table>
@@ -223,7 +224,7 @@
           <tbody>
             <tr><td>Ordinary debug prompt</td><td>Depends on the prompt and response.</td><td>Optional.</td><td>Defined by the prompt.</td></tr>
             <tr><td>Generic agent mode</td><td>Depends on that mode's tools and instructions.</td><td>Depends on that mode.</td><td>Defined by that mode.</td></tr>
-            <tr><td><code>pi-debug-mode</code></td><td>Its injected instructions place competing hypotheses and targeted probes before a fix.</td><td><code>debug_reproduction</code> runs after instrumentation and after the fix.</td><td>After user confirmation, its instructions call for probe cleanup and relevant validation.</td></tr>
+            <tr><td><code>pi-debug-mode</code></td><td>Its injected instructions place competing hypotheses and targeted probes before a fix.</td><td>Guided mode asks at the checkpoint. Autopilot asks only for visual, click, touch, or aesthetic judgment.</td><td>Pi reports machine evidence, cleans probes, and preserves human confirmation boundaries.</td></tr>
           </tbody>
         </table>
       </div>
@@ -233,18 +234,18 @@
       <div class="section-rail">
         <span class="section-index">05 / INSTALL</span>
         <h2 id="install-title">Install from npm or the tagged source.</h2>
-        <p class="section-intro">Both commands pin version 0.1.7. Restart Pi after installation, then run <code>/debug</code> with the symptom and expected behavior.</p>
+        <p class="section-intro">Both commands pin version 0.1.8. Restart Pi after installation, then run <code>/debug</code> with the symptom and expected behavior.</p>
       </div>
       <div class="install-grid">
         <article class="install-card">
           <h3>npm</h3>
           <p>Install the package through Pi's npm source.</p>
-          <pre class="command"><code>pi install npm:pi-debug-mode@0.1.7</code></pre>
+          <pre class="command"><code>pi install npm:pi-debug-mode@0.1.8</code></pre>
         </article>
         <article class="install-card">
           <h3>GitHub</h3>
           <p>Install the immutable Git tag through Pi's Git source.</p>
-          <pre class="command"><code>pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.7</code></pre>
+          <pre class="command"><code>pi install git:github.com/liush2yuxjtu/pi-debug-mode@v0.1.8</code></pre>
         </article>
       </div>
     </section>
@@ -297,7 +298,7 @@
     <div class="footer-inner site-shell">
       <div>
         <a class="brand" href="https://liush2yuxjtu.github.io/pi-debug-mode/">pi-debug-mode</a>
-        <p class="footer-note">MIT licensed. Version 0.1.7. <time datetime="2026-09-07">Updated 7 September 2026</time>.</p>
+        <p class="footer-note">MIT licensed. Version 0.1.8. <time datetime="2026-09-11">Updated 11 September 2026</time>.</p>
       </div>
       <div class="footer-links" aria-label="Footer navigation">
         <a class="footer-link" href="https://liush2yuxjtu.github.io/pi-debug-mode/">English canonical page</a>
