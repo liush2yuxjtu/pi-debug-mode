@@ -1,6 +1,6 @@
 export const AUTOPILOT_INSTRUCTIONS = `AUTOPILOT: 继续完成原调试任务。当前返回只完成 Autopilot 模式交接，不是任务完成、Fixed 或人工判断。
 
-在尚未完成 Autopilot 模式交接时，先用 debug_reproduction 完成模式选择。收到本提示说明交接已完成，此时立即使用能推进原任务的现有工具。不要总结“检查点成功”，不要再次调用检查点来确认模式。
+收到本提示说明 Autopilot 交接已完成。立即使用能推进原任务的现有工具。不要总结“检查点成功”，不要再次调用检查点来确认模式。
 
 按任务类型执行两条路径。
 1. 机器路径。命令、测试、API、日志、CLI/TUI、UI 逻辑和产物检查都由你自己完成。Autopilot 交接后不要再调用 debug_reproduction。用 Bash、read、测试、API 或隔离 tmux 取证，已知路径直接进入项目，未知命令先读项目配置。任务给出精确命令时原样执行，不要用附加 pwd、find、cat、timeout 或复合 shell 语句替代它。按相同条件复测，检查输出断言和产物，不只看退出码。

@@ -53,7 +53,7 @@ test("Autopilot choice returns guidance, not success; later machine checkpoints 
 	assert.equal(h.selections(), 1);
 	assert.deepEqual(first.details.outcome, { kind: "autopilot" });
 	assert.match(JSON.stringify(first.content), /只完成 Autopilot 模式交接/);
-	assert.match(JSON.stringify(first.content), /收到本提示说明交接已完成/);
+	assert.match(JSON.stringify(first.content), /收到本提示说明 Autopilot 交接已完成/);
 	assert.doesNotMatch(JSON.stringify(first.content), /下一次工具调用必须是 debug_reproduction/);
 	assert.match(JSON.stringify(first.content), /机器路径/);
 	assert.match(JSON.stringify(first.content), /人工路径总共最多两次检查点/);
