@@ -17,7 +17,7 @@ Rebuild English with `tools/real-tui-video/render.sh`; rebuild Chinese with `too
 
 ## Concept demo
 
-`pi-debug-mode-demo.mp4` is generated from `docs/demo.html` by `tools/demo-video/render.sh`. `pi-debug-mode-demo-zh.mp4` is generated from `docs/demo-zh.html` by `tools/demo-video/render.sh zh`. Both are deterministic simulations, not real TUI captures.
+`pi-debug-mode-demo.mp4` is generated from `docs/demo.html` by `tools/demo-video/render.sh`. `pi-debug-mode-demo-zh.mp4` is generated from `docs/demo-zh.html` by `tools/demo-video/render.sh zh`. Both are deterministic simulations, not real TUI captures. Version 0.1.8 keeps this earlier Guided UI demo as a historical compatibility recording. It does not claim to show Autopilot behavior.
 
 - `pi-debug-mode-preview.gif`: 800×450, 8 fps, 96-frame English inline loop from seconds 10–22 of the real Pi TUI recording.
 - `pi-debug-mode-preview-zh.gif`: matching 96-frame Chinese real-TUI loop from seconds 10–22.

@@ -1,49 +1,64 @@
-# Distribution plan for 0.1.7
+# Distribution plan for 0.1.8
 
 ## Canonical artifact and version
 
 - Artifact: Pi extension and npm package `pi-debug-mode`
-- Current verified release: `0.1.7`, tag `v0.1.7`
-- Previous release: `0.1.6`, tag `v0.1.6`
+- Current release candidate: `0.1.8`
+- Previous verified release: `0.1.7`, tag `v0.1.7`
 - Canonical source: `https://github.com/liush2yuxjtu/pi-debug-mode`
 - GitHub Pages source: `main/docs`
 - GitHub Pages base: `https://liush2yuxjtu.github.io/pi-debug-mode/`
 - License: MIT
 
-## Problem and replacement
+## Release change
 
-Version 0.1.6 used concept-demo GIFs as primary previews. Version 0.1.7 replaces both English and Chinese primary GIFs with 12-second segments from the real-machine Pi TUI recordings, seconds 10–22.
+Version 0.1.8 adds an Autopilot choice inside the existing `debug_reproduction` tool. Autopilot changes prompt guidance only. It does not add a slash command, start a background runner, simulate clicks, or bypass approval.
 
-## Completed release waves
+Machine-checkable work stays with Pi. Visual, click, touch, and aesthetic judgments keep a human checkpoint. The first Autopilot result is a mode handoff. Machine paths use no second checkpoint. Human paths use one additional checkpoint with `humanReason`.
 
-1. Replaced primary GIF bytes with real-TUI 10–22s segments; encoding ran on Mac mini only.
-2. Bumped package and public surfaces to 0.1.7.
-3. Passed tests, typecheck, package dry-run, local verifier, GIF metadata checks, and local browser QA.
-4. Merged to `main`, deployed Pages, and created immutable `v0.1.7`.
-5. Published ten GitHub Release assets and npm through OIDC.
-6. Verified exact Pi Gallery version, current real-TUI GIF URL, zero `<video>` elements, and zero-click frame changes.
-7. Recorded release evidence and metrics.
+## Evidence and media
+
+- The existing Guided UI demo video remains unchanged as a historical compatibility recording.
+- `artifacts/demo/pi-debug-mode-demo.mp4` and its poster remain deterministic Guided simulation evidence.
+- The real TUI recordings remain unchanged and continue to document the earlier live-machine workflow.
+- A new video render was not produced because the Mac mini gate reported less than 10 GiB free space. No local MacBook rendering was used.
+- The 20-case Autopilot prompt evaluation passed 20/20 with `openai-codex/gpt-5.6-luna` and minimal thinking.
 
 ## Direct channels
 
 ### GitHub and README
 
-English and Chinese GIF previews embed actual Pi TUI output without link wrappers. Complete real-machine MP4 recordings remain explicit secondary links.
+Publish the source, `CHANGELOG.md`, Autopilot behavior documentation, and existing demo artifacts from the canonical repository.
 
 ### npm and Pi Package Gallery
 
-`pi-debug-mode@0.1.7` uses only `pi.image`, pointed at the real-TUI English GIF. `pi.video` remains omitted so Gallery shows image animation instead of modal video behavior.
+Publish `pi-debug-mode@0.1.8` with `pi.image` pinned to the `v0.1.8` real-TUI GIF. Keep `pi.video` omitted so the animated image remains the primary no-click preview.
 
 ### GitHub Pages
 
-English and Chinese pages embed real-TUI GIF segments. Reduced-motion users receive static PNG posters. Full MP4 recordings remain secondary links.
+Publish the updated English and Chinese pages. Keep the old Guided interactive demo labeled as a historical simulation. Do not claim that its video demonstrates Autopilot.
+
+## Release gates
+
+- `npm test`
+- `npm run typecheck`
+- `npm run verify:release -- --mode local`
+- `npm pack --dry-run`
+- 20-case prompt evaluation and `evals/benchmark.json`
+- no secrets, local runtime paths, or private browser state in the package
+- old video and poster hashes preserved unless a future remote render is explicitly approved
+
+## Authentication and publication gates
+
+- GitHub push, GitHub Release, npm publish, Pi Package Gallery refresh, and GitHub Pages publication are public mutations.
+- Use official GitHub and npm flows only.
+- Verify public status after every publication. Do not infer publication from a local commit or upload response.
+- If the Mac mini disk gate remains below 10 GiB, keep the existing video and report the render as `waiting-machine`.
 
 ## Rollback
 
-Patch-only releases. Never move a published tag. If media source needs another change, publish a new patch and update all pinned URLs.
+Do not move the published `v0.1.7` tag. If `0.1.8` is published and a problem is found, publish a new patch release and update pinned URLs. Revert the feature branch before push if local gates fail.
 
-## Known boundaries
+## Resume-safe reporting
 
-- Pi Gallery refresh delay remains upstream-controlled.
-- Pi Gallery social metadata remains generic under https://github.com/earendil-works/pi/issues/6699.
-- Full MP4 remains available for complete evidence; primary previews show real TUI motion.
+Record the branch, commit, tag, package checksum, public URLs, publication status, and verification command results in `.build-in-public/release-report.md` after the public release completes. Keep historical release evidence files unchanged.
