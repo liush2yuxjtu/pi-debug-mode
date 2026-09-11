@@ -8,18 +8,18 @@
 
 ## 最终结果
 
-最终候选通过 20/20。冻结历史基线通过 14/20。
+最终候选通过 20/20。冻结历史基线通过 4/20。
 
 | 分组 | 基线 | 候选 |
 | --- | ---: | ---: |
-| train | 8/10 | 10/10 |
-| validation | 3/5 | 5/5 |
-| regression | 3/5 | 5/5 |
-| 总计 | 14/20 | 20/20 |
+| train | 3/10 | 10/10 |
+| validation | 1/5 | 5/5 |
+| regression | 0/5 | 5/5 |
+| 总计 | 4/20 | 20/20 |
 
-模型是 `openai-codex/gpt-5.6-luna`。Runner 使用 `pi --model luna --thinking minimal`。最终候选提示为 886 个 JavaScript 字符。历史 baseline 固定在 `evals/baseline.txt`，不随生产提示变化。
+模型是 `openai-codex/gpt-5.6-luna`。Runner 使用 `pi --model luna --thinking minimal`。最终候选提示为 1010 个 JavaScript 字符。历史 baseline 固定在 `evals/baseline.txt`，不随生产提示变化。
 
-最终 A/B 运行包含 40 个配对进程。候选总 `usage.totalTokens` 为 143186。基线为 164211。候选总子进程时长为 403144ms。基线为 422708ms。两侧并发运行，累加时长不是墙钟时间。每个用例只采样一次，不能推导统计显著性。
+最终 A/B 运行包含 40 个配对进程。候选总 `usage.totalTokens` 为 107662。基线为 145509。候选总子进程时长为 302449ms。基线为 382906ms。两侧并发运行，累加时长不是墙钟时间。每个用例只采样一次，不能推导统计显著性。
 
 `benchmark.json` 保存逐例断言、工具调用、最终回答、模型、Token 和匿名映射。`candidateAccepted` 为 `true`，因为候选 20/20，公开 regression 全通过，且没有基础测试或类型检查回归。
 

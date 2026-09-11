@@ -37,5 +37,5 @@ const summary = Object.fromEntries(['baseline', 'candidate'].map(identity => {
   }];
 }));
 const report = { version: 1, model: 'openai-codex/gpt-5.6-luna', thinking: 'minimal', fixtureOnly: true, publicRegressionOnly: true, repetitions: 1, candidateAccepted: summary.candidate.passed === 20 && summary.candidate.splits.regression >= summary.baseline.splits.regression, summary, runs };
-await writeFile(resolve(output ?? join(directories.at(-1), 'benchmark.json')), JSON.stringify(report, null, 2));
+await writeFile(resolve(output ?? join(directories.at(-1), 'summary.json')), JSON.stringify(report, null, 2));
 console.log(JSON.stringify({ summary, candidateAccepted: report.candidateAccepted }, null, 2));

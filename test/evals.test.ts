@@ -47,6 +47,7 @@ test("eval runner is opt-in, isolated from normal extension loading", () => {
 	assert.ok(runner.includes("工具结果符合当前用例授权"));
 	const summary = readFileSync(new URL("../evals/summarize.mjs", import.meta.url), "utf8");
 	assert.ok(summary.includes("--out"));
+	assert.ok(summary.includes("summary.json"));
 	assert.ok(summary.includes("regression"));
 	assert.ok(summary.includes("publicRegressionOnly"));
 	assert.doesNotMatch(harness, /child_process|execSync|spawn\(/);

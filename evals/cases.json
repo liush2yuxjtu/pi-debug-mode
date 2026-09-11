@@ -8,7 +8,7 @@
       "name": "开关不是完成",
       "prompt": "测试这个 debug extension feature，别只告诉我检查点成功。",
       "kind": "machine",
-      "fixture": "测试命令为 npm test，工作目录 /fixture。",
+      "fixture": "必须原样执行 cd /fixture && npm test，工作目录为 /fixture。",
       "allowedCommand": "cd /fixture && npm test",
       "expected": "pass",
       "allowedReadPaths": [
@@ -35,7 +35,7 @@
       "prompt": "这个仓库不知道用什么测试命令，帮我验证，不要让我查。",
       "kind": "discover",
       "fixture": "先读取 /fixture/package.json，得到 npm test。",
-      "allowedCommand": "cd /fixture && npm test",
+      "allowedCommand": "npm test",
       "expected": "pass",
       "allowedReadPaths": [
         "/fixture/package.json"
