@@ -12,7 +12,7 @@ const split = option('--split', 'train');
 if (!['train', 'validation', 'heldout', 'all'].includes(split)) throw Error('未知 split');
 const ids = option('--ids', '').split(',').map(id => id.trim()).filter(Boolean);
 const allCases = JSON.parse(await readFile(join(root, 'cases.json'), 'utf8')).cases;
-const cases = allCases.filter(c => (split === 'all' || c.split === split) && (!ids.length || ids.includes(c.id)));
+const cases = allCases.filter(c => ids.length ? ids.includes(c.id) : split === 'all' || c.split === split);
 if (ids.some(id => !allCases.some(c => c.id === id))) throw Error('ids 包含未知用例');
 if (!cases.length) throw Error('当前筛选没有用例');
 const limit = Number(option('--limit', String(cases.length)));
@@ -20,10 +20,12 @@ if (!Number.isInteger(limit) || limit < 1 || limit > cases.length) throw Error('
 const candidate = await readFile(resolve(option('--candidate', join(root, 'candidate.txt'))), 'utf8');
 const out = resolve(option('--out', join(root, 'results', randomUUID())));
 await mkdir(dirname(out), { recursive: true });
-await mkdir(out); // Existing evidence must never be overwritten.
+await mkdir(out);
 const baseline = AUTOPILOT_INSTRUCTIONS;
-const variants = Math.random() < .5 ? { A: baseline, B: candidate } : { A: candidate, B: baseline };
-for (const [label, text] of Object.entries(variants)) await writeFile(join(out, `${label}.txt`), text);
+const variants = Math.random() < .5
+  ? { A: { identity: 'baseline', text: baseline }, B: { identity: 'candidate', text: candidate } }
+  : { A: { identity: 'candidate', text: candidate }, B: { identity: 'baseline', text: baseline } };
+for (const [label, variant] of Object.entries(variants)) await writeFile(join(out, `${label}.txt`), variant.text);
 const hash = text => createHash('sha256').update(text).digest('hex');
 const report = [];
 let infrastructureFailure = false;
@@ -90,7 +92,7 @@ for (const c of cases.slice(0, limit)) {
   }));
 }
 await writeFile(join(out, 'benchmark.json'), JSON.stringify({ version: 1, split, model: 'openai-codex/luna', thinking: 'minimal', fixtureOnly: true, infrastructureFailure, runs: report }, null, 2));
-await writeFile(join(out, 'mapping.json'), JSON.stringify(Object.fromEntries(Object.entries(variants).map(([label, text]) => [label, { identity: text === baseline ? 'baseline' : 'candidate', sha256: hash(text), promptChars: text.length }])), null, 2));
+await writeFile(join(out, 'mapping.json'), JSON.stringify(Object.fromEntries(Object.entries(variants).map(([label, variant]) => [label, { identity: variant.identity, sha256: hash(variant.text), promptChars: variant.text.length }])), null, 2));
 console.log(`结果：${out}`);
 if (infrastructureFailure) process.exitCode = 2;
 else if (report.some(r => !r.passed)) process.exitCode = 1;

@@ -9,6 +9,7 @@ function harness() {
 	const tools = new Map<string, ToolDefinition>();
 	const entries: { type: string; customType: string; data: unknown }[] = [];
 	let selections = 0;
+	const selectionOptions: string[][] = [];
 	let choice: string | undefined = "Autopilot — Agent 自行验证";
 	const pi = {
 		registerCommand: (name: string, command: typeof commands extends Map<string, infer V> ? V : never) => commands.set(name, command),
@@ -22,7 +23,7 @@ function harness() {
 		ui: {
 			setStatus() {}, notify() {},
 			theme: { fg: (_: string, text: string) => text },
-			select: async () => { selections++; return choice; },
+			select: async (_title: string, options: string[]) => { selections++; selectionOptions.push(options); return choice; },
 			editor: async () => "extra context",
 		},
 		sessionManager: { getBranch: () => entries },
@@ -34,6 +35,7 @@ function harness() {
 		commandNames: () => [...commands.keys()],
 		select: (value: string | undefined) => { choice = value; },
 		selections: () => selections,
+		selectionOptions: () => selectionOptions,
 		command: async (name: string, args = "") => { await commands.get(name)!.handler(args, ctx); },
 		event: (name: string, event: unknown = {}) => handlers.get(name)!(event, ctx),
 		checkpoint: async (humanReason?: string, signal?: AbortSignal) => {
@@ -70,6 +72,7 @@ test("visual judgment still uses original outcomes; cancelled does not claim fix
 	await h.checkpoint();
 	h.select(undefined);
 	assert.deepEqual((await h.checkpoint("Judge visual alignment")).details.outcome, { kind: "cancelled" });
+	assert.ok(!h.selectionOptions().at(-1)?.includes("Autopilot — Agent 自行验证"));
 	h.select("Issue reproduced, please try again");
 	assert.deepEqual((await h.checkpoint("Judge click behavior")).details.outcome, { kind: "reproduced" });
 	h.select("Fixed");

@@ -10,11 +10,12 @@ import {
 } from "./protocol.ts";
 
 const STATE_ENTRY = "pi-debug-mode:state";
+const AUTOPILOT_OPTION = "Autopilot — Agent 自行验证";
 const OPTIONS = [
 	"Fixed",
 	"Issue reproduced, please try again",
 	"Type prompt…",
-	"Autopilot — Agent 自行验证",
+	AUTOPILOT_OPTION,
 ] as const;
 
 interface DebugState {
@@ -151,11 +152,13 @@ export default function debugMode(pi: ExtensionAPI): void {
 					.join("\n");
 				const choice = await ctx.ui.select(
 					`${params.title}\n${params.humanReason?.trim() ?? ""}\n${steps}`,
-					[...OPTIONS],
+					[...OPTIONS].filter(
+						(option) => !state.autopilot || option !== AUTOPILOT_OPTION,
+					),
 					{ signal: _signal },
 				);
 
-				if (choice === "Autopilot — Agent 自行验证") {
+				if (choice === AUTOPILOT_OPTION) {
 					state.autopilot = true;
 					persist(pi, state);
 					updateStatus(ctx, true, true);
@@ -187,11 +190,9 @@ export default function debugMode(pi: ExtensionAPI): void {
 	pi.on("before_agent_start", (event) => {
 		if (!state.active) return;
 		return {
-			systemPrompt: `${event.systemPrompt}\n\n${
-			state.autopilot
-				? `[PI DEBUG MODE ACTIVE]\nBug: ${state.bug}\n\n${AUTOPILOT_INSTRUCTIONS}`
-				: debugInstructions(state.bug)
-		}`,
+			systemPrompt: `${event.systemPrompt}\n\n${state.autopilot
+			? `[PI DEBUG MODE ACTIVE]\nBug: ${state.bug}\n\n${AUTOPILOT_INSTRUCTIONS}`
+			: debugInstructions(state.bug)}`,
 		};
 	});
 

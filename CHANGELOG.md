@@ -25,6 +25,9 @@ All notable changes to `pi-debug-mode` are recorded here.
 - Prevented machine-only flows from treating the Autopilot handoff as a finished verification.
 - Prevented visual flows from replacing human judgment with file searches, logs, or unrelated commands.
 - Fixed eval grading so `cannot claim fixed` is not treated as a successful fix claim.
+- Fixed A/B reruns so baseline and candidate identities remain distinct even when prompt files match.
+- Fixed targeted eval reruns so `--ids` selects requested cases across all splits.
+- Fixed human checkpoints so an already enabled Autopilot option is not offered a second time.
 
 ### Verification
 
