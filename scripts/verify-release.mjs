@@ -60,8 +60,10 @@ const EXPECTED_PACKAGE_FILES = [
 	'LICENSE',
 	'README.md',
 	'package.json',
+	'src/TELEMETRY.md',
 	'src/index.ts',
 	'src/protocol.ts',
+	'src/usage-entry.ts',
 ]
 const REQUIRED_SITE_FILES = [
 	'docs/.nojekyll',
@@ -395,7 +397,7 @@ function checkPiMetadata(result, { pkg, identity }) {
 	const expectedImage = `${taggedMediaBase(identity)}artifacts/demo/pi-debug-mode-preview.gif`
 	const problems = []
 	if (!pi || typeof pi !== 'object') problems.push('pi metadata is missing')
-	if (!arraysEqual(pi?.extensions, ['./src/index.ts'])) problems.push('pi.extensions must contain only ./src/index.ts')
+	if (!arraysEqual(pi?.extensions, ['./src/usage-entry.ts'])) problems.push('pi.extensions must contain only ./src/usage-entry.ts')
 	if (pi?.image !== expectedImage) problems.push(`pi.image must be ${expectedImage}`)
 	if (pi && Object.hasOwn(pi, 'video')) problems.push('pi.video must be omitted so the animated GIF is the primary no-click preview')
 	if (unknownKeys.length) problems.push(`unsupported fields ${unknownKeys.join(', ')}`)
