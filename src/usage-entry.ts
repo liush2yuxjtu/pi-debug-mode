@@ -1,13 +1,13 @@
 import { createHash, randomUUID } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import debugMode from "./index.ts";
 
 const PACKAGE = "pi-debug-mode";
-const VERSION = "0.1.8";
-const DAY = 86_400_000;
+const VERSION = String(JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version);
 
 type FunnelState = {
   schema: 1;
@@ -57,22 +57,21 @@ function config(): { endpoint: URL } | undefined {
 
 async function send(endpoint: URL, event: FunnelEvent, id: string): Promise<void> {
   try {
-    const body = JSON.stringify({
-      schema_version: 1,
-      event,
-      event_id: randomUUID(),
-      anonymous_install_id: id,
-      package: PACKAGE,
-      version: VERSION,
-      timestamp: new Date().toISOString(),
-      os: process.platform,
-      node_major: Number(process.versions.node.split(".")[0]),
-      ci: truthy("CI") || truthy("GITHUB_ACTIONS"),
-    });
     await fetch(endpoint, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body,
+      body: JSON.stringify({
+        schema_version: 1,
+        event,
+        event_id: randomUUID(),
+        anonymous_install_id: id,
+        package: PACKAGE,
+        version: VERSION,
+        timestamp: new Date().toISOString(),
+        os: process.platform,
+        node_major: Number(process.versions.node.split(".")[0]),
+        ci: truthy("CI") || truthy("GITHUB_ACTIONS"),
+      }),
       signal: AbortSignal.timeout(500),
     });
   } catch {
@@ -84,7 +83,6 @@ async function record(success: boolean): Promise<void> {
   const configured = config();
   if (!configured) return;
   const file = statePath();
-  const directory = join(file, "..");
   const now = Date.now();
   const day = utcDay(now);
   const week = utcWeek(now);
@@ -111,14 +109,16 @@ async function record(success: boolean): Promise<void> {
     state.firstSuccess = true;
     events.push("first_success");
   }
+  let temporary: string | undefined;
   try {
-    await mkdir(directory, { recursive: true, mode: 0o700 });
-    const temporary = `${file}.${randomUUID()}.tmp`;
-    await writeFile(temporary, JSON.stringify(state), { mode: 0o600 });
+    await mkdir(dirname(file), { recursive: true, mode: 0o700 });
+    temporary = `${file}.${randomUUID()}.tmp`;
+    await writeFile(temporary, JSON.stringify(state), { mode: 0o600, flag: "wx" });
     await rename(temporary, file);
+    temporary = undefined;
     await Promise.all(events.map((event) => send(configured.endpoint, event, state!.id)));
   } catch {
-    await rm(`${file}.tmp`, { force: true }).catch(() => undefined);
+    if (temporary) await rm(temporary, { force: true }).catch(() => undefined);
   }
 }
 
@@ -129,9 +129,7 @@ export default function usageInstrumentedDebugMode(pi: ExtensionAPI): void {
     get(target, property, receiver) {
       if (property !== "registerTool") return Reflect.get(target, property, receiver);
       return (tool: any) => {
-        if (tool?.name !== "debug_reproduction" || typeof tool.execute !== "function") {
-          return target.registerTool(tool);
-        }
+        if (tool?.name !== "debug_reproduction" || typeof tool.execute !== "function") return target.registerTool(tool);
         const execute = tool.execute.bind(tool);
         return target.registerTool({
           ...tool,
