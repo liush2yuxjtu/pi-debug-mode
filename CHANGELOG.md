@@ -32,12 +32,12 @@ All notable changes to `pi-debug-mode` are recorded here.
 
 ### Verification
 
-- `npm test` passed 9/9 tests.
+- `npm test` passed 10/10 tests.
 - `npm run typecheck` passed.
 - Final Pi A/B run used `openai-codex/gpt-5.6-luna` with minimal thinking.
 - Final candidate passed 20/20 fixed behavior evals.
 - Final public regression score was 5/5.
-- The package remained limited to the existing `src/index.ts` extension entrypoint.
+- The package uses `src/usage-entry.ts` as its extension entrypoint. That wrapper loads `src/index.ts` and keeps the optional telemetry boundary separate from Debug Mode.
 
 ### Security and compatibility
 
