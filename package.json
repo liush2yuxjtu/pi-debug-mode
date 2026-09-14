@@ -29,7 +29,7 @@
   ],
   "pi": {
     "extensions": [
-      "./src/index.ts"
+      "./src/usage-entry.ts"
     ],
     "image": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.8/artifacts/demo/pi-debug-mode-preview.gif"
   },

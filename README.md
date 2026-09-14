@@ -96,7 +96,7 @@ Use an ordinary prompt for a direct question or a bug with an obvious static cau
 
 ## Permissions and security
 
-Pi extensions run with the same system permissions as Pi. This package adds two commands and one interactive tool. Autopilot is one choice inside that existing tool. It does not start background services, send telemetry, or make network requests.
+Pi extensions run with the same system permissions as Pi. This package adds two commands and one interactive tool. Autopilot is one choice inside that existing tool. It does not start background services. Optional anonymous usage telemetry is disabled by default and only sends when you explicitly enable it, acknowledge the collector privacy boundary, and configure an HTTPS endpoint. See [src/TELEMETRY.md](src/TELEMETRY.md).
 
 A debug session may ask Pi to add temporary runtime probes and read local logs. Review proposed tool calls. Do not reproduce a bug with secrets in inputs or logs.
 
@@ -115,7 +115,7 @@ Use it for bugs that need runtime evidence, competing hypotheses, or a human rep
 
 ### What data leaves my machine?
 
-The extension itself sends no telemetry and makes no network requests. Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session.
+By default, no usage telemetry leaves your machine. If you explicitly opt in and configure an HTTPS collector, the extension can send only the anonymous funnel events documented in [src/TELEMETRY.md](src/TELEMETRY.md); it does not send prompts, bug descriptions, code, paths, tokens, emails, usernames, or model output. Separately, your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session.
 
 ### Does it prove every fix?
 

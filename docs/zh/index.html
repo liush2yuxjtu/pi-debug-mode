@@ -66,7 +66,7 @@
         "name": "哪些数据会离开本机？",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "扩展本身不发送遥测，也不发起网络请求。你配置的 Pi 模型提供商仍可能收到 Pi 在会话中发送的提示词、工具输出和日志。"
+          "text": "使用遥测默认关闭。明确开启后，扩展只发送协议中定义的匿名漏斗事件。你配置的 Pi 模型提供商仍可能收到 Pi 在会话中发送的提示词、工具输出和日志。"
         }
       },
       {
@@ -262,8 +262,8 @@
           <p>Pi 扩展拥有与 Pi 相同的系统权限。调试会话可能添加临时探针并读取本地日志。</p>
         </article>
         <article class="security-card">
-          <h3>扩展不发送遥测</h3>
-          <p>pi-debug-mode 不启动后台服务，不发送遥测，也不发起网络请求。</p>
+          <h3>可选使用遥测</h3>
+          <p>使用遥测默认关闭。明确开启后，只向你配置的 HTTPS 收集端点发送匿名漏斗事件。详见 <a href="https://github.com/liush2yuxjtu/pi-debug-mode/blob/main/src/TELEMETRY.md">遥测协议</a>。</p>
         </article>
         <article class="security-card">
           <h3>模型提供商边界</h3>
@@ -284,7 +284,7 @@
         </article>
         <article class="faq-item">
           <h3>哪些数据会离开本机？</h3>
-          <p>扩展本身不发送遥测，也不发起网络请求。你配置的 Pi 模型提供商仍可能收到 Pi 在会话中发送的提示词、工具输出和日志。</p>
+          <p>使用遥测默认关闭。明确开启后，扩展只发送 <a href="https://github.com/liush2yuxjtu/pi-debug-mode/blob/main/src/TELEMETRY.md">协议中定义的匿名漏斗事件</a>。你配置的 Pi 模型提供商仍可能收到 Pi 在会话中发送的提示词、工具输出和日志。</p>
         </article>
         <article class="faq-item">
           <h3>它能证明每次修复都正确吗？</h3>

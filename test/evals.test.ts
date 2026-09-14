@@ -31,7 +31,9 @@ test("failure grader does not treat a negated success phrase as success", () => 
 
 test("eval runner is opt-in, isolated from normal extension loading", () => {
 	const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
-	assert.deepEqual(pkg.pi.extensions, ["./src/index.ts"]);
+	assert.deepEqual(pkg.pi.extensions, ["./src/usage-entry.ts"]);
+	const usageEntry = readFileSync(new URL("../src/usage-entry.ts", import.meta.url), "utf8");
+	assert.match(usageEntry, /debugMode/);
 	const runner = readFileSync(new URL("../evals/run.mjs", import.meta.url), "utf8");
 	for (const flag of ["--no-session", "--no-context-files", "--no-builtin-tools", "--no-extensions", "--no-skills"]) assert.ok(runner.includes(flag));
 	assert.ok(runner.includes("'--model', 'luna'"));

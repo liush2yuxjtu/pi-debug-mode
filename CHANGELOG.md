@@ -42,7 +42,7 @@ All notable changes to `pi-debug-mode` are recorded here.
 
 - Guided mode keeps its three existing outcomes.
 - Autopilot does not bypass login, consent, payment, permission, or destructive-action approval.
-- The extension sends no telemetry and makes no network requests.
+- Usage telemetry is disabled by default. Explicit opt-in sends only the anonymous funnel events documented in `src/TELEMETRY.md`; it never sends prompts, code, paths, tokens, or model output.
 - Existing sessions restore Guided mode when they have no Autopilot state.
 
 ## [0.1.7] 2026-09-07

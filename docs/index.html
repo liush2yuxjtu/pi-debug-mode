@@ -66,7 +66,7 @@
         "name": "What data leaves my machine?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "The extension itself sends no telemetry and makes no network requests. Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session."
+          "text": "Usage telemetry is disabled by default. If you opt in, the extension sends only anonymous funnel events described in the telemetry contract. Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session."
         }
       },
       {
@@ -262,8 +262,8 @@
           <p>Pi extensions run with the same system permissions as Pi. A debug session may add temporary probes and read local logs.</p>
         </article>
         <article class="security-card">
-          <h3>No extension telemetry</h3>
-          <p>pi-debug-mode starts no background service, sends no telemetry, and makes no network requests.</p>
+          <h3>Optional usage telemetry</h3>
+          <p>Usage telemetry is disabled by default. Explicit opt-in sends only anonymous funnel events to a configured HTTPS collector. See <a href="https://github.com/liush2yuxjtu/pi-debug-mode/blob/main/src/TELEMETRY.md">the telemetry contract</a>.</p>
         </article>
         <article class="security-card">
           <h3>Provider boundary</h3>
@@ -284,7 +284,7 @@
         </article>
         <article class="faq-item">
           <h3>What data leaves my machine?</h3>
-          <p>The extension itself sends no telemetry and makes no network requests. Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session.</p>
+          <p>Usage telemetry is disabled by default. If you opt in, the extension sends only anonymous funnel events described in <a href="https://github.com/liush2yuxjtu/pi-debug-mode/blob/main/src/TELEMETRY.md">the telemetry contract</a>. Your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session.</p>
         </article>
         <article class="faq-item">
           <h3>Does it prove every fix?</h3>
