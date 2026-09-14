@@ -1,8 +1,6 @@
 name: Release
 
 on:
-  push:
-    branches: [main]
   release:
     types: [published]
 
@@ -12,6 +10,7 @@ permissions:
 
 jobs:
   publish-npm:
+    if: startsWith(github.event.release.tag_name, 'v')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -20,16 +19,25 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
+      - name: Verify release version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          test "v${PACKAGE_VERSION}" = "${RELEASE_TAG}"
       - run: npm ci
       - run: npm test
       - run: npm run typecheck
-      - name: Publish target version once
+      - run: npm run verify:release -- --mode local
+      - name: Check whether version already exists
+        id: version
         run: |
           PACKAGE_NAME=$(node -p "require('./package.json').name")
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          test "$PACKAGE_VERSION" = "0.1.8"
           if npm view "${PACKAGE_NAME}@${PACKAGE_VERSION}" version >/dev/null 2>&1; then
-            echo "${PACKAGE_NAME}@${PACKAGE_VERSION} already exists; skipping"
-            exit 0
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
-          npm publish --access public --provenance
+      - if: steps.version.outputs.exists != 'true'
+        run: npm publish --access public
