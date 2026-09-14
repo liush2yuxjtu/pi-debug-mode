@@ -12,7 +12,6 @@ const VERSION = String(JSON.parse(readFileSync(new URL("../package.json", import
 type FunnelState = {
   schema: 1;
   id: string;
-  firstDay: string;
   lastDay: string;
   firstSuccess: boolean;
   returned: boolean;
@@ -25,36 +24,27 @@ function truthy(name: string): boolean {
   const value = process.env[name]?.trim().toLowerCase();
   return value === "1" || value === "true" || value === "yes";
 }
-
-function utcDay(now: number): string {
-  return new Date(now).toISOString().slice(0, 10);
-}
-
+function utcDay(now: number): string { return new Date(now).toISOString().slice(0, 10); }
 function utcWeek(now: number): string {
   const d = new Date(now);
   d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
   return d.toISOString().slice(0, 10);
 }
-
 function statePath(): string {
   const root = process.platform === "win32"
     ? (process.env.LOCALAPPDATA || join(homedir(), "AppData", "Local"))
     : (process.env.XDG_CONFIG_HOME || join(homedir(), ".config"));
   return join(root, "liushiyu-usage-funnel", `${createHash("sha256").update(PACKAGE).digest("hex")}.json`);
 }
-
 function config(): { endpoint: URL } | undefined {
   if (!truthy("PI_USAGE_TELEMETRY") || !truthy("PI_USAGE_TELEMETRY_PRIVACY_ACK")) return;
-  if (truthy("PI_TELEMETRY_DISABLED") || truthy("DO_NOT_TRACK")) return;
+  if (truthy("PI_TELEMETRY_DISABLED") || truthy("DO_NOT_TRACK") || truthy("CI") || truthy("GITHUB_ACTIONS")) return;
   try {
     const endpoint = new URL(process.env.PI_USAGE_TELEMETRY_ENDPOINT || "");
     if (endpoint.protocol !== "https:" || endpoint.username || endpoint.password || endpoint.search || endpoint.hash) return;
     return { endpoint };
-  } catch {
-    return;
-  }
+  } catch { return; }
 }
-
 async function send(endpoint: URL, event: FunnelEvent, id: string): Promise<void> {
   try {
     await fetch(endpoint, {
@@ -70,60 +60,61 @@ async function send(endpoint: URL, event: FunnelEvent, id: string): Promise<void
         timestamp: new Date().toISOString(),
         os: process.platform,
         node_major: Number(process.versions.node.split(".")[0]),
-        ci: truthy("CI") || truthy("GITHUB_ACTIONS"),
+        ci: false,
       }),
       signal: AbortSignal.timeout(500),
     });
-  } catch {
-    // Usage measurement must never affect the host extension.
-  }
+  } catch { /* at-most-once telemetry: no retries or offline spool */ }
 }
-
 async function record(success: boolean): Promise<void> {
   const configured = config();
   if (!configured) return;
   const file = statePath();
-  const now = Date.now();
-  const day = utcDay(now);
-  const week = utcWeek(now);
-  let state: FunnelState | undefined;
-  try {
-    state = JSON.parse(await readFile(file, "utf8")) as FunnelState;
-  } catch {
-    state = undefined;
-  }
-  const events: FunnelEvent[] = [];
-  if (!state || state.schema !== 1 || typeof state.id !== "string") {
-    state = { schema: 1, id: randomUUID(), firstDay: day, lastDay: day, firstSuccess: false, returned: false, week: null };
-    events.push("first_install", "first_launch");
-  } else if (!state.returned && state.lastDay < day) {
-    state.returned = true;
-    events.push("returning_user");
-  }
-  state.lastDay = day;
-  if (state.week !== week) {
-    state.week = week;
-    events.push("weekly_active");
-  }
-  if (success && !state.firstSuccess) {
-    state.firstSuccess = true;
-    events.push("first_success");
-  }
+  const lock = `${file}.lock`;
+  let locked = false;
   let temporary: string | undefined;
+  let state: FunnelState | undefined;
+  const events: FunnelEvent[] = [];
   try {
     await mkdir(dirname(file), { recursive: true, mode: 0o700 });
+    await mkdir(lock, { mode: 0o700 });
+    locked = true;
+    try { state = JSON.parse(await readFile(file, "utf8")) as FunnelState; } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") return;
+    }
+    const now = Date.now();
+    const day = utcDay(now);
+    const week = utcWeek(now);
+    if (!state || state.schema !== 1 || typeof state.id !== "string") {
+      state = { schema: 1, id: randomUUID(), lastDay: day, firstSuccess: false, returned: false, week: null };
+      events.push("first_install", "first_launch");
+    } else if (!state.returned && state.lastDay < day) {
+      state.returned = true;
+      events.push("returning_user");
+    }
+    state.lastDay = day;
+    if (state.week !== week) { state.week = week; events.push("weekly_active"); }
+    if (success && !state.firstSuccess) { state.firstSuccess = true; events.push("first_success"); }
     temporary = `${file}.${randomUUID()}.tmp`;
     await writeFile(temporary, JSON.stringify(state), { mode: 0o600, flag: "wx" });
     await rename(temporary, file);
     temporary = undefined;
-    await Promise.all(events.map((event) => send(configured.endpoint, event, state!.id)));
   } catch {
+    return;
+  } finally {
     if (temporary) await rm(temporary, { force: true }).catch(() => undefined);
+    if (locked) await rm(lock, { recursive: true, force: true }).catch(() => undefined);
   }
+  if (state) await Promise.all(events.map((event) => send(configured.endpoint, event, state.id)));
 }
 
 export default function usageInstrumentedDebugMode(pi: ExtensionAPI): void {
-  pi.on("session_start", () => { void record(false); });
+  let queue = Promise.resolve();
+  const enqueue = (success: boolean) => {
+    queue = queue.then(() => record(success)).catch(() => undefined);
+    return queue;
+  };
+  pi.on("session_start", () => { void enqueue(false); });
 
   const instrumented = new Proxy(pi, {
     get(target, property, receiver) {
@@ -135,7 +126,7 @@ export default function usageInstrumentedDebugMode(pi: ExtensionAPI): void {
           ...tool,
           async execute(...args: any[]) {
             const result = await execute(...args);
-            if (result?.details?.outcome?.kind === "fixed") void record(true);
+            if (result?.details?.outcome?.kind === "fixed") void enqueue(true);
             return result;
           },
         });
