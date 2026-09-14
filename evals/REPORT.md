@@ -8,18 +8,18 @@
 
 ## 最终结果
 
-最终候选通过 20/20。冻结历史基线通过 4/20。
+最终候选通过 20/20。冻结历史基线通过 3/20。
 
 | 分组 | 基线 | 候选 |
 | --- | ---: | ---: |
-| train | 3/10 | 10/10 |
-| validation | 1/5 | 5/5 |
+| train | 1/10 | 10/10 |
+| validation | 2/5 | 5/5 |
 | regression | 0/5 | 5/5 |
-| 总计 | 4/20 | 20/20 |
+| 总计 | 3/20 | 20/20 |
 
-模型是 `openai-codex/gpt-5.6-luna`。Runner 使用 `pi --model luna --thinking minimal`。最终候选提示为 1010 个 JavaScript 字符。历史 baseline 固定在 `evals/baseline.txt`，不随生产提示变化。
+模型是 `openai-codex/gpt-5.6-luna`。Runner 使用 `pi --model luna --thinking minimal`。最终候选提示为 1072 个 JavaScript 字符。历史 baseline 固定在 `evals/baseline.txt`，不随生产提示变化。
 
-最终 A/B 运行包含 40 个配对进程。候选总 `usage.totalTokens` 为 107662。基线为 145509。候选总子进程时长为 302449ms。基线为 382906ms。两侧并发运行，累加时长不是墙钟时间。每个用例只采样一次，不能推导统计显著性。
+最终 A/B 运行包含 40 个配对进程。候选总 `usage.totalTokens` 为 103006。基线为 153984。候选总子进程时长为 298850ms。基线为 405325ms。两侧并发运行，累加时长不是墙钟时间。每个用例只采样一次，不能推导统计显著性。
 
 `benchmark.json` 保存逐例断言、工具调用、最终回答、模型、Token 和匿名映射。`candidateAccepted` 为 `true`，因为候选 20/20，公开 regression 全通过，且没有基础测试或类型检查回归。
 
@@ -29,7 +29,7 @@ PR review 发现并修复以下问题：
 
 - A/B 身份现在在构造 variant 时显式保存。Runner 不再通过 prompt 内容相等判断 baseline。
 - `--ids` 现在独立于默认 split。指定 ID 会跨 train、validation 和 regression 选择用例。
-- 每个 case 现在保存 `allowedCommand`、`expected` 和 `allowedReadPaths`。合成 harness 拒绝其他命令和路径。
+- 每个 case 现在保存 `allowedCommand`、`expected` 和 `allowedReadPaths`。合成 harness 拒绝其他命令和路径，grader 也拒绝 handoff 后的非法 Bash 或 read。
 - `summarize.mjs` 默认把结果写到输入目录。只有显式传 `--out evals/benchmark.json` 才更新 Git 基准。
 - 新 `/debug` 任务会重置 Autopilot。旧任务不会改变新任务的 Guided 起点。
 - Autopilot 已开启后，人工检查点不再显示 Autopilot 选项。

@@ -27,6 +27,7 @@ All notable changes to `pi-debug-mode` are recorded here.
 - Fixed eval grading so `cannot claim fixed` is not treated as a successful fix claim.
 - Fixed A/B reruns so baseline and candidate identities remain distinct even when prompt files match.
 - Fixed targeted eval reruns so `--ids` selects requested cases across all splits.
+- Fixed case grading so rejected Bash and read calls cannot hide behind a later valid result.
 - Fixed human checkpoints so an already enabled Autopilot option is not offered a second time.
 
 ### Verification
