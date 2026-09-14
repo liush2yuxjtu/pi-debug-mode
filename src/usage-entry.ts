@@ -17,9 +17,7 @@ type FunnelState = {
   returned: boolean;
   week: string | null;
 };
-
 type FunnelEvent = "first_install" | "first_launch" | "first_success" | "returning_user" | "weekly_active";
-
 function truthy(name: string): boolean {
   const value = process.env[name]?.trim().toLowerCase();
   return value === "1" || value === "true" || value === "yes";
@@ -49,6 +47,7 @@ async function send(endpoint: URL, event: FunnelEvent, id: string): Promise<void
   try {
     await fetch(endpoint, {
       method: "POST",
+      redirect: "error",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
         schema_version: 1,
@@ -79,13 +78,16 @@ async function record(success: boolean): Promise<void> {
     await mkdir(dirname(file), { recursive: true, mode: 0o700 });
     await mkdir(lock, { mode: 0o700 });
     locked = true;
-    try { state = JSON.parse(await readFile(file, "utf8")) as FunnelState; } catch (error) {
+    try {
+      state = JSON.parse(await readFile(file, "utf8")) as FunnelState;
+      if (!state || state.schema !== 1 || typeof state.id !== "string" || typeof state.lastDay !== "string" || typeof state.firstSuccess !== "boolean" || typeof state.returned !== "boolean") return;
+    } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") return;
     }
     const now = Date.now();
     const day = utcDay(now);
     const week = utcWeek(now);
-    if (!state || state.schema !== 1 || typeof state.id !== "string") {
+    if (!state) {
       state = { schema: 1, id: randomUUID(), lastDay: day, firstSuccess: false, returned: false, week: null };
       events.push("first_install", "first_launch");
     } else if (!state.returned && state.lastDay < day) {
@@ -99,9 +101,8 @@ async function record(success: boolean): Promise<void> {
     await writeFile(temporary, JSON.stringify(state), { mode: 0o600, flag: "wx" });
     await rename(temporary, file);
     temporary = undefined;
-  } catch {
-    return;
-  } finally {
+  } catch { return; }
+  finally {
     if (temporary) await rm(temporary, { force: true }).catch(() => undefined);
     if (locked) await rm(lock, { recursive: true, force: true }).catch(() => undefined);
   }
