@@ -63,6 +63,7 @@ const EXPECTED_PACKAGE_FILES = [
 	'src/TELEMETRY.md',
 	'src/index.ts',
 	'src/protocol.ts',
+	'src/telemetry.ts',
 	'src/usage-entry.ts',
 ]
 const REQUIRED_SITE_FILES = [

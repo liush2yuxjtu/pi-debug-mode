@@ -2,6 +2,27 @@
 
 All notable changes to `pi-debug-mode` are recorded here.
 
+## [0.1.11] 2026-09-20
+
+### Changed
+
+- Usage telemetry now goes to the shared `@nyn5255/telemetry` collector instead of the package-specific funnel. One schema, one collector, one consent model across the published packages.
+- Usage telemetry is **on by default**. The first interactive session prints the full disclosure once: collector address, exact field list, never-sent list, 180-day retention, the hosting caveat, and `DO_NOT_TRACK=1`. A headless session does not consume that notice, so a human still sees it.
+- `install` now fires on the first opted-in session, `activated` only when a debug session actually starts, and `first_success` when a reproduction ends in `Fixed`. Previously `install`, `activated`, and `active` all fired on session start, which made the activation rate meaningless.
+- The network deadline is 1000 ms (the SDK maximum) because the 500 ms default is shorter than a serverless cold start over a long-haul link, which dropped events silently.
+
+### Added
+
+- `/debug-telemetry status | on | off`. Off is immediate and persists, and a stored off wins over the default.
+- `README.md` and `src/TELEMETRY.md` state that telemetry is on by default, with the off switches next to it, before install.
+- `PI_TELEMETRY_DEBUG=1` prints the exact JSON that would be sent on stderr, sends nothing, and writes no state, so the published field list can be checked instead of trusted.
+- `PI_DEBUG_MODE_TELEMETRY=1|0` process override; the legacy `PI_USAGE_TELEMETRY` opt-in still counts as consent.
+
+### Notes
+
+- Nothing is obfuscated: the payload is plain schema-v1 JSON to a public endpoint whose source is readable. The collector stores no IP, user agent, or forwarding header, and its database schema has no column for them.
+- Counts are lower bounds: at-most-once delivery with no retries, and npm downloads include CI and are not users.
+
 ## [0.1.9] 2026-09-14
 
 ### Added
