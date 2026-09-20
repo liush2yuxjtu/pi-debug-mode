@@ -21,6 +21,8 @@ assert.equal(pkg.dependencies?.["@nyn5255/telemetry"], "^0.1.3");
 for (const file of ["src/telemetry.ts","src/usage-entry.ts","src/TELEMETRY.md"]) {
   await readFile(join(tmp, "node_modules", "pi-debug-mode", file), "utf8");
 }
+const publishedTelemetrySource = await readFile(join(tmp, "node_modules", "pi-debug-mode", "src", "telemetry.ts"), "utf8");
+await writeFile(join(tmp, "published-telemetry.ts"), publishedTelemetrySource);
 
 const probePath = join(tmp, "probe.mjs");
 await writeFile(probePath, `
@@ -31,7 +33,7 @@ import { join } from "node:path";
 import {
   PACKAGE, FEATURE, COLLECTOR_ENDPOINT, RETENTION_DAYS, SENT_FIELDS,
   resolveConsent, createFunnel, firstRunNotice
-} from "./node_modules/pi-debug-mode/src/telemetry.ts";
+} from "./published-telemetry.ts";
 
 const stateDirectory = await mkdtemp(join(tmpdir(), "pi-debug-wire-"));
 const prefs = join(stateDirectory, "prefs.json");
