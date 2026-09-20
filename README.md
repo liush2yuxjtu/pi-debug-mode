@@ -1,6 +1,6 @@
 # pi-debug-mode
 
-pi-debug-mode adds a Cursor-style evidence-first Debug Mode to the [Pi coding agent](https://github.com/earendil-works/pi-mono). Its injected instructions tell Pi to wait for runtime evidence before changing code. The workflow asks Pi to compare hypotheses, add targeted probes, pause for human reproduction, inspect captured evidence, apply the smallest supported fix, and verify the result.
+pi-debug-mode adds a Cursor-style evidence-first Debug Mode to the [Pi coding agent](https://github.com/earendil-works/pi-mono) for runtime debugging, bug reproduction, root-cause analysis, and verification. Its injected instructions tell Pi to wait for runtime evidence before changing code. The workflow asks Pi to compare hypotheses, add targeted probes, pause for human reproduction, inspect captured evidence, apply the smallest supported fix, and verify the result.
 
 The canonical source is [github.com/liush2yuxjtu/pi-debug-mode](https://github.com/liush2yuxjtu/pi-debug-mode).
 
