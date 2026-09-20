@@ -78,7 +78,8 @@ assert.deepEqual(payloads.map(p => p.event), ["install","activated","first_succe
 for (const p of payloads) {
   assert.equal(p.package, "pi-debug-mode");
   assert.equal(p.version, version);
-  assert.equal(p.feature, "debug");
+  if (p.event === "install") assert.equal(p.feature, undefined);
+  else assert.equal(p.feature, "debug");
   assert.equal(p.ci, false);
   assert.ok(p.event_id);
   assert.ok(p.anonymous_install_id);
