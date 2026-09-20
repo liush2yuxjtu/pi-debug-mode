@@ -61,6 +61,11 @@ If you invoke `/debug` while Pi is busy, the extension waits for the current age
 
 Use `/debug-stop` to leave Debug Mode without claiming a fix.
 
+### Send feedback safely
+
+Use `/debug-feedback`. Feedback text is explicit opt-in. You may optionally attach the current main session plus referenced `pi-subtask` child sessions; raw transcripts never leave the machine, transcript upload requires deterministic redaction, TruffleHog with zero findings, a size/redaction summary, and a second confirmation. If scanning is unavailable or finds anything, transcript upload is blocked. `DO_NOT_TRACK=1` and `PI_TELEMETRY_DISABLED=1` disable feedback upload too. Redacted feedback is retained for 30 days.
+TruffleHog must be available on `PATH` to attach transcripts; text-only feedback does not require it.
+
 ## Uninstall
 
 For an npm install, run:
