@@ -1,6 +1,6 @@
 {
   "name": "pi-debug-mode",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Cursor-style debug mode for the Pi coding agent, with evidence-first debugging and targeted runtime probes.",
   "type": "module",
   "license": "MIT",
@@ -48,5 +48,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@nyn5255/telemetry": "^0.1.1"
   }
 }

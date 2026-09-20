@@ -4,7 +4,7 @@ Usage measurement is **off by default**. The extension performs no telemetry fil
 
 - `PI_USAGE_TELEMETRY=1`
 - `PI_USAGE_TELEMETRY_PRIVACY_ACK=1`
-- `PI_USAGE_TELEMETRY_ENDPOINT=https://...`
+- 可选：`PI_USAGE_TELEMETRY_ENDPOINT=https://...` 覆盖默认 collector；默认使用 `https://telemetry-peach.vercel.app/api/events`
 
 `DO_NOT_TRACK=1` or `PI_TELEMETRY_DISABLED=1` always disables it.
 
@@ -12,10 +12,10 @@ Usage measurement is **off by default**. The extension performs no telemetry fil
 
 The funnel emits only these event names:
 
-- `first_install` — first opted-in launch on this machine (not an npm postinstall hook)
-- `first_launch` — same first real extension session
+- `install` — first opted-in real extension session on this machine (never an npm postinstall hook)
+- `activated` — first opted-in session where the extension is actually loaded
 - `first_success` — the user confirms a debug reproduction as `Fixed`
-- `returning_user` — first opted-in use on a later UTC day
+- `d7_retained` — another real success 7–8 days after first success
 - `weekly_active` — at most once per UTC week
 
 ## Fields
