@@ -12,8 +12,12 @@ import { createTelemetry, type Telemetry } from "@nyn5255/telemetry";
  * consent model across the published packages means the funnel counts a user
  * once instead of once per package implementation.
  *
- * Off by default. Nothing is written or sent until the user grants consent here
- * or explicitly sets the opt-in environment variables.
+ * On by default, with a one-time notice on first run and a documented, immediate
+ * way out: /debug-telemetry off, DO_NOT_TRACK=1, or PI_TELEMETRY_DISABLED=1.
+ * Nothing is hidden: the payload is schema-v1 JSON in the clear, the field list is
+ * published, and the collector address is printed in the notice and the README.
+ * There is no encoding, packing, or obfuscation step, and no prompt, path, token,
+ * or identity field is ever collected.
  */
 
 export const PACKAGE = "pi-debug-mode";
@@ -68,9 +72,11 @@ interface Prefs {
 	consent: Consent;
 	updatedAt?: string;
 	collector?: string;
+	/** True once the first-run disclosure has been shown, so it is shown only once. */
+	noticeShown?: boolean;
 }
 
-const DEFAULT_PREFS: Prefs = { schema: 1, consent: "unset" };
+const DEFAULT_PREFS: Prefs = { schema: 1, consent: "unset", noticeShown: false };
 
 function truthy(value: string | undefined): boolean {
 	const normalized = value?.trim().toLowerCase();
@@ -106,34 +112,49 @@ export async function readPrefs(file = prefsPath()): Promise<Prefs> {
 	}
 }
 
-/** Persist consent with an atomic rename and owner-only permissions. */
-export async function writePrefs(consent: Consent, file = prefsPath()): Promise<void> {
-	const target: Prefs = {
-		schema: 1,
-		consent,
-		updatedAt: new Date().toISOString(),
-		collector: COLLECTOR_ENDPOINT,
-	};
+/** Atomically write preferences with owner-only permissions. */
+async function savePrefs(prefs: Prefs, file: string): Promise<void> {
 	await mkdir(dirname(file), { recursive: true, mode: 0o700 });
 	const temporary = `${file}.${randomUUID()}.tmp`;
 	try {
-		await writeFile(temporary, `${JSON.stringify(target)}\n`, { mode: 0o600, flag: "wx" });
+		await writeFile(temporary, `${JSON.stringify(prefs)}\n`, { mode: 0o600, flag: "wx" });
 		await rename(temporary, file);
 	} finally {
 		await rm(temporary, { force: true }).catch(() => undefined);
 	}
 }
 
+/** Persist the consent choice, preserving whether the notice has been shown. */
+export async function writePrefs(consent: Consent, file = prefsPath()): Promise<void> {
+	const existing = await readPrefs(file);
+	await savePrefs(
+		{
+			schema: 1,
+			consent,
+			noticeShown: existing.noticeShown === true,
+			updatedAt: new Date().toISOString(),
+			collector: COLLECTOR_ENDPOINT,
+		},
+		file,
+	);
+}
+
+/** Record that the first-run disclosure was displayed to a human, so it shows once. */
+export async function markNoticeShown(file = prefsPath()): Promise<void> {
+	const existing = await readPrefs(file);
+	await savePrefs({ ...existing, schema: 1, collector: COLLECTOR_ENDPOINT, noticeShown: true }, file);
+}
+
 /**
- * Effective consent.
+ * Effective consent. This package is opt-out: absent any signal, telemetry is on
+ * and a first-run notice discloses it (see consentSummary and the session notice).
  *
  * Precedence, highest first:
- *  1. DO_NOT_TRACK / PI_TELEMETRY_DISABLED — always off, no consent is enough.
- *  2. PI_DEBUG_MODE_TELEMETRY=1|0 — process override for scripted runs.
- *  3. Legacy PI_USAGE_TELEMETRY=1 + PI_USAGE_TELEMETRY_PRIVACY_ACK=1 — the previous
- *     funnel's opt-in, honored so an operator who already opted in is not silently
- *     turned off by the migration.
- *  4. Stored consent from /debug-telemetry.
+ *  1. DO_NOT_TRACK / PI_TELEMETRY_DISABLED — always off, nothing overrides it.
+ *  2. PI_DEBUG_MODE_TELEMETRY=0|1 — process override for scripted runs.
+ *  3. Stored choice from /debug-telemetry (off persists and wins over the default).
+ *  4. Legacy PI_USAGE_TELEMETRY=1 + PI_USAGE_TELEMETRY_PRIVACY_ACK=1.
+ *  5. Default: granted, disclosed by the first-run notice.
  */
 export async function resolveConsent(
 	env: NodeJS.ProcessEnv = process.env,
@@ -143,8 +164,10 @@ export async function resolveConsent(
 	const override = env.PI_DEBUG_MODE_TELEMETRY?.trim().toLowerCase();
 	if (override === "1" || override === "true") return "granted";
 	if (override === "0" || override === "false") return "denied";
+	const stored = (await readPrefs(file)).consent;
+	if (stored !== "unset") return stored;
 	if (truthy(env.PI_USAGE_TELEMETRY) && truthy(env.PI_USAGE_TELEMETRY_PRIVACY_ACK)) return "granted";
-	return (await readPrefs(file)).consent;
+	return "granted";
 }
 
 /**
@@ -172,7 +195,16 @@ export function createFunnel(consent: Consent, options: { version: string; state
 	});
 }
 
-/** Consent copy shown before the user decides. Both promises and the retention are stated. */
+/** One-time first-run disclosure. Default-on is only acceptable with this notice. */
+export function firstRunNotice(): string[] {
+	return [
+		"pi-debug-mode anonymous usage telemetry is ON by default.",
+		...consentSummary(),
+		"Turn it off any time: /debug-telemetry off, or set DO_NOT_TRACK=1.",
+	];
+}
+
+/** Disclosure shown in the notice, the status command, and before any decision. Both promises and the retention are stated. */
 export function consentSummary(): string[] {
 	return [
 		`Collector: ${COLLECTOR_ENDPOINT}`,

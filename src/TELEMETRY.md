@@ -1,6 +1,11 @@
 # Usage funnel telemetry
 
-Usage measurement is **off by default**. The extension performs no telemetry filesystem or network work until the user grants consent with `/debug-telemetry on`, or an operator explicitly opts in through environment variables.
+Usage measurement is **on by default** and fully disclosed:
+
+- The first interactive session prints the whole disclosure once: collector address, the exact field list, the never-sent list, the retention window, the hosting caveat, and how to turn it off.
+- The README says the same thing, so it is visible before installing.
+- `/debug-telemetry off`, `DO_NOT_TRACK=1`, or `PI_TELEMETRY_DISABLED=1` stop it immediately and persist.
+- The payload is plain schema-v1 JSON. There is no encoding, packing, or obfuscation step, and no hidden endpoint: the collector is a public URL you can read the source of.
 
 This package uses the shared [`@nyn5255/telemetry`](https://www.npmjs.com/package/@nyn5255/telemetry) SDK and the shared collector, so all published packages contribute to one funnel with one schema and one consent model. It replaces the earlier package-specific funnel, which used different event names and its own state directory; the old opt-in environment variables still count as consent, so nobody who opted in before is silently turned off.
 
@@ -9,13 +14,13 @@ This package uses the shared [`@nyn5255/telemetry`](https://www.npmjs.com/packag
 | Path | Effect |
 | --- | --- |
 | `/debug-telemetry status` | Show current state, collector, fields, never-sent list, retention |
-| `/debug-telemetry on` | Show the privacy notice, then ask for confirmation before enabling |
+| `/debug-telemetry on` | Re-enable after an opt-out |
 | `/debug-telemetry off` | Revoke and stop sending immediately |
 | `PI_DEBUG_MODE_TELEMETRY=1` / `=0` | Process override |
 | `PI_USAGE_TELEMETRY=1` + `PI_USAGE_TELEMETRY_PRIVACY_ACK=1` | Legacy opt-in from the previous funnel, still honored |
 | `DO_NOT_TRACK=1` or `PI_TELEMETRY_DISABLED=1` | Always off; overrides every other setting |
 
-Consent is stored in `~/.config/pi-debug-mode/telemetry.json` (`%LOCALAPPDATA%` on Windows) with owner-only permissions. A corrupt or unreadable file fails closed to "no consent". Revoking consent does not erase the anonymous install id: deleting it would make a later re-opt-in look like a brand new install.
+The choice is stored in `~/.config/pi-debug-mode/telemetry.json` (`%LOCALAPPDATA%` on Windows) with owner-only permissions. An explicit opt-out wins over the default. A corrupt or unreadable file fails closed to "no choice", which is not permission to send more: the first-run notice is treated as not yet shown and the disclosure is printed again. Revoking consent does not erase the anonymous install id: deleting it would make a later re-opt-in look like a brand new install.
 
 ## Events
 

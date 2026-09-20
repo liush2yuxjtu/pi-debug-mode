@@ -10,9 +10,14 @@ import {
 	SENT_FIELDS,
 	consentSummary,
 	createFunnel,
+	firstRunNotice,
+	markNoticeShown,
+	readPrefs,
 	resolveConsent,
 	writePrefs,
 } from "./telemetry.ts";
+
+const NOTICE_ENTRY = "pi-debug-mode:telemetry-notice";
 
 const VERSION = String(
 	JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).version,
@@ -23,8 +28,12 @@ const VERSION = String(
  *
  * The extension is loaded through this wrapper so the funnel can see real usage
  * (a debug session starting, a reproduction ending in Fixed) without the debug
- * implementation knowing telemetry exists. Consent is checked once at load and
- * again whenever the user changes it with `/debug-telemetry`.
+ * implementation knowing telemetry exists.
+ *
+ * Telemetry is on by default, so the first interactive session prints the full
+ * disclosure — collector, fields, never-sent list, retention, and how to turn it
+ * off — once, and records that it was shown. A headless run never marks it as
+ * shown, so a human still sees it on their first real session.
  */
 export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Promise<void> {
 	let telemetry: Telemetry | undefined;
@@ -35,30 +44,19 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 	const funnel = (): Telemetry | undefined => telemetry;
 
 	pi.registerCommand("debug-telemetry", {
-		description: "Usage telemetry consent: status, on, off (off by default)",
+		description: "Usage telemetry: status, on, off (on by default; off is immediate)",
 		handler: async (args: string, ctx: ExtensionContext) => {
 			const action = args.trim().toLowerCase();
 			const lines = consentSummary();
 
 			if (action === "on") {
-				if (!ctx.hasUI) {
-					await writePrefs("granted");
-					consent = "granted";
-					telemetry = createFunnel(consent, { version: VERSION });
-					return;
-				}
-				const agreed = await ctx.ui.confirm(
-					"Enable pi-debug-mode usage telemetry?",
-					[...lines, "", "Enable now?"].join("\n"),
-				);
-				if (!agreed) {
-					ctx.ui.notify("Telemetry stays off.", "info");
-					return;
-				}
 				await writePrefs("granted");
 				consent = "granted";
 				telemetry = createFunnel(consent, { version: VERSION });
-				ctx.ui.notify("Usage telemetry enabled. /debug-telemetry off revokes it.", "info");
+				ctx.ui.notify(
+					[...lines, "", "Usage telemetry enabled. /debug-telemetry off turns it off again."].join("\n"),
+					"info",
+				);
 				return;
 			}
 
@@ -71,8 +69,7 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 				return;
 			}
 
-			const state =
-				consent === "granted" ? "on" : consent === "denied" ? "off" : "off (never decided)";
+			const state = consent === "granted" ? "on (default)" : "off";
 			const envOverride =
 				process.env.PI_DEBUG_MODE_TELEMETRY ??
 				(process.env.PI_USAGE_TELEMETRY ? "legacy PI_USAGE_TELEMETRY" : undefined);
@@ -84,7 +81,7 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 				`Retention: ${RETENTION_DAYS} days`,
 				envOverride ? `Process override active: ${envOverride}` : "No process override.",
 				...lines.slice(-1),
-				"Enable with /debug-telemetry on, revoke with /debug-telemetry off.",
+				"On by default. Turn off with /debug-telemetry off or DO_NOT_TRACK=1.",
 			].join("\n");
 			ctx.ui.notify(message, "info");
 		},
@@ -128,7 +125,16 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 		},
 	}) as ExtensionAPI;
 
-	pi.on("session_start", () => {
+	pi.on("session_start", async (_event: unknown, ctx: ExtensionContext) => {
+		if (consent === "granted" && !(await readPrefs()).noticeShown) {
+			const notice = firstRunNotice();
+			if (ctx.hasUI) {
+				ctx.ui.notify(notice.join("\n"), "warning");
+				pi.appendEntry(NOTICE_ENTRY, { shownAt: new Date().toISOString(), collector: COLLECTOR_ENDPOINT });
+				await markNoticeShown().catch(() => undefined);
+			}
+			// Headless runs leave the flag unset on purpose: the notice is owed to a human.
+		}
 		// One install event per anonymous install id, at most one attempt.
 		void funnel()?.install();
 	});
