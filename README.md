@@ -2,6 +2,10 @@
 
 pi-debug-mode adds a Cursor-style evidence-first Debug Mode to the [Pi coding agent](https://github.com/earendil-works/pi-mono) for runtime debugging, bug reproduction, root-cause analysis, and verification. Its injected instructions tell Pi to wait for runtime evidence before changing code. The workflow asks Pi to compare hypotheses, add targeted probes, pause for human reproduction, inspect captured evidence, apply the smallest supported fix, and verify the result.
 
+## Try this first
+
+After installing, ask Pi naturally: “Debug why checkout hangs after payment. Use runtime evidence before changing code.” Pi can activate Debug Mode through the debug_mode tool; /debug remains available as the explicit command.
+
 The canonical source is [github.com/liush2yuxjtu/pi-debug-mode](https://github.com/liush2yuxjtu/pi-debug-mode).
 
 ## Live preview — no click required
@@ -96,7 +100,7 @@ Use an ordinary prompt for a direct question or a bug with an obvious static cau
 
 ## Permissions and security
 
-Pi extensions run with the same system permissions as Pi. This package adds two commands and one interactive tool. Autopilot is one choice inside that existing tool. It does not start background services. Anonymous usage telemetry is **on by default** and disclosed on the first interactive run: the collector address, the exact fields, what is never sent, the 180-day retention, and how to disable it. It sends only funnel events (install, activated, first success, weekly active) as plain JSON to a public collector whose source you can read. Turn it off with `/debug-telemetry off`, `DO_NOT_TRACK=1`, or `PI_TELEMETRY_DISABLED=1`. See [src/TELEMETRY.md](src/TELEMETRY.md).
+Pi extensions run with the same system permissions as Pi. This package adds two commands, one activation tool, and one interactive checkpoint tool. Autopilot is one choice inside that existing tool. It does not start background services. Anonymous usage telemetry is **on by default** and disclosed on the first interactive run: the collector address, the exact fields, what is never sent, the 180-day retention, and how to disable it. It sends only funnel events (install, activated, first success, weekly active) as plain JSON to a public collector whose source you can read. Turn it off with `/debug-telemetry off`, `DO_NOT_TRACK=1`, or `PI_TELEMETRY_DISABLED=1`. See [src/TELEMETRY.md](src/TELEMETRY.md).
 
 A debug session may ask Pi to add temporary runtime probes and read local logs. Review proposed tool calls. Do not reproduce a bug with secrets in inputs or logs.
 
