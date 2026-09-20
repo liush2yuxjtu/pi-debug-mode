@@ -38,6 +38,8 @@ function harness() {
 		selectionOptions: () => selectionOptions,
 		command: async (name: string, args = "") => { await commands.get(name)!.handler(args, ctx); },
 		event: (name: string, event: unknown = {}) => handlers.get(name)!(event, ctx),
+		tool: async (name: string, params: Record<string, unknown>) =>
+			tools.get(name)!.execute("test", params, undefined, undefined, ctx),
 		checkpoint: async (humanReason?: string, signal?: AbortSignal) => {
 			const result = await tools.get("debug_reproduction")!.execute("test", { title: "Verify", steps: ["Run regression"], humanReason }, signal, undefined, ctx);
 			assert.ok(result.details && typeof result.details === "object" && "outcome" in result.details);
@@ -45,6 +47,15 @@ function harness() {
 		},
 	};
 }
+
+test("debug_mode lets the agent activate evidence-first debugging from natural language", async () => {
+	const h = harness();
+	const result = await h.tool("debug_mode", { bug: "checkout hangs after payment" });
+	assert.match(JSON.stringify(result.content), /PI DEBUG MODE ACTIVE/);
+	assert.match(JSON.stringify(result.content), /checkout hangs after payment/);
+	const prompt = h.event("before_agent_start", { systemPrompt: "BASE" });
+	assert.match(JSON.stringify(prompt), /checkout hangs after payment/);
+});
 
 test("Autopilot choice returns guidance, not success; later machine checkpoints never prompt", async () => {
 	const h = harness();

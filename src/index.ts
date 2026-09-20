@@ -80,6 +80,38 @@ function isPersistedState(value: unknown): value is PersistedState {
 export default function debugMode(pi: ExtensionAPI): void {
 	const state: DebugState = { active: false, bug: "", autopilot: false };
 
+	function activateDebug(bug: string, ctx: ExtensionContext): void {
+		state.active = true;
+		state.bug = bug;
+		state.autopilot = false;
+		persist(pi, state);
+		updateStatus(ctx, true, false);
+	}
+
+	pi.registerTool({
+		name: "debug_mode",
+		label: "Start Debug Mode",
+		description:
+			"Activate evidence-first Pi Debug Mode for a concrete bug. Use when the user asks to diagnose or debug a bug with runtime evidence before speculative fixes.",
+		promptSnippet: "Activate evidence-first debugging for a concrete bug",
+		promptGuidelines: [
+			"Use debug_mode when the user explicitly wants a bug diagnosed or debugged. After activation, follow the returned evidence-first instructions and use debug_reproduction for checkpoints.",
+		],
+		parameters: Type.Object({
+			bug: Type.String({ minLength: 1, description: "Concrete bug, symptom, and expected behavior" }),
+		}),
+		async execute(_toolCallId, params, signal, _onUpdate, ctx) {
+			signal?.throwIfAborted();
+			const bug = params.bug.trim();
+			if (!bug) throw new Error("bug is required");
+			activateDebug(bug, ctx);
+			return {
+				content: [{ type: "text" as const, text: debugInstructions(bug) }],
+				details: { active: true, bug },
+			};
+		},
+	});
+
 	pi.registerCommand("debug", {
 		description: "start evidence-first debug mode",
 		handler: async (args, ctx) => {
@@ -90,11 +122,7 @@ export default function debugMode(pi: ExtensionAPI): void {
 					: undefined);
 			if (!bug) return;
 
-			state.active = true;
-			state.bug = bug;
-			state.autopilot = false;
-			persist(pi, state);
-			updateStatus(ctx, true, state.autopilot);
+			activateDebug(bug, ctx);
 			await ctx.waitForIdle();
 			await pi.sendUserMessage(`Debug this issue in Pi Debug Mode:\n\n${bug}`);
 		},
