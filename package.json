@@ -50,6 +50,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@nyn5255/telemetry": "^0.1.1"
+    "@nyn5255/telemetry": "^0.1.3"
   }
 }
