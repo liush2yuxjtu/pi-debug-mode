@@ -3,6 +3,7 @@ import type {
 	ExtensionContext,
 } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
+import { registerDebugFeedback } from "./feedback.ts";
 import {
 	AUTOPILOT_INSTRUCTIONS,
 	outcomeMessage,
@@ -78,6 +79,7 @@ function isPersistedState(value: unknown): value is PersistedState {
 }
 
 export default function debugMode(pi: ExtensionAPI): void {
+	registerDebugFeedback(pi);
 	const state: DebugState = { active: false, bug: "", autopilot: false };
 
 	pi.registerCommand("debug", {

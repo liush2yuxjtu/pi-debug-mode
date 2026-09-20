@@ -92,7 +92,7 @@ test("visual judgment still uses original outcomes; cancelled does not claim fix
 
 test("no additional commands; restore preference, reset empty branches and migrate old state", async () => {
 	const h = harness();
-	assert.deepEqual(h.commandNames().sort(), ["debug", "debug-stop"]);
+	assert.deepEqual(h.commandNames().sort(), ["debug", "debug-feedback", "debug-stop"]);
 	await h.command("debug", "bug");
 	await h.checkpoint();
 	h.event("session_start");
