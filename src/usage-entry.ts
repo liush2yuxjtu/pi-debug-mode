@@ -82,6 +82,7 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 				envOverride ? `Process override active: ${envOverride}` : "No process override.",
 				...lines.slice(-1),
 				"On by default. Turn off with /debug-telemetry off or DO_NOT_TRACK=1.",
+				"Inspect it instead of sending it: PI_TELEMETRY_DEBUG=1.",
 			].join("\n");
 			ctx.ui.notify(message, "info");
 		},
