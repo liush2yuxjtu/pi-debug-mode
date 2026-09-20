@@ -7,11 +7,11 @@ import { spawnSync } from "node:child_process";
 const version = "0.1.11";
 const tmp = await mkdtemp(join(tmpdir(), "pi-debug-published-"));
 await writeFile(join(tmp, "package.json"), JSON.stringify({name:"published-consumer",private:true,type:"module"}, null, 2));
-const npm = process.platform === "win32" ? "npm.cmd" : "npm";
-const install = spawnSync(npm, ["install","--ignore-scripts","--no-audit","--no-fund",`pi-debug-mode@${version}`], {
-  cwd: tmp, stdio: "inherit", env: process.env
-});
-assert.equal(install.status, 0, "npm install failed");
+const installArgs = ["install","--ignore-scripts","--no-audit","--no-fund",`pi-debug-mode@${version}`];
+const install = process.platform === "win32"
+  ? spawnSync("cmd.exe", ["/d","/s","/c", "npm", ...installArgs], {cwd: tmp, stdio:"inherit", env:process.env})
+  : spawnSync("npm", installArgs, {cwd: tmp, stdio:"inherit", env:process.env});
+assert.equal(install.status, 0, `npm install failed: ${install.error?.message || install.signal || install.status}`);
 
 const packagePath = join(tmp, "node_modules", "pi-debug-mode", "package.json");
 const pkg = JSON.parse(await readFile(packagePath, "utf8"));
