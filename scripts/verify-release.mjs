@@ -61,6 +61,7 @@ const EXPECTED_PACKAGE_FILES = [
 	'README.md',
 	'package.json',
 	'src/TELEMETRY.md',
+	'src/feedback.ts',
 	'src/index.ts',
 	'src/protocol.ts',
 	'src/telemetry.ts',

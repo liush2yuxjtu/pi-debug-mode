@@ -1,7 +1,7 @@
 {
   "name": "pi-debug-mode",
   "version": "0.1.12",
-  "description": "Cursor-style evidence-first debug mode for the Pi coding agent with runtime probes, bug reproduction, root-cause analysis, minimal fixes, and verification.",
+  "description": "Cursor-style debug mode for the Pi coding agent with evidence-first debugging, runtime probes, bug reproduction, root-cause analysis, minimal fixes, and verification.",
   "type": "module",
   "license": "MIT",
   "author": "Liu Shiyu",
@@ -36,7 +36,7 @@
     "extensions": [
       "./src/usage-entry.ts"
     ],
-    "image": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-preview.gif"
+    "image": "https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-preview.gif"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",

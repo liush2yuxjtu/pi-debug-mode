@@ -6,25 +6,25 @@ The canonical source is [github.com/liush2yuxjtu/pi-debug-mode](https://github.c
 
 ## Live preview — no click required
 
-![Animated pi-debug-mode workflow preview](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-preview.gif)
+![Animated pi-debug-mode workflow preview](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-preview.gif)
 
 The animated preview runs inline and loops automatically. It is a real Pi TUI recording segment from the published extension, captured on a real machine.
 
-[Watch the full real Pi TUI recording](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-real-tui.mp4). The 80.92-second recording captures a live `/debug` run on a real machine with a published extension release and `openai-codex/gpt-5.6-sol`. It includes hypothesis generation, temporary `pi-debug` probes, the interactive `debug_reproduction` checkpoint, evidence inspection, the smallest fix, human verification, probe cleanup, and a passing test.
+[Watch the full real Pi TUI recording](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-real-tui.mp4). The 80.92-second recording captures a live `/debug` run on a real machine with a published extension release and `openai-codex/gpt-5.6-sol`. It includes hypothesis generation, temporary `pi-debug` probes, the interactive `debug_reproduction` checkpoint, evidence inspection, the smallest fix, human verification, probe cleanup, and a passing test.
 
 The source terminal session was recorded from tmux as an asciinema cast. Only long human-wait intervals were compressed. The TUI output and tool execution remain from the live run.
 
 ### 中文动态预览
 
-![pi-debug-mode 中文动态工作流预览](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-preview-zh.gif)
+![pi-debug-mode 中文动态工作流预览](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-preview-zh.gif)
 
 上方 GIF 会直接循环播放，无需点击。它来自真实机器上的真实 Pi TUI 录屏片段。
 
-- [观看 57 秒真实中文 Pi TUI 录屏](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
-- [观看 13 秒中文概念演示](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-demo-zh.mp4)
+- [观看 57 秒真实中文 Pi TUI 录屏](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-real-tui-zh.mp4)
+- [观看 13 秒中文概念演示](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-demo-zh.mp4)
 - [打开中文交互演示](https://liush2yuxjtu.github.io/pi-debug-mode/demo-zh.html)
 
-For another English route, [watch the original 13-second product demo](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-demo.mp4), [watch the fresh Guided replay](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.11/artifacts/demo/pi-debug-mode-demo-0.1.8.mp4), or open the [English interactive demo](https://liush2yuxjtu.github.io/pi-debug-mode/demo.html).
+For another English route, [watch the original 13-second product demo](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-demo.mp4), [watch the fresh Guided replay](https://cdn.jsdelivr.net/gh/liush2yuxjtu/pi-debug-mode@v0.1.12/artifacts/demo/pi-debug-mode-demo-0.1.8.mp4), or open the [English interactive demo](https://liush2yuxjtu.github.io/pi-debug-mode/demo.html).
 
 ## Install
 
