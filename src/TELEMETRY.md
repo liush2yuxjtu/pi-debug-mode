@@ -20,7 +20,7 @@ This package uses the shared [`@nyn5255/telemetry`](https://www.npmjs.com/packag
 | `PI_DEBUG_MODE_TELEMETRY=1` / `=0` | Process override |
 | `PI_USAGE_TELEMETRY=1` + `PI_USAGE_TELEMETRY_PRIVACY_ACK=1` | Legacy opt-in from the previous funnel, still honored |
 | `DO_NOT_TRACK=1` or `PI_TELEMETRY_DISABLED=1` | Always off; overrides every other setting |
-| `PI_TELEMETRY_DEBUG=1` | Print the exact JSON that would be sent on stderr, send nothing, write no state (needs `@nyn5255/telemetry` ≥ 0.1.2, currently on PR #5) |
+| `PI_TELEMETRY_DEBUG=1` | Print the exact JSON that would be sent on stderr, send nothing, write no state (provided by `@nyn5255/telemetry` ≥ 0.1.3) |
 
 The choice is stored in `~/.config/pi-debug-mode/telemetry.json` (`%LOCALAPPDATA%` on Windows) with owner-only permissions. An explicit opt-out wins over the default. A corrupt or unreadable file fails closed to "no choice", which is not permission to send more: the first-run notice is treated as not yet shown and the disclosure is printed again. Revoking consent does not erase the anonymous install id: deleting it would make a later re-opt-in look like a brand new install.
 
