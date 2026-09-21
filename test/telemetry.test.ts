@@ -257,7 +257,7 @@ test("a headless session never consumes the disclosure", async () => {
 	assert.equal(interactive.notifications.length, 1);
 });
 
-test("status and off report and change the default state", async () => {
+test("status, on and off report and change the opt-in state", async () => {
 	const { pi, commands } = fakePi();
 	await usageInstrumentedDebugMode(pi);
 
