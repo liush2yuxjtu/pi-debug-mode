@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Telemetry User Funnel Observatory</title>
+  <meta name="description" content="Live aggregate-only npm telemetry dashboard: OS, Node major, package/version cohorts and funnel.">
+  <style>
+    :root{color-scheme:dark;--bg:#0b0d10;--panel:#12161b;--panel2:#171c22;--line:#27303a;--text:#f4f7fa;--muted:#96a3b1;--accent:#86efac;--blue:#93c5fd;--amber:#fde68a;--violet:#c4b5fd;--red:#fca5a5}
+    *{box-sizing:border-box} body{margin:0;background:linear-gradient(180deg,#0b0d10,#0d1117 45%,#0b0d10);color:var(--text);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .shell{max-width:1180px;margin:0 auto;padding:28px 18px 56px}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:20px}.eyebrow{font:700 12px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}.title{font-size:clamp(28px,5vw,52px);line-height:1.03;letter-spacing:-.04em;margin:8px 0 10px}.sub{max-width:780px;color:var(--muted);margin:0}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn,select{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:10px;min-height:42px;padding:0 12px}.btn{cursor:pointer;font-weight:700}.btn:hover{border-color:#4b5968}.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px;margin:8px 0 22px}.dot{width:9px;height:9px;border-radius:50%;background:var(--amber)}.dot.ok{background:var(--accent)}.dot.err{background:var(--red)}
+    .grid{display:grid;gap:12px}.metrics{grid-template-columns:repeat(6,minmax(0,1fr));margin-bottom:18px}.card{background:rgba(18,22,27,.92);border:1px solid var(--line);border-radius:14px;padding:16px}.metric .k{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.metric .v{font-size:28px;font-weight:800;letter-spacing:-.03em;margin-top:4px}.metric .h{font-size:12px;color:var(--muted);margin-top:2px}
+    .two{grid-template-columns:1.05fr .95fr;margin-bottom:18px}.section-title{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:14px}.section-title h2{font-size:18px;margin:0}.section-title p{font-size:12px;color:var(--muted);margin:0}.barrow{display:grid;grid-template-columns:84px 1fr 48px;gap:10px;align-items:center;margin:9px 0}.bar{height:10px;background:#202731;border-radius:99px;overflow:hidden}.fill{height:100%;border-radius:99px;background:var(--blue)}.barrow:nth-child(3n+2) .fill{background:var(--violet)}.barrow:nth-child(3n) .fill{background:var(--accent)}
+    .funnel{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.stage{position:relative;border:1px solid var(--line);border-radius:12px;padding:14px;background:var(--panel2)}.stage:not(:last-child):after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);z-index:2;color:#657180}.stage .n{font-size:28px;font-weight:800}.stage .l{font-size:12px;color:var(--muted)}.stage .r{font-size:12px;margin-top:6px}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}.filters label{display:grid;gap:5px;color:var(--muted);font-size:12px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:830px;background:rgba(18,22,27,.7)}th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line)}th{position:sticky;top:0;background:#151a20;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}td.num{text-align:right;font-variant-numeric:tabular-nums}.pill{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:2px 7px;font-size:12px;background:#161b21}.note{font-size:13px;color:var(--muted);margin-top:10px}.insight{margin-top:18px;border-left:3px solid var(--accent);padding:12px 14px;background:#11171a;border-radius:0 10px 10px 0}.insight b{color:var(--accent)}.foot{margin-top:24px;font-size:12px;color:var(--muted);display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}a{color:var(--blue)}
+    @media(max-width:900px){.metrics{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:1fr}.funnel{grid-template-columns:1fr}.stage:not(:last-child):after{content:"↓";right:auto;left:50%;top:auto;bottom:-19px}.top{display:block}.actions{margin-top:14px}}
+    @media(max-width:560px){.shell{padding:20px 12px 40px}.metrics{grid-template-columns:repeat(2,1fr)}.metric .v{font-size:24px}.barrow{grid-template-columns:72px 1fr 36px}.actions .btn{flex:1}}
+  </style>
+</head>
+<body>
+<main class="shell">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Live · aggregate-only</div>
+      <h1 class="title">Telemetry User Funnel Observatory</h1>
+      <p class="sub">真实 Production 安装来源 → OS → Node major → Package / Version → Funnel。只展示聚合数据，不暴露 anonymous_install_id、event_id、用户名、IP 或地理位置。</p>
+    </div>
+    <div class="actions">
+      <button class="btn" id="refresh" type="button">刷新数据</button>
+      <a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="https://github.com/liush2yuxjtu/telemetry" target="_blank" rel="noreferrer">Source</a>
+    </div>
+  </header>
+
+  <div class="status"><span class="dot" id="dot"></span><span id="statusText">正在读取 Production…</span></div>
+
+  <section class="grid metrics" aria-label="总览">
+    <div class="card metric"><div class="k">Installs</div><div class="v" id="mInstall">—</div><div class="h">non-CI cohorts</div></div>
+    <div class="card metric"><div class="k">Activated</div><div class="v" id="mActivated">—</div><div class="h" id="hActivated">—</div></div>
+    <div class="card metric"><div class="k">First success</div><div class="v" id="mSuccess">—</div><div class="h" id="hSuccess">—</div></div>
+    <div class="card metric"><div class="k">Weekly active</div><div class="v" id="mWau">—</div><div class="h" id="hWau">—</div></div>
+    <div class="card metric"><div class="k">D7 eligible</div><div class="v" id="mD7e">—</div><div class="h">进入完整观察窗</div></div>
+    <div class="card metric"><div class="k">D7 retained</div><div class="v" id="mD7">—</div><div class="h">[7d, 8d)</div></div>
+  </section>
+
+  <section class="grid two">
+    <div class="card">
+      <div class="section-title"><div><h2>OS 来源</h2><p>首次 install 记录的运行环境</p></div></div>
+      <div id="osBars"></div>
+    </div>
+    <div class="card">
+      <div class="section-title"><div><h2>Node Major</h2><p>安装 cohort 的 Node 主版本</p></div></div>
+      <div id="nodeBars"></div>
+    </div>
+  </section>
+
+  <section class="card" style="margin-bottom:18px">
+    <div class="section-title"><div><h2>总体 Funnel</h2><p>first-install cohort 口径</p></div><span class="pill" id="generated">—</span></div>
+    <div class="funnel">
+      <div class="stage"><div class="l">Install</div><div class="n" id="fInstall">—</div><div class="r">100%</div></div>
+      <div class="stage"><div class="l">Activated</div><div class="n" id="fActivated">—</div><div class="r" id="fActRate">—</div></div>
+      <div class="stage"><div class="l">First success</div><div class="n" id="fSuccess">—</div><div class="r" id="fSuccessRate">—</div></div>
+      <div class="stage"><div class="l">Weekly active</div><div class="n" id="fWau">—</div><div class="r" id="fWauRate">—</div></div>
+      <div class="stage"><div class="l">D7 retained</div><div class="n" id="fD7">—</div><div class="r" id="fD7Rate">—</div></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="section-title"><div><h2>原始分层 Cohorts</h2><p>OS × Node × Package × first-install version</p></div><span class="pill" id="rowCount">—</span></div>
+    <div class="filters">
+      <label>OS<select id="osFilter"><option value="">全部</option></select></label>
+      <label>Node<select id="nodeFilter"><option value="">全部</option></select></label>
+      <label>Package<select id="pkgFilter"><option value="">全部</option></select></label>
+      <label>Version<select id="versionFilter"><option value="">全部</option></select></label>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>OS</th><th>Node</th><th>Package</th><th>Version</th><th style="text-align:right">Install</th><th style="text-align:right">Activated</th><th style="text-align:right">Success</th><th style="text-align:right">WAU</th><th style="text-align:right">D7</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <div class="note" id="filterSummary">—</div>
+  </section>
+
+  <div class="insight" id="insight"><b>观察：</b>等待数据。</div>
+  <footer class="foot">
+    <span>Data: telemetry-peach.vercel.app · cache-control: no-store</span>
+    <span>“安装实例” ≠ 严格意义上的真人用户；同一人多设备/多包可能产生多个 cohort。</span>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const SOURCES='https://telemetry-peach.vercel.app/api/sources';
+  const FUNNEL='https://telemetry-peach.vercel.app/api/funnel';
+  const $=id=>document.getElementById(id);
+  let sourceData=null, funnelData=null;
+
+  const pct=(n,d)=>d?((n/d)*100).toFixed(1)+'%':'—';
+  const osLabel=x=>({darwin:'macOS',linux:'Linux',win32:'Windows',android:'Android'})[x]||x;
+
+  function setStatus(mode,text){$('dot').className='dot '+(mode||'');$('statusText').textContent=text}
+  function renderBars(target,items,labelKey){
+    const max=Math.max(1,...items.map(x=>x.installs||0));
+    $(target).innerHTML=items.map(x=>`<div class="barrow"><span>${labelKey(x)}</span><div class="bar"><div class="fill" style="width:${Math.max(2,(x.installs/max)*100)}%"></div></div><strong style="text-align:right">${x.installs}</strong></div>`).join('');
+  }
+  function options(id,values,label=x=>x){
+    const el=$(id), current=el.value;
+    el.innerHTML='<option value="">全部</option>'+[...values].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true})).map(v=>`<option value="${v}">${label(v)}</option>`).join('');
+    if([...values].map(String).includes(current)) el.value=current;
+  }
+  function filteredRows(){
+    const os=$('osFilter').value,node=$('nodeFilter').value,pkg=$('pkgFilter').value,version=$('versionFilter').value;
+    return sourceData.rows.filter(r=>(!os||r.os===os)&&(!node||String(r.node_major)===node)&&(!pkg||r.package===pkg)&&(!version||r.version===version));
+  }
+  function renderTable(){
+    const rows=filteredRows();
+    $('rowCount').textContent=rows.length+' cohorts';
+    $('rows').innerHTML=rows.length?rows.map(r=>`<tr><td><span class="pill">${osLabel(r.os)}</span></td><td>Node ${r.node_major}</td><td><code>${r.package}</code></td><td><code>${r.version}</code></td><td class="num">${r.installs}</td><td class="num">${r.activated}</td><td class="num">${r.first_success}</td><td class="num">${r.weekly_active}</td><td class="num">${r.d7_retained}</td></tr>`).join(''):'<tr><td colspan="9">当前筛选没有数据。</td></tr>';
+    const sum=k=>rows.reduce((n,r)=>n+(r[k]||0),0), installs=sum('installs'),activated=sum('activated'),success=sum('first_success'),wau=sum('weekly_active');
+    $('filterSummary').textContent=`筛选结果：${installs} install → ${activated} activated → ${success} first success；weekly active ${wau}。`;
+  }
+  function render(){
+    const t=sourceData.totals;
+    $('mInstall').textContent=t.installs;$('mActivated').textContent=t.activated;$('mSuccess').textContent=t.first_success;$('mWau').textContent=t.weekly_active;$('mD7e').textContent=t.d7_eligible;$('mD7').textContent=t.d7_retained;
+    $('hActivated').textContent=pct(t.activated,t.installs)+' of installs';$('hSuccess').textContent=pct(t.first_success,t.activated)+' of activated';$('hWau').textContent=pct(t.weekly_active,t.installs)+' of installs';
+    $('fInstall').textContent=t.installs;$('fActivated').textContent=t.activated;$('fSuccess').textContent=t.first_success;$('fWau').textContent=t.weekly_active;$('fD7').textContent=t.d7_retained;
+    $('fActRate').textContent=pct(t.activated,t.installs)+' of installs';$('fSuccessRate').textContent=pct(t.first_success,t.activated)+' of activated';$('fWauRate').textContent=pct(t.weekly_active,t.installs)+' of installs';$('fD7Rate').textContent=t.d7_eligible?pct(t.d7_retained,t.d7_eligible)+' of eligible':'not eligible yet';
+    $('generated').textContent=new Date(sourceData.generated_at).toLocaleString();
+    renderBars('osBars',sourceData.os,x=>osLabel(x.os));renderBars('nodeBars',sourceData.node_major,x=>'Node '+x.node_major);
+    options('osFilter',new Set(sourceData.rows.map(r=>r.os)),osLabel);options('nodeFilter',new Set(sourceData.rows.map(r=>r.node_major)));options('pkgFilter',new Set(sourceData.rows.map(r=>r.package)));options('versionFilter',new Set(sourceData.rows.map(r=>r.version)));
+    renderTable();
+    const topOS=[...sourceData.os].sort((a,b)=>b.installs-a.installs)[0];
+    const versions=funnelData.packages||[]; const newest=[...versions].sort((a,b)=>b.version.localeCompare(a.version,undefined,{numeric:true}))[0];
+    $('insight').innerHTML=`<b>观察：</b> 当前最大 OS 来源是 ${osLabel(topOS.os)}（${topOS.installs}/${t.installs}）；最新 cohort ${newest?.package||'—'}@${newest?.version||'—'} 为 ${newest?.installs||0} installs → ${newest?.activated||0} activated → ${newest?.first_success||0} first success。样本量仍小，适合定位漏斗掉点，不适合过度外推。`;
+  }
+  async function load(){
+    setStatus('','正在读取 Production…');$('refresh').disabled=true;
+    try{
+      const [a,b]=await Promise.all([fetch(SOURCES,{cache:'no-store'}),fetch(FUNNEL,{cache:'no-store'})]);
+      if(!a.ok||!b.ok) throw new Error('HTTP '+a.status+'/'+b.status);
+      [sourceData,funnelData]=await Promise.all([a.json(),b.json()]);
+      render();setStatus('ok','Production 已连接 · '+new Date().toLocaleTimeString());
+    }catch(e){setStatus('err','读取失败：'+e.message)}
+    finally{$('refresh').disabled=false}
+  }
+  ['osFilter','nodeFilter','pkgFilter','versionFilter'].forEach(id=>$(id).addEventListener('change',()=>sourceData&&renderTable()));
+  $('refresh').addEventListener('click',load);
+  load();
+})();
+</script>
+</body>
+</html>
