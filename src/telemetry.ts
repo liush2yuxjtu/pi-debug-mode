@@ -152,9 +152,9 @@ export async function markNoticeShown(file = prefsPath()): Promise<void> {
  * Precedence, highest first:
  *  1. DO_NOT_TRACK / PI_TELEMETRY_DISABLED — always off, nothing overrides it.
  *  2. PI_DEBUG_MODE_TELEMETRY=0|1 — process override for scripted runs.
- *  3. Stored choice from /debug-telemetry (off persists and wins over the default).
+ *  3. Stored choice from /debug-telemetry.
  *  4. Legacy PI_USAGE_TELEMETRY=1 + PI_USAGE_TELEMETRY_PRIVACY_ACK=1.
- *  5. Default: granted, disclosed by the first-run notice.
+ *  5. Default: denied.
  */
 export async function resolveConsent(
 	env: NodeJS.ProcessEnv = process.env,
@@ -198,7 +198,7 @@ export function createFunnel(consent: Consent, options: { version: string; state
 /** One-time first-run disclosure. Default-on is only acceptable with this notice. */
 export function firstRunNotice(): string[] {
 	return [
-		"pi-debug-mode anonymous usage telemetry is ON by default.",
+		"pi-debug-mode anonymous usage telemetry is enabled.",
 		...consentSummary(),
 		"Turn it off any time: /debug-telemetry off, or set DO_NOT_TRACK=1.",
 	];

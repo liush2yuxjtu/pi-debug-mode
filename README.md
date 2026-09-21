@@ -101,7 +101,7 @@ Use an ordinary prompt for a direct question or a bug with an obvious static cau
 
 ## Permissions and security
 
-Pi extensions run with the same system permissions as Pi. This package adds two commands and one interactive tool. Autopilot is one choice inside that existing tool. It does not start background services. Anonymous usage telemetry is **on by default** and disclosed on the first interactive run: the collector address, the exact fields, what is never sent, the 180-day retention, and how to disable it. It sends only funnel events (install, activated, first success, weekly active) as plain JSON to a public collector whose source you can read. Turn it off with `/debug-telemetry off`, `DO_NOT_TRACK=1`, or `PI_TELEMETRY_DISABLED=1`. See [src/TELEMETRY.md](src/TELEMETRY.md).
+Pi extensions run with the same system permissions as Pi. This package adds two commands and one interactive tool. Autopilot is one choice inside that existing tool. It does not start background services. Anonymous usage telemetry is **off by default**. Enable it explicitly with `/debug-telemetry on`; after opt-in, the first interactive run discloses: the collector address, the exact fields, what is never sent, the 180-day retention, and how to disable it. It sends only funnel events (install, activated, first success, weekly active) as plain JSON to a public collector whose source you can read. Turn it off with `/debug-telemetry off`, `DO_NOT_TRACK=1`, or `PI_TELEMETRY_DISABLED=1`. See [src/TELEMETRY.md](src/TELEMETRY.md).
 
 A debug session may ask Pi to add temporary runtime probes and read local logs. Review proposed tool calls. Do not reproduce a bug with secrets in inputs or logs.
 
@@ -120,7 +120,7 @@ Use it for bugs that need runtime evidence, competing hypotheses, or a human rep
 
 ### What data leaves my machine?
 
-Usage telemetry is on by default and can be switched off immediately with `/debug-telemetry off` or `DO_NOT_TRACK=1`. It sends only the anonymous funnel events documented in [src/TELEMETRY.md](src/TELEMETRY.md); it does not send prompts, bug descriptions, code, paths, tokens, emails, usernames, or model output, and nothing is obfuscated: the payload is readable JSON. Separately, your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session.
+Usage telemetry is off by default and can be enabled explicitly with `/debug-telemetry on` and switched off immediately with `/debug-telemetry off` or `DO_NOT_TRACK=1`. It sends only the anonymous funnel events documented in [src/TELEMETRY.md](src/TELEMETRY.md); it does not send prompts, bug descriptions, code, paths, tokens, emails, usernames, or model output, and nothing is obfuscated: the payload is readable JSON. Separately, your configured Pi model provider may receive prompts, tool outputs, and logs that Pi sends during the session.
 
 ### Does it prove every fix?
 

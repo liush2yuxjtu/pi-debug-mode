@@ -148,7 +148,7 @@ test("granted consent persists with a stated collector and sends the funnel even
 });
 
 test("opt-outs always win, and an explicit off beats the default", async () => {
-	assert.equal(await resolveConsent(), "granted", "default is on");
+	assert.equal(await resolveConsent(), "denied", "default is off");
 	process.env.DO_NOT_TRACK = "1";
 	assert.equal(await resolveConsent(), "denied");
 	delete process.env.DO_NOT_TRACK;
@@ -232,7 +232,7 @@ test("the first interactive session discloses the collector, fields, and retenti
 	assert.ok(shown.includes(COLLECTOR_ENDPOINT));
 	assert.ok(shown.includes(`${RETENTION_DAYS} days`));
 	assert.ok(shown.includes("anonymous_install_id"));
-	assert.ok(shown.includes("ON by default"));
+	assert.ok(shown.includes("telemetry is enabled"));
 	assert.match(shown, /DO_NOT_TRACK=1/);
 	assert.equal((await readPrefs()).noticeShown, true, "shown once, then recorded");
 
@@ -257,7 +257,7 @@ test("a headless session never consumes the disclosure", async () => {
 	assert.equal(interactive.notifications.length, 1);
 });
 
-test("status and off report and change the default state", async () => {
+test("status, on and off report and change the opt-in state", async () => {
 	const { pi, commands } = fakePi();
 	await usageInstrumentedDebugMode(pi);
 
@@ -281,6 +281,6 @@ test("the consent copy promises exactly the fields the collector accepts", () =>
 	for (const field of SENT_FIELDS) assert.ok(summary.includes(field), `missing ${field}`);
 	assert.ok(summary.includes(`${RETENTION_DAYS} days`));
 	assert.match(summary, /never blocks/);
-	assert.match(firstRunNotice().join("\n"), /ON by default/);
+	assert.match(firstRunNotice().join("\n"), /telemetry is enabled/);
 	assert.match(summary, /may keep short-lived technical request logs/);
 });
