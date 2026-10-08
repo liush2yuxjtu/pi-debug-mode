@@ -66,6 +66,16 @@ Use `/debug-stop` to leave Debug Mode without claiming a fix.
 Use `/debug-feedback`. Feedback text is explicit opt-in. You may optionally attach the current main session plus referenced `pi-subtask` child sessions; raw transcripts never leave the machine, transcript upload requires deterministic redaction, TruffleHog with zero findings, a size/redaction summary, and a second confirmation. If scanning is unavailable or finds anything, transcript upload is blocked. `DO_NOT_TRACK=1` and `PI_TELEMETRY_DISABLED=1` disable feedback upload too. Redacted feedback is retained for 30 days.
 TruffleHog must be available on `PATH` to attach transcripts; text-only feedback does not require it.
 
+### Use it in other agents (Agent Skill)
+
+The same workflow is also available as a portable Agent Skill in [`skills/debug-mode/SKILL.md`](skills/debug-mode/SKILL.md). It works in agents that load `SKILL.md` files, such as Claude Code, Codex, Cursor, and OpenClaw. It has no runtime code. The `debug_reproduction` checkpoint becomes a plain question to the user.
+
+```bash
+npx skills add liush2yuxjtu/pi-debug-mode --skill debug-mode
+```
+
+Pi users should keep the extension install above. The extension adds the interactive checkpoint tool and session state.
+
 ## Uninstall
 
 For an npm install, run:
