@@ -1,6 +1,6 @@
 # Usage funnel telemetry
 
-Usage measurement is **on by default**:
+From `0.1.11`, usage measurement is **on by default** (`0.1.9` and earlier are opt-in only):
 
 - The first session sends one anonymous install event. To send nothing at all, set `DO_NOT_TRACK=1` or `PI_TELEMETRY_DISABLED=1` before the first run.
 - The first interactive session prints the whole disclosure once: collector address, the exact field list, the never-sent list, the retention window, the hosting caveat, and how to turn it off.
