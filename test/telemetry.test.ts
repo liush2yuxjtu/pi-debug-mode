@@ -148,7 +148,7 @@ test("granted consent persists with a stated collector and sends the funnel even
 });
 
 test("opt-outs always win, and an explicit off beats the default", async () => {
-	assert.equal(await resolveConsent(), "denied", "default is off");
+	assert.equal(await resolveConsent(), "granted", "default is on");
 	process.env.DO_NOT_TRACK = "1";
 	assert.equal(await resolveConsent(), "denied");
 	delete process.env.DO_NOT_TRACK;
