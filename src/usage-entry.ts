@@ -30,7 +30,7 @@ const VERSION = String(
  * (a debug session starting, a reproduction ending in Fixed) without the debug
  * implementation knowing telemetry exists.
  *
- * Telemetry is off by default. After explicit opt-in, the first interactive session prints the full
+ * Telemetry is on by default. The first interactive session prints the full
  * disclosure — collector, fields, never-sent list, retention, and how to turn it
  * off — once, and records that it was shown. A headless run never marks it as
  * shown, so a human still sees it on their first real session.
@@ -44,7 +44,7 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 	const funnel = (): Telemetry | undefined => telemetry;
 
 	pi.registerCommand("debug-telemetry", {
-		description: "Usage telemetry: status, on, off (off by default; opt-in required)",
+		description: "Usage telemetry: status, on, off (on by default; first-run notice)",
 		handler: async (args: string, ctx: ExtensionContext) => {
 			const action = args.trim().toLowerCase();
 			const lines = consentSummary();
@@ -69,10 +69,13 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 				return;
 			}
 
-			const state = consent === "granted" ? "on" : "off (default)";
 			const envOverride =
 				process.env.PI_DEBUG_MODE_TELEMETRY ??
 				(process.env.PI_USAGE_TELEMETRY ? "legacy PI_USAGE_TELEMETRY" : undefined);
+			const storedConsent = (await readPrefs()).consent;
+			// "(default)" only when nothing chose the state: no stored choice and no env override.
+			const isDefault = storedConsent === "unset" && envOverride === undefined;
+			const state = consent === "granted" ? (isDefault ? "on (default)" : "on") : "off";
 			const message = [
 				`Usage telemetry: ${state}`,
 				`Collector: ${COLLECTOR_ENDPOINT}`,
@@ -81,7 +84,7 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 				`Retention: ${RETENTION_DAYS} days`,
 				envOverride ? `Process override active: ${envOverride}` : "No process override.",
 				...lines.slice(-1),
-				"Off by default. Enable with /debug-telemetry on; turn off with /debug-telemetry off or DO_NOT_TRACK=1.",
+				"On by default. Turn off with /debug-telemetry off or DO_NOT_TRACK=1; turn back on with /debug-telemetry on.",
 				"Inspect it instead of sending it: PI_TELEMETRY_DEBUG=1.",
 			].join("\n");
 			ctx.ui.notify(message, "info");
