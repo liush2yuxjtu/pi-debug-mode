@@ -69,11 +69,13 @@ export default async function usageInstrumentedDebugMode(pi: ExtensionAPI): Prom
 				return;
 			}
 
-			const storedConsent = (await readPrefs()).consent;
-			const state = consent === "granted" ? (storedConsent === "unset" ? "on (default)" : "on") : "off";
 			const envOverride =
 				process.env.PI_DEBUG_MODE_TELEMETRY ??
 				(process.env.PI_USAGE_TELEMETRY ? "legacy PI_USAGE_TELEMETRY" : undefined);
+			const storedConsent = (await readPrefs()).consent;
+			// "(default)" only when nothing chose the state: no stored choice and no env override.
+			const isDefault = storedConsent === "unset" && envOverride === undefined;
+			const state = consent === "granted" ? (isDefault ? "on (default)" : "on") : "off";
 			const message = [
 				`Usage telemetry: ${state}`,
 				`Collector: ${COLLECTOR_ENDPOINT}`,

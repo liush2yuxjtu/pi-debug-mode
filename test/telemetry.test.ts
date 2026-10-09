@@ -257,6 +257,29 @@ test("a headless session never consumes the disclosure", async () => {
 	assert.equal(interactive.notifications.length, 1);
 });
 
+test("status does not call an env-forced or stored state the default", async () => {
+	process.env.PI_DEBUG_MODE_TELEMETRY = "1";
+	const forced = fakePi();
+	await usageInstrumentedDebugMode(forced.pi);
+	const forcedStatus = fakeCtx();
+	await forced.commands.get("debug-telemetry").handler("status", forcedStatus.ctx);
+	assert.match(forcedStatus.notifications[0], /^Usage telemetry: on\n/);
+	assert.match(forcedStatus.notifications[0], /Process override active: 1/);
+	delete process.env.PI_DEBUG_MODE_TELEMETRY;
+
+	const { pi, commands } = fakePi();
+	await usageInstrumentedDebugMode(pi);
+	await commands.get("debug-telemetry").handler("on", fakeCtx().ctx);
+	const stored = fakeCtx();
+	await commands.get("debug-telemetry").handler("status", stored.ctx);
+	assert.match(stored.notifications[0], /^Usage telemetry: on\n/);
+
+	await commands.get("debug-telemetry").handler("off", fakeCtx().ctx);
+	const off = fakeCtx();
+	await commands.get("debug-telemetry").handler("status", off.ctx);
+	assert.match(off.notifications[0], /^Usage telemetry: off\n/);
+});
+
 test("status, on and off report and change the opt-in state", async () => {
 	const { pi, commands } = fakePi();
 	await usageInstrumentedDebugMode(pi);
