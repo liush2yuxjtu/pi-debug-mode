@@ -1,10 +1,11 @@
 # Usage funnel telemetry
 
-Usage measurement is **off by default** and explicit opt-in:
+From `0.1.11`, usage measurement is **on by default** (`0.1.9` and earlier are opt-in only):
 
-- After opt-in, the first interactive session prints the whole disclosure once: collector address, the exact field list, the never-sent list, the retention window, the hosting caveat, and how to turn it off.
-- The README says the same thing, so it is visible before installing.
-- `/debug-telemetry on` explicitly enables it. `/debug-telemetry off`, `DO_NOT_TRACK=1`, or `PI_TELEMETRY_DISABLED=1` stop it immediately; stored off persists.
+- The first session sends one anonymous install event. To send nothing at all, set `DO_NOT_TRACK=1` or `PI_TELEMETRY_DISABLED=1` before the first run.
+- The first interactive session prints the whole disclosure once: collector address, the exact field list, the never-sent list, the retention window, the hosting caveat, and how to turn it off.
+- The README says the same thing, so it is visible before installing. A headless run sends the install event without printing the notice; the notice appears in the next interactive session.
+- `/debug-telemetry off`, `DO_NOT_TRACK=1`, or `PI_TELEMETRY_DISABLED=1` stop it immediately; stored off persists. `/debug-telemetry on` turns it back on.
 - The payload is plain schema-v1 JSON. There is no encoding, packing, or obfuscation step, and no hidden endpoint: the collector is a public URL you can read the source of.
 - `PI_TELEMETRY_DEBUG=1` prints the exact bytes instead of sending them (the same idea as `HOMEBREW_ANALYTICS_DEBUG` and `NEXT_TELEMETRY_DEBUG`), so the field list above can be checked rather than trusted. It also leaves local state untouched, so a later real run still delivers the event.
 
