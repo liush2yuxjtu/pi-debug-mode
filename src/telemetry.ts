@@ -154,7 +154,7 @@ export async function markNoticeShown(file = prefsPath()): Promise<void> {
  *  2. PI_DEBUG_MODE_TELEMETRY=0|1 — process override for scripted runs.
  *  3. Stored choice from /debug-telemetry.
  *  4. Legacy PI_USAGE_TELEMETRY=1 + PI_USAGE_TELEMETRY_PRIVACY_ACK=1.
- *  5. Default: denied.
+ *  5. Default: granted, disclosed by the first-run notice.
  */
 export async function resolveConsent(
 	env: NodeJS.ProcessEnv = process.env,
