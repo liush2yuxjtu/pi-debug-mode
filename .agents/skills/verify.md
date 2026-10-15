@@ -34,6 +34,12 @@ For npm warnings, run these checks when npm is used:
     npm config list --location=user
     npm ci --ignore-scripts --loglevel=warn
 
+Run the repository prerequisite check after dependencies are installed:
+
+    npm run verify:prerequisites
+
+This check must report node, npm, pi, trufflehog, and the local tsc binary. Install missing required binaries to a stable PATH location such as /bin/<name>, then rerun the check. Do not downgrade a missing required binary to SKIP.
+
 Capture every Unknown env config, proxy, deprecation, or lifecycle warning. Do not hide warnings with --silent, redirection, or a changed log level.
 
 For a missing optional tool, run an explicit availability check such as:
