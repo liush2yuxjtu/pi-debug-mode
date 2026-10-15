@@ -90,6 +90,22 @@ Preserve the raw `/no-comments` report and classify each finding:
 
 An unresolved `MUST KILL`, an unrerun rejected report, an unjustified keep, or any other open `/no-comments` work is a **FAIL**. Do not delete comments only to make this gate green. For docs-only or tests-only changes, state why `/no-comments` is not applicable and preserve that scope decision in the verification report.
 
+## Pi skill discovery verifier
+
+For changes to this project skill or other Pi skill-loading behavior, verify the real Pi resource boundary. Use Node 24 when the local Pi runtime requires it.
+
+- Confirm `pi --version` and `pi --help`.
+- Use an empty disposable directory as cwd and `PI_CODING_AGENT_DIR`. Invoke:
+  
+      pi --mode rpc --offline --no-session --no-context-files --no-extensions --no-prompt-templates --no-themes --no-tools --skill <repo>/.agents/skills/verify.md
+  
+  Send one JSON line `{"id":"verify-discovery","type":"get_commands"}` on stdin, then EOF. Require a successful response with exactly one `skill:verify` resource, source `skill`, and the intended project skill path. Do not make a model request.
+- For project-path changes, repeat the check in disposable Git fixtures with the skill copied under `.pi/skills/verify/` and `.agents/skills/verify/`. Use `--approve` only for the known fixture. Require `sourceInfo.scope=project` and the resolved fixture path.
+- Preserve the candidate commit SHA, command, exit status, filtered RPC result, and snapshot report. Do not claim another machine was synced or model behavior was evaluated from a local loading check.
+- Delete only disposable probe directories. Leave sessions, credentials, and unrelated working changes intact.
+
+A docs-only change has runtime verdict **SKIP**. A successful RPC resource-discovery check is separate evidence for skill loading. This project-specific verifier incorporates the portable Pi verification rules from `liush2yuxjtu/dot-pi/.agents/skills/verify.md`; dot-pi fleet-only paths are not part of this project.
+
 ## Evidence and verdict
 
 Preserve raw evidence before interpreting it. Use one verdict:
