@@ -1,7 +1,12 @@
 import { existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 
-const required = ['node', 'npm', 'pi', 'trufflehog'];
+const required = [
+  ['node', 'node'],
+  ['npm', 'npm'],
+  ['pi', '/bin/pi'],
+  ['trufflehog', '/bin/trufflehog'],
+];
 const checks = [];
 
 function checkBinary(name, command = name, args = ['--version']) {
@@ -19,7 +24,7 @@ function checkBinary(name, command = name, args = ['--version']) {
   });
 }
 
-for (const binary of required) checkBinary(binary);
+for (const [name, command] of required) checkBinary(name, command);
 checkBinary(
   'tsc',
   existsSync('node_modules/.bin/tsc') ? 'node_modules/.bin/tsc' : 'tsc',
