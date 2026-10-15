@@ -78,6 +78,18 @@ Then probe at least one nearby edge case suggested by the change while staying a
 
 If the host surface cannot start, do not silently downgrade to a mock. Return **BLOCKED** unless the changed behavior is directly covered by a real exported API or an explicitly declared runtime harness. In that case, name the harness and state that the full host surface remains untested.
 
+## Comment hygiene gate
+
+For any code or configuration diff, run `/no-comments` against the same scope before the final verdict. Use the project skill at `.agents/skills/no-comments/SKILL.md`, which is based on Cursor's pstack `no-comments` skill.
+
+Preserve the raw `/no-comments` report and classify each finding:
+
+- **Accepted and fixed** — the smallest in-scope root-cause change is present, and the report was rerun.
+- **Kept with proof** — the comment is required by an external constraint that the report documents.
+- **Open** — the finding, required rerun, constraint encoding, or scope decision is unresolved.
+
+An unresolved `MUST KILL`, an unrerun rejected report, an unjustified keep, or any other open `/no-comments` work is a **FAIL**. Do not delete comments only to make this gate green. For docs-only or tests-only changes, state why `/no-comments` is not applicable and preserve that scope decision in the verification report.
+
 ## Evidence and verdict
 
 Preserve raw evidence before interpreting it. Use one verdict:
