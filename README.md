@@ -1,8 +1,8 @@
 # pi-debug-mode
 
-[![npm](https://img.shields.io/npm/v/pi-debug-mode.svg)](https://www.npmjs.com/package/pi-debug-mode)
-[![npm downloads](https://img.shields.io/npm/dm/pi-debug-mode.svg)](https://www.npmjs.com/package/pi-debug-mode)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/pi-debug-mode)](https://www.npmjs.com/package/pi-debug-mode)
+[![npm downloads](https://img.shields.io/npm/dm/pi-debug-mode)](https://www.npmjs.com/package/pi-debug-mode)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Pi coding agent](https://img.shields.io/badge/Pi-coding%20agent-blue)](https://github.com/earendil-works/pi-mono)
 
 **Cursor-style, evidence-first Debug Mode for the [Pi coding agent](https://github.com/earendil-works/pi-mono).** Wait for runtime evidence before changing code: compare hypotheses, add targeted probes, pause for human reproduction, inspect captured evidence, apply the smallest supported fix, and verify.
